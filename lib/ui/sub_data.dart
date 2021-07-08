@@ -2,17 +2,83 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 class DataPage extends StatefulWidget{
   @override
   _DataPageState createState() => _DataPageState();
 
 }
 
+class Item {
+  const Item(this.name,this.icon);
+  final String name;
+  final Icon icon;
+}
+
 class _DataPageState extends State<DataPage>{
 
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
+  Item selectedGender;
+  File _image;
+  List<Item> Gender = <Item>[
+    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
+    const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF167F67),)),
 
+  ];
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50
+    );
+
+    setState(() {
+      _image = image;
+
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await  ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50
+    );
+
+    setState(() {
+      _image = image;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,19 +102,36 @@ class _DataPageState extends State<DataPage>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 13,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-
-                    CircleAvatar(
-                      minRadius: 60,
-                      backgroundColor: Colors.deepOrange.shade300,
+                    GestureDetector(
+                      onTap: () {
+                        _showPicker(context);
+                      },
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage("https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
-                        minRadius: 50,
+                        radius: 55,
+                        backgroundColor: Colors.grey,
+                        child: _image != null
+                            ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            _image,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ) : CircleAvatar(
+                          minRadius: 60,
+                          backgroundColor: Colors.deepOrange.shade300,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage("https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
+                            minRadius: 50,
+                          ),
+                        ),
                       ),
                     ),
+
 
                   ],
                 ),
@@ -79,7 +162,7 @@ class _DataPageState extends State<DataPage>{
           Divider(),
           ListTile(
             title: Text(
-              "BIRTHDAY",
+              "DATE OF BIRTH",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: Container(
@@ -97,27 +180,95 @@ class _DataPageState extends State<DataPage>{
           Divider(),
           ListTile(
             title: Text(
-              "Twitter",
+              "GENDER",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: Text(
-              "@ramkumar",
+            subtitle: DropdownButton<Item>(
+
+              hint:  Text("Select Gender"),
+              value: selectedGender,
+              onChanged: (Item Value) {
+                setState(() {
+                  selectedGender = Value;
+                });
+              },
+              items: Gender.map((Item user) {
+                return  DropdownMenuItem<Item>(
+                  value: user,
+                  child: Row(
+                    children: <Widget>[
+                      user.icon,
+                      SizedBox(width: 10,),
+                      Text(
+                        user.name,
+                        style:  TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              "WEIGHT",
+              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+            ),
+            subtitle: TextFormField(
+
               style: TextStyle(fontSize: 18.0),
             ),
           ),
           Divider(),
           ListTile(
             title: Text(
-              "Facebook",
+              "LENGTH",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: Text(
-              "facebook.com/ramkumar",
+            subtitle: TextFormField(
+
               style: TextStyle(fontSize: 18.0),
             ),
           ),
-          Divider(),
+          ListTile(
+            title: Text(
+              "TIME",
+              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+            ),
+            subtitle: TextFormField(
+
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8.0),
+            child: RaisedButton(
+              padding: const EdgeInsets.all(16.0),
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0)),
+              color: Colors.yellow.shade700,
+              child: Text(
+                "Confirm",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
+              ),
+              onPressed: () {},
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+        },
+        tooltip: 'Increment',
+        child: Icon(
+          FontAwesomeIcons.userPlus,
+          size: 20,
+        ),
       ),
     );
   }
