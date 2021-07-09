@@ -20,6 +20,17 @@ class Item {
 
 class _HospitalPageState extends State<HospitalPage>{
 
+  TextEditingController _dateController = TextEditingController();
+  DateTime _selectedDate;
+  TextEditingController timeinput = TextEditingController();
+  //text editing controller for text field
+
+  @override
+  void initState() {
+    timeinput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,13 +222,24 @@ class _HospitalPageState extends State<HospitalPage>{
                   "DATE: ",
                   style: TextStyle(color: Colors.black54),
                 ),
+                Container(
+                  width: 150,
+                  padding: EdgeInsets.all(8.0),
+                  child: TextField(
+                    focusNode: AlwaysDisabledFocusNode(),
+                    controller: _dateController,
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 5.0),
             Row(
               children: <Widget>[
                 Icon(
-                  FontAwesomeIcons.businessTime,
+                  Icons.timer,
                   size: 12.0,
                   color: Colors.black54,
                 ),
@@ -226,6 +248,40 @@ class _HospitalPageState extends State<HospitalPage>{
                   "TIME: ",
                   style: TextStyle(color: Colors.black54),
                 ),
+                Container(
+                  width: 150,
+                  
+                  child: TextField(
+                    controller: timeinput, //editing controller of this TextField
+                    decoration: InputDecoration(
+                        labelText: "Enter Time" //label text of field
+                    ),
+                    readOnly: true,  //set it true, so that user will not able to edit text
+                    onTap: () async {
+                      TimeOfDay pickedTime =  await showTimePicker(
+                        initialTime: TimeOfDay.now(),
+                        context: context,
+                      );
+
+                      if(pickedTime != null ){
+                        print(pickedTime.format(context));   //output 10:51 PM
+                        DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                        //converting to DateTime so that we can further format on different pattern.
+                        print(parsedTime); //output 1970-01-01 22:53:00.000
+                        String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
+                        print(formattedTime); //output 14:59:00
+                        //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                        setState(() {
+                          timeinput.text = formattedTime; //set the value of text field.
+                        });
+                      }else{
+                        print("Time is not selected");
+                      }
+                    },
+                  ),
+                ),
+
               ],
             ),
           ],
@@ -233,5 +289,38 @@ class _HospitalPageState extends State<HospitalPage>{
       ],
     );
   }
-}
+  _selectDate(BuildContext context) async {
+    DateTime newSelectedDate = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate != null ? _selectedDate : DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2040),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData.dark().copyWith(
+              colorScheme: ColorScheme.dark(
+                primary: Colors.deepPurple,
+                onPrimary: Colors.white,
+                surface: Colors.blueGrey,
+                onSurface: Colors.yellow,
+              ),
+              dialogBackgroundColor: Colors.blue[500],
+            ),
+            child: child,
+          );
+        });
 
+    if (newSelectedDate != null) {
+      _selectedDate = newSelectedDate;
+      _dateController
+        ..text = DateFormat.yMd().format(_selectedDate)
+        ..selection = TextSelection.fromPosition(TextPosition(
+            offset: _dateController.text.length,
+            affinity: TextAffinity.upstream));
+    }
+  }
+}
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
+}

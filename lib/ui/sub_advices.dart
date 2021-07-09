@@ -24,7 +24,7 @@ class _AdvicesPageState extends State<AdvicesPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("ADVICES PAGE"),
+        title: Text("ADVICES PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
       ),

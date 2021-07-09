@@ -84,7 +84,7 @@ class _DataPageState extends State<DataPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("DATA PAGE"),
+        title: Text("DATA PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
       ),

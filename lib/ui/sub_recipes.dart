@@ -24,7 +24,7 @@ class _RecipesPageState extends State<RecipesPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("RECIPE PAGE"),
+        title: Text("RECIPE PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
       ),
