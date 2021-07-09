@@ -6,6 +6,7 @@ import 'package:data_buffer/ui/sub_data.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
 import 'package:data_buffer/ui/sub_hospital.dart';
+import 'package:data_buffer/ui/sub_calendar.dart';
 
 class DashboardScreen extends StatefulWidget{
   @override
@@ -91,6 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                     icon: FontAwesomeIcons.calendarWeek,
                     title: "CALENDAR",
                     data: "698",
+                    screen_num: 5,
                   ),
                 ),
               ],
@@ -174,6 +176,10 @@ class _DashboardScreenState extends State<DashboardScreen>{
             case 4:
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => HospitalPage()));
+              break;
+            case 5:
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => CalendarPage()));
               break;
           }
 

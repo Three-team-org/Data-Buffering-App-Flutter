@@ -26,7 +26,6 @@ class _DataPageState extends State<DataPage>{
   List<Item> Gender = <Item>[
     const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
     const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF167F67),)),
-
   ];
 
   void _showPicker(context) {
