@@ -1,7 +1,11 @@
+import 'package:data_buffer/ui/sub_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/ui/sub_data.dart';
+import 'package:data_buffer/ui/sub_recipes.dart';
+import 'package:data_buffer/ui/sub_advices.dart';
+import 'package:data_buffer/ui/sub_advices.dart';
 
 class DashboardScreen extends StatefulWidget{
   @override
@@ -48,8 +52,9 @@ class _DashboardScreenState extends State<DashboardScreen>{
                   child: _buildTile(
                     color: Colors.green,
                     icon: FontAwesomeIcons.receipt,
-                    title: "RECIPIES",
+                    title: "RECIPES",
                     data: "857",
+                    screen_num: 2,
                   ),
                 ),
               ],
@@ -66,6 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                     icon: FontAwesomeIcons.speakerDeck,
                     title: "ADVICES",
                     data: "864",
+                    screen_num: 3,
                   ),
                 ),
                 const SizedBox(width: 16.0),
@@ -94,6 +100,8 @@ class _DashboardScreenState extends State<DashboardScreen>{
       ) ,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (ctx) => NewPage()));
         },
         tooltip: 'Increment',
         child: Icon(
@@ -153,6 +161,14 @@ class _DashboardScreenState extends State<DashboardScreen>{
             case 1:
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => DataPage()));
+              break;
+            case 2:
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => RecipesPage()));
+              break;
+            case 3:
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => AdvicesPage()));
               break;
           }
 

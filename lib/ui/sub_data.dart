@@ -119,7 +119,7 @@ class _DataPageState extends State<DataPage>{
                             _image,
                             width: 100,
                             height: 100,
-                            fit: BoxFit.fitHeight,
+                            // fit: BoxFit.fitHeight,
                           ),
                         ) : CircleAvatar(
                           minRadius: 60,
@@ -131,8 +131,6 @@ class _DataPageState extends State<DataPage>{
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
                 SizedBox(
