@@ -30,7 +30,16 @@ class _NewPageState extends State<NewPage>{
       ),
       body: Center(
         child:
-        Text("Your text"),
+        Container(
+          margin: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(color: Colors.grey.shade200),
+          child: Text(
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
+                  "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
+                  " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){

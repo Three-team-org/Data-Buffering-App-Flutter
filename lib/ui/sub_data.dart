@@ -125,7 +125,8 @@ class _DataPageState extends State<DataPage>{
                           minRadius: 60,
                           backgroundColor: Colors.deepOrange.shade300,
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage("https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
+                            backgroundImage: NetworkImage(
+                                "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
                             minRadius: 50,
                           ),
                         ),

@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height:_large? _height/4 : (_medium? _height/3.75 : _height/3.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.red[200], Colors.redAccent],
                 ),
               ),
             ),
@@ -93,7 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: _large? _height/4.5 : (_medium? _height/4.25 : _height/4),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Colors.blue[200], Colors.blueAccent],
                 ),
               ),
             ),

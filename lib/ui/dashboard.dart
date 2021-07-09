@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/ui/sub_data.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
-import 'package:data_buffer/ui/sub_advices.dart';
+import 'package:data_buffer/ui/sub_hospital.dart';
 
 class DashboardScreen extends StatefulWidget{
   @override
@@ -81,6 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                     icon: FontAwesomeIcons.hospital,
                     title: "HOSPITAL",
                     data: "857",
+                    screen_num: 4,
                   ),
                 ),
                 const SizedBox(width: 16.0),
@@ -169,6 +170,10 @@ class _DashboardScreenState extends State<DashboardScreen>{
             case 3:
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => AdvicesPage()));
+              break;
+            case 4:
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => HospitalPage()));
               break;
           }
 
