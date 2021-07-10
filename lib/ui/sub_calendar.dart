@@ -15,14 +15,15 @@ class CalendarPage extends StatefulWidget{
 
 }
 
-
 class _CalendarPageState extends State<CalendarPage>{
 
   final String address = "Some text";
   final String phone="Some text";
   final double total = 500;
   final double delivery = 100;
-
+  String group_water = "group_water";
+  String group_vit = "group_vit";
+  String group_hygine = "group_hygine";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,18 +81,24 @@ class _CalendarPageState extends State<CalendarPage>{
               Column(
                 children: <Widget>[
                   RadioListTile(
-                    selected: true,
-                    value: address,
-                    groupValue: address,
+                    value: group_water,
+                    groupValue: "group_water",
                     title: Text(address),
-                    onChanged: (value){},
+                    onChanged: (value){
+
+                    },
                   ),
                   RadioListTile(
-                    selected: false,
-                    value: "New Address",
-                    groupValue: address,
+
+                    value: group_water,
+                    groupValue: "group_water",
                     title: Text("Some text..."),
-                    onChanged: (value){},
+                    onChanged: (value){
+                      setState(() {
+                          group_water = value.toString();
+                      });
+                      print(value);
+                    },
                   ),
                   Container(
                       color: Colors.grey.shade200,
@@ -100,16 +107,16 @@ class _CalendarPageState extends State<CalendarPage>{
                       child: Text("VIT. D".toUpperCase())
                   ),
                   RadioListTile(
-                    selected: true,
-                    value: "Some text...",
-                    groupValue: phone,
+
+                    value: "group_vit",
+                    groupValue: "group_vit",
                     title: Text(phone),
                     onChanged: (value){},
                   ),
                   RadioListTile(
-                    selected: false,
-                    value: "COLOR",
-                    groupValue: phone,
+
+                    value: 0,
+                    groupValue: "group_vit",
                     title: Text("Some text..."),
                     onChanged: (value){},
                   ),
@@ -133,13 +140,14 @@ class _CalendarPageState extends State<CalendarPage>{
                   child: Text("HYGINE".toUpperCase())
               ),
               RadioListTile(
-                groupValue: true,
-                value: true,
+                groupValue: "group_hygine",
+                value: "group_hygine",
                 title: Text("MORNING"),
                 onChanged: (value){},
+
               ),
               RadioListTile(
-                groupValue: true,
+                groupValue: "group_hygine",
                 value: true,
                 title: Text("EVENING"),
                 onChanged: (value){},
@@ -169,3 +177,4 @@ class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
+
