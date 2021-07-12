@@ -97,7 +97,6 @@ class _CalendarPageState extends State<CalendarPage>{
                       setState(() {
                           group_water = value.toString();
                       });
-                      print(value);
                     },
                   ),
                   Container(

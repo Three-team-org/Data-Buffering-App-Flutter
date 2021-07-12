@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height:_large? _height/4 : (_medium? _height/3.75 : _height/3.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.red[200], Colors.redAccent],
+                  colors: [Colors.red[400], Colors.redAccent],
                 ),
               ),
             ),
@@ -93,7 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: _large? _height/4.5 : (_medium? _height/4.25 : _height/4),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[200], Colors.blueAccent],
+                  colors: [Colors.red[400], Colors.redAccent],
                 ),
               ),
             ),
@@ -101,12 +101,8 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(top: _large? _height/30 : (_medium? _height/25 : _height/20)),
-          child: Image.asset(
-            'assets/images/login.png',
-            height: _height/5,
-            width: _width/5,
-          ),
+          margin: EdgeInsets.only(top: _large? _height/15 : (_medium? _height/12.5 : _height/10)),
+          child: Text("Your Logo Here!", style: TextStyle(fontSize: 25, color: Colors.blueAccent),)
         ),
       ],
     );
