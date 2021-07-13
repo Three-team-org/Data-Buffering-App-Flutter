@@ -102,7 +102,7 @@ class _SignInScreenState extends State<SignInScreen> {
         Container(
           alignment: Alignment.bottomCenter,
           margin: EdgeInsets.only(top: _large? _height/15 : (_medium? _height/12.5 : _height/10)),
-          child: Text("Your Logo Here!", style: TextStyle(fontSize: 25, color: Colors.blueAccent),)
+          child: Text("Your Logo Goes Here!", style: TextStyle(fontSize: 25, color: Colors.yellow),)
         ),
       ],
     );

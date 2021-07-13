@@ -24,7 +24,7 @@ class _NewPageState extends State<NewPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("New PAGE",style: TextStyle(color: Colors.blueAccent, fontSize: 25),),
+        title: Text("New PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.blue,
         elevation: 0,
       ),

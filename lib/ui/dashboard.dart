@@ -7,6 +7,7 @@ import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
 import 'package:data_buffer/ui/sub_hospital.dart';
 import 'package:data_buffer/ui/sub_calendar.dart';
+import 'package:data_buffer/ui/widgets/network_image.dart';
 
 class DashboardScreen extends StatefulWidget{
   @override
@@ -16,151 +17,10 @@ class DashboardScreen extends StatefulWidget{
 class _DashboardScreenState extends State<DashboardScreen>{
   final TextStyle whiteText = TextStyle(color: Colors.white);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const SizedBox(height: 40.0),
-          _buildHeader(),
-          const SizedBox(height: 20.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              "DASHBOARD",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: _buildTile(
-                    color: Colors.pink,
-                    icon: FontAwesomeIcons.database,
-                    title: "DATA",
-                    data: "1200",
-                    screen_num: 1,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                Expanded(
-                  child: _buildTile(
-                    color: Colors.green,
-                    icon: FontAwesomeIcons.receipt,
-                    title: "RECIPES",
-                    data: "857",
-                    screen_num: 2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: _buildTile(
-                    color: Colors.blue,
-                    icon: FontAwesomeIcons.speakerDeck,
-                    title: "ADVICES",
-                    data: "864",
-                    screen_num: 3,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                Expanded(
-                  child: _buildTile(
-                    color: Colors.pink,
-                    icon: FontAwesomeIcons.hospital,
-                    title: "HOSPITAL",
-                    data: "857",
-                    screen_num: 4,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                Expanded(
-                  child: _buildTile(
-                    color: Colors.blue,
-                    icon: FontAwesomeIcons.calendarWeek,
-                    title: "CALENDAR",
-                    data: "698",
-                    screen_num: 5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20.0),
-        ],
-      ) ,
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => NewPage()));
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          FontAwesomeIcons.userPlus,
-        ),
-      ),
-    );
-
-  }
-  Container _buildHeader() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.fromLTRB(0, 50.0, 0, 32.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-        ),
-        color: Colors.blue,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-
-          const SizedBox(height: 10.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              "Dr. John Doe",
-              style: whiteText.copyWith(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 5.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-              "Md, (General Medium), DM(Cardiology)",
-              style: whiteText.copyWith(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  GestureDetector _buildTile(
-      {Color color, IconData icon, String title, String data, int screen_num}) {
+  Widget cards(image, title, price, page_num) {
     return GestureDetector(
-        onTap: (){
-          switch(screen_num){
+      onTap: (){
+          switch(page_num){
             case 1:
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => DataPage()));
@@ -181,38 +41,135 @@ class _DashboardScreenState extends State<DashboardScreen>{
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => CalendarPage()));
               break;
+            case 6:
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => NewPage()));
+              break;
           }
-
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          height: 150.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4.0),
-            color: color,
-          ),
+      },
+      child:Container(
+        height: 200,
+        width: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 6.0,
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
-                icon,
-                color: Colors.white,
+              PNetworkImage(
+                image,
+                height: 80,
               ),
-              Text(
-                title,
-                style: whiteText.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+              SizedBox(
+                height: 10,
               ),
-              Text(
-                data,
-                style:
-                whiteText.copyWith(fontWeight: FontWeight.bold, fontSize: 10.0),
-              ),
+              Text(title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             ],
           ),
         ),
+      ) ,
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        // bottomNavigationBar: BottomNavigationBar(
+        //   currentIndex: 1,
+        //   items: [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.calendar_today),
+        //       title: Text("Today's Special"),
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(
+        //           Icons.fastfood,
+        //           color: Colors.deepOrange,
+        //         ),
+        //         title: Text(
+        //           "Foods",
+        //           style: TextStyle(color: Colors.deepOrange),
+        //         )),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.settings), title: Text("Settings")),
+        //   ],
+        // ),
+        backgroundColor: Colors.white70.withOpacity(0.9),
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: 250,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30)),
+                  color: Colors.blueAccent.shade700,
+                ),
+                width: double.infinity,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 90, bottom: 20),
+                width: 200,
+                height: 180,
+                decoration: BoxDecoration(
+                    color: Colors.orangeAccent.shade200,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(160),
+                        bottomLeft: Radius.circular(290),
+                        bottomRight: Radius.circular(160),
+                        topRight: Radius.circular(10))),
+              ),
+              CustomScrollView(
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("MY DASHBOARD",
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white)),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(20.0),
+                    sliver: SliverGrid.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      children: <Widget>[
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdxrQu01qxumDHoBO_zODO670lIX05Kajlaw&usqp=CAU", 'DATA', '30', 1),
+                        cards("https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?ixid=MnwxMjA"
+                            "3fDB8MHxzZWFyY2h8MXx8cmVjaXBlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80", 'RECIPES', '37', 2),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPdyinzKIVsQbbZclbNtG098Iu0f700mmTQA&usqp=CAU", 'ADVICES', '22', 3),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1_hYpvoB_9-nKpbHbazxs3hmiawAlbvLgJg&usqp=CAU", 'HOSPITAL', '90', 4),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGS1LgXBdnQ-ZoTuJ8PZby_J5iAsnjnXlm7Q&usqp=CAU", 'CALENDAR', '22', 5),
+                        cards("https://cdn0.iconfinder.com/data/icons/interface-10/128/_add_image-512.png", 'NEW', '90', 6),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 
 }
