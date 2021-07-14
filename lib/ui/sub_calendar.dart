@@ -8,7 +8,8 @@ import 'dart:io';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:data_buffer/ui/widgets/primary_button.dart';
-
+import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:data_buffer/ui/widgets/custom_color_picker.dart';
 class CalendarPage extends StatefulWidget{
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -17,13 +18,15 @@ class CalendarPage extends StatefulWidget{
 
 class _CalendarPageState extends State<CalendarPage>{
 
-  final String address = "Some text";
-  final String phone="Some text";
-  final double total = 500;
-  final double delivery = 100;
   String group_water = "group_water";
   String group_vit = "group_vit";
   String group_hygine = "group_hygine";
+  String _picked_water = "WATER TWO";
+  String _picked_vit = "Vit. ONE";
+  String _picked_hygine = "Morning";
+  Color _color = Colors.blue;
+
+  List<String> _checked_color;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,57 +79,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   color: Colors.grey.shade200,
                   padding: EdgeInsets.all(8.0),
                   width: double.infinity,
-                  child: Text("WATER".toUpperCase())
-              ),
-              Column(
-                children: <Widget>[
-                  RadioListTile(
-                    value: group_water,
-                    groupValue: "group_water",
-                    title: Text(address),
-                    onChanged: (value){
-
-                    },
-                  ),
-                  RadioListTile(
-
-                    value: group_water,
-                    groupValue: "group_water",
-                    title: Text("Some text..."),
-                    onChanged: (value){
-                      setState(() {
-                          group_water = value.toString();
-                      });
-                    },
-                  ),
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("VIT. D".toUpperCase())
-                  ),
-                  RadioListTile(
-
-                    value: "group_vit",
-                    groupValue: "group_vit",
-                    title: Text(phone),
-                    onChanged: (value){},
-                  ),
-                  RadioListTile(
-
-                    value: 0,
-                    groupValue: "group_vit",
-                    title: Text("Some text..."),
-                    onChanged: (value){},
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("REACTION".toUpperCase())
+                  child: Text("New Groceries".toUpperCase())
               ),
               TextFormField(
 
@@ -136,20 +89,97 @@ class _CalendarPageState extends State<CalendarPage>{
                   color: Colors.grey.shade200,
                   padding: EdgeInsets.all(8.0),
                   width: double.infinity,
-                  child: Text("HYGINE".toUpperCase())
+                  child: Text("WATER".toUpperCase())
               ),
-              RadioListTile(
-                groupValue: "group_hygine",
-                value: "group_hygine",
-                title: Text("MORNING"),
-                onChanged: (value){},
+              Column(
+                children: <Widget>[
+                  RadioButtonGroup(
+                  orientation: GroupedButtonsOrientation.VERTICAL,
+                    margin: const EdgeInsets.only(left: 12.0),
+                    onSelected: (String selected) => setState((){
+                      print(selected);
+                      _picked_water = selected;
+                    }),
+                    labels: <String>[
+                      "WATER ONE",
+                      "WATER TWO",
+                    ],
+                    picked: _picked_water,
 
+                  ),
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("VIT. D".toUpperCase())
+                  ),
+                  RadioButtonGroup(
+                    orientation: GroupedButtonsOrientation.VERTICAL,
+                    margin: const EdgeInsets.only(left: 12.0),
+                    onSelected: (String selected) => setState((){
+                      print(selected);
+                      _picked_vit = selected;
+                    }),
+                    labels: <String>[
+                      "Vit. ONE",
+                      "Vit. TWO",
+                    ],
+                    picked: _picked_vit,
+                  ),
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Color".toUpperCase())
+                  ),
+                  MyColorPicker(
+                      onSelectColor: (value) {
+                        setState(() {
+                          _color = value;
+                        });
+                      },
+                      availableColors: [
+                        Colors.blue,
+                        Colors.lightBlue,
+                        Colors.orange,
+                        Colors.red,
+                        Colors.purple,
+                        Colors.grey,
+                        Colors.teal
+                      ],
+                      initialColor: _color)
+                ],
               ),
-              RadioListTile(
-                groupValue: "group_hygine",
-                value: true,
-                title: Text("EVENING"),
-                onChanged: (value){},
+              SizedBox(height: 20.0,),
+              Container(
+                  color: Colors.grey.shade200,
+                  padding: EdgeInsets.all(8.0),
+                  width: double.infinity,
+                  child: Text("Reaction".toUpperCase())
+              ),
+              TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+                // controller: myController,
+              ),
+              Container(
+                  color: Colors.grey.shade200,
+                  padding: EdgeInsets.all(8.0),
+                  width: double.infinity,
+                  child: Text("Hygine".toUpperCase())
+              ),
+              RadioButtonGroup(
+                orientation: GroupedButtonsOrientation.VERTICAL,
+                margin: const EdgeInsets.only(left: 12.0),
+                onSelected: (String selected) => setState((){
+                  print(selected);
+                  _picked_hygine = selected;
+                }),
+                labels: <String>[
+                  "Morning",
+                  "Evening",
+                ],
+                picked: _picked_hygine,
               ),
               Container(
                 width: double.infinity,
