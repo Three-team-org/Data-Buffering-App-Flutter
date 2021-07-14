@@ -13,6 +13,8 @@ import 'package:data_buffer/ui/widgets/custom_color_picker.dart';
 import 'package:data_buffer/database/model/form.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+
 class CalendarPage extends StatefulWidget{
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -23,11 +25,12 @@ class _CalendarPageState extends State<CalendarPage>{
 
   Form_draft form;
 
-  String _picked_water = "WATER TWO";
+  String _picked_water = "WATER ONE";
   String _picked_vit = "Vit. ONE";
   String _picked_hygine = "Morning";
   Color _color = Colors.blue;
-  String _selected_day_str;
+  String _hex_color = '0x${Colors.blue.value.toRadixString(16)}';
+  String _selected_day_str = DateFormat("yyyy-MM-dd").format(DateTime.now());
   DateTime _selectedDay;
   DateTime _focusedDay = DateTime.now();
   TextEditingController _groceries_controller = TextEditingController();
@@ -35,20 +38,59 @@ class _CalendarPageState extends State<CalendarPage>{
 
   Future addRecord() async {
     var db = new DatabaseHelper();
-    var Form = new Form_draft(_groceries_controller.text, _picked_water,_picked_vit, _color.toString(),
+    var Form = new Form_draft(_groceries_controller.text, _picked_water,_picked_vit, _hex_color,
         _reaction_controller.text, _picked_hygine, _selected_day_str,
         );
     await db.saveUser(Form);
+    setState(() {
+      _groceries_controller = TextEditingController(text: '');
+      _picked_water = "WATER ONE";
+      _picked_vit = "Vit. ONE";
+
+      Color otherColor = Colors.blue;
+      _color = otherColor;
+      _reaction_controller = TextEditingController(text: '');
+      _picked_hygine = "Morning";
+    });
 
   }
   getRecord(String date) async {
     var db = new DatabaseHelper();
     var maps = await db.getDraft(date);
 
-    print(maps[0]['grocery_name'] );
-    setState(() {
+    if(maps.length !=0) {
+      String grocery_name_str = maps[0]['grocery_name'];
+      String water_type_str = maps[0]['water_type'];
+      String vit_type_str = maps[0]['vit_type'];
+      String color_str = maps[0]['color'];
+      String reaction_str = maps[0]['reaction'];
+      String hygiene_str = maps[0]['hygiene'];
+      String colorString = color_str.toString(); // Color(0x12345678)
+      print(colorString);
+      String valueString = colorString.split('0x')[1]; // kind of hacky..
+      print(valueString);
+      int value = int.parse(valueString, radix: 16);
+      setState(() {
+        _groceries_controller = TextEditingController(text: grocery_name_str);
+        _picked_water = water_type_str;
+        _picked_vit = vit_type_str;
 
-    });
+        Color otherColor = new Color(value);
+        _color = otherColor;
+        _reaction_controller = TextEditingController(text: reaction_str);
+        _picked_hygine = hygiene_str;
+      });
+    }
+    else{
+      _groceries_controller = TextEditingController(text: '');
+      _picked_water = "WATER ONE";
+      _picked_vit = "Vit. ONE";
+
+      Color otherColor = Colors.blue;
+      _color = otherColor;
+      _reaction_controller = TextEditingController(text: '');
+      _picked_hygine = "Morning";
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -101,7 +143,7 @@ class _CalendarPageState extends State<CalendarPage>{
 
                       _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
                       getRecord(_selected_day_str);
-                      print(_selected_day_str);
+
                       _focusedDay = focusedDay;
 
                     });
@@ -138,7 +180,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   orientation: GroupedButtonsOrientation.VERTICAL,
                     margin: const EdgeInsets.only(left: 12.0),
                     onSelected: (String selected) => setState((){
-                      print(selected);
+
                       _picked_water = selected;
                     }),
                     labels: <String>[
@@ -158,7 +200,7 @@ class _CalendarPageState extends State<CalendarPage>{
                     orientation: GroupedButtonsOrientation.VERTICAL,
                     margin: const EdgeInsets.only(left: 12.0),
                     onSelected: (String selected) => setState((){
-                      print(selected);
+
                       _picked_vit = selected;
                     }),
                     labels: <String>[
@@ -173,22 +215,36 @@ class _CalendarPageState extends State<CalendarPage>{
                       width: double.infinity,
                       child: Text("Color".toUpperCase())
                   ),
-                  MyColorPicker(
-                      onSelectColor: (value) {
-                        setState(() {
-                          _color = value;
-                        });
-                      },
-                      availableColors: [
-                        Colors.blue,
-                        Colors.lightBlue,
-                        Colors.orange,
-                        Colors.red,
-                        Colors.purple,
-                        Colors.grey,
-                        Colors.teal
-                      ],
-                      initialColor: _color)
+                  SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Card(
+                        elevation: 2,
+                        child: ColorPicker(
+                          // Use the screenPickerColor as start color.
+                          color: _color,
+                          // Update the screenPickerColor using the callback.
+                          onColorChanged: (Color color) =>
+                              setState((){
+                                _color = color;
+                                _hex_color = '0x${_color.value.toRadixString(16)}';
+                              }),
+                          width: 44,
+                          height: 44,
+                          borderRadius: 22,
+                          heading: Text(
+                            'Select color',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          subheading: Text(
+                            'Select color shade',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 20.0,),
@@ -213,7 +269,7 @@ class _CalendarPageState extends State<CalendarPage>{
                 orientation: GroupedButtonsOrientation.VERTICAL,
                 margin: const EdgeInsets.only(left: 12.0),
                 onSelected: (String selected) => setState((){
-                  print(selected);
+
                   _picked_hygine = selected;
                 }),
                 labels: <String>[
@@ -225,7 +281,7 @@ class _CalendarPageState extends State<CalendarPage>{
               Container(
                 width: double.infinity,
                 child: RaisedButton(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.red,
                   onPressed: (){
                     addRecord();
                   },
