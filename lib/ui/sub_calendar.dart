@@ -10,6 +10,9 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:data_buffer/ui/widgets/primary_button.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:data_buffer/ui/widgets/custom_color_picker.dart';
+import 'package:data_buffer/database/model/form.dart';
+import 'package:data_buffer/database/database_helper.dart';
+import 'package:table_calendar/table_calendar.dart';
 class CalendarPage extends StatefulWidget{
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -18,15 +21,35 @@ class CalendarPage extends StatefulWidget{
 
 class _CalendarPageState extends State<CalendarPage>{
 
-  String group_water = "group_water";
-  String group_vit = "group_vit";
-  String group_hygine = "group_hygine";
+  Form_draft form;
+
   String _picked_water = "WATER TWO";
   String _picked_vit = "Vit. ONE";
   String _picked_hygine = "Morning";
   Color _color = Colors.blue;
+  String _selected_day_str;
+  DateTime _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+  TextEditingController _groceries_controller = TextEditingController();
+  TextEditingController _reaction_controller = TextEditingController();
 
-  List<String> _checked_color;
+  Future addRecord() async {
+    var db = new DatabaseHelper();
+    var Form = new Form_draft(_groceries_controller.text, _picked_water,_picked_vit, _color.toString(),
+        _reaction_controller.text, _picked_hygine, _selected_day_str,
+        );
+    await db.saveUser(Form);
+
+  }
+  getRecord(String date) async {
+    var db = new DatabaseHelper();
+    var maps = await db.getDraft(date);
+
+    print(maps[0]['grocery_name'] );
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,16 +78,34 @@ class _CalendarPageState extends State<CalendarPage>{
           child: Column(
             children: [
               Container(
-                height: 300.0,
+                height: 350.0,
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: SfDateRangePicker(
-                  selectionMode: DateRangePickerSelectionMode.single,
-                  headerStyle: DateRangePickerHeaderStyle(
-                    textAlign: TextAlign.center,
-                  ),
+                child: TableCalendar(
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) {
+                    // Use `selectedDayPredicate` to determine which day is currently selected.
+                    // If this returns true, then `day` will be marked as selected.
+
+                    // Using `isSameDay` is recommended to disregard
+                    // the time-part of compared DateTime objects.
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+
+                      _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
+                      getRecord(_selected_day_str);
+                      print(_selected_day_str);
+                      _focusedDay = focusedDay;
+
+                    });
+                  },
                 ),
               ),
               Row(
@@ -82,7 +123,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   child: Text("New Groceries".toUpperCase())
               ),
               TextFormField(
-
+                controller: _groceries_controller,
                 style: TextStyle(fontSize: 18.0),
               ),
               Container(
@@ -160,7 +201,7 @@ class _CalendarPageState extends State<CalendarPage>{
               TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: 3,
-                // controller: myController,
+                controller: _reaction_controller,
               ),
               Container(
                   color: Colors.grey.shade200,
@@ -185,7 +226,9 @@ class _CalendarPageState extends State<CalendarPage>{
                 width: double.infinity,
                 child: RaisedButton(
                   color: Theme.of(context).primaryColor,
-                  onPressed: ()=> {},
+                  onPressed: (){
+                    addRecord();
+                  },
                   child: Text("Confirm", style: TextStyle(
                       color: Colors.white
                   ),),
