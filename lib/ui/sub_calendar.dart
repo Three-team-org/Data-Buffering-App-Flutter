@@ -14,6 +14,8 @@ import 'package:data_buffer/database/model/form.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:data_buffer/ui/widgets/textformfield.dart';
+import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 
 class CalendarPage extends StatefulWidget{
   @override
@@ -35,6 +37,15 @@ class _CalendarPageState extends State<CalendarPage>{
   DateTime _focusedDay = DateTime.now();
   TextEditingController _groceries_controller = TextEditingController();
   TextEditingController _reaction_controller = TextEditingController();
+  String hint;
+  TextEditingController textEditingController;
+  TextInputType keyboardType;
+  bool obscureText;
+  IconData icon;
+  double _width;
+  double _pixelRatio;
+  bool large;
+  bool medium;
 
   Future addRecord() async {
     var db = new DatabaseHelper();
@@ -94,6 +105,10 @@ class _CalendarPageState extends State<CalendarPage>{
   }
   @override
   Widget build(BuildContext context) {
+    _width = MediaQuery.of(context).size.width;
+    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    medium=  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -164,10 +179,13 @@ class _CalendarPageState extends State<CalendarPage>{
                   width: double.infinity,
                   child: Text("New Groceries".toUpperCase())
               ),
-              TextFormField(
-                controller: _groceries_controller,
-                style: TextStyle(fontSize: 18.0),
+              CustomTextField(
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Groceries name",
+                textEditingController: _groceries_controller,
               ),
+
               Container(
                   color: Colors.grey.shade200,
                   padding: EdgeInsets.all(8.0),
@@ -177,6 +195,7 @@ class _CalendarPageState extends State<CalendarPage>{
               Column(
                 children: <Widget>[
                   RadioButtonGroup(
+                    activeColor: _color,
                   orientation: GroupedButtonsOrientation.VERTICAL,
                     margin: const EdgeInsets.only(left: 12.0),
                     onSelected: (String selected) => setState((){
@@ -197,6 +216,7 @@ class _CalendarPageState extends State<CalendarPage>{
                       child: Text("VIT. D".toUpperCase())
                   ),
                   RadioButtonGroup(
+                    activeColor: _color,
                     orientation: GroupedButtonsOrientation.VERTICAL,
                     margin: const EdgeInsets.only(left: 12.0),
                     onSelected: (String selected) => setState((){
@@ -254,11 +274,24 @@ class _CalendarPageState extends State<CalendarPage>{
                   width: double.infinity,
                   child: Text("Reaction".toUpperCase())
               ),
-              TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: 3,
-                controller: _reaction_controller,
+              Material(
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: large? 12 : (medium? 10 : 8),
+                child: TextFormField(
+                  controller: _reaction_controller,
+                  keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.orange[200],
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
+                    hintText: hint,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none),
+                  ),
+                ),
               ),
+
               Container(
                   color: Colors.grey.shade200,
                   padding: EdgeInsets.all(8.0),
@@ -266,6 +299,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   child: Text("Hygine".toUpperCase())
               ),
               RadioButtonGroup(
+                activeColor: _color,
                 orientation: GroupedButtonsOrientation.VERTICAL,
                 margin: const EdgeInsets.only(left: 12.0),
                 onSelected: (String selected) => setState((){

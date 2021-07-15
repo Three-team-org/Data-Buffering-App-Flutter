@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:data_buffer/ui/widgets/textformfield.dart';
+
 class DataPage extends StatefulWidget{
   @override
   _DataPageState createState() => _DataPageState();
@@ -24,10 +26,17 @@ class _DataPageState extends State<DataPage>{
   Item selectedGender;
   File _image;
   List<Item> Gender = <Item>[
-    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
-    const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF167F67),)),
+    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF4500),)),
+    const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF4500),)),
   ];
-
+  TextEditingController textEditingController;
+  TextInputType keyboardType;
+  bool obscureText;
+  IconData icon;
+  double _width;
+  double _pixelRatio;
+  bool large;
+  bool medium;
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -152,9 +161,10 @@ class _DataPageState extends State<DataPage>{
               "FULL NAME",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: TextFormField(
-
-              style: TextStyle(fontSize: 18.0),
+            subtitle: CustomTextField(
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Your Full Name",
             ),
           ),
           Divider(),
@@ -166,7 +176,24 @@ class _DataPageState extends State<DataPage>{
             subtitle: Container(
               width: 150,
               padding: EdgeInsets.all(8.0),
-              child: TextField(
+              child: Material(
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: large? 12 : (medium? 10 : 8),
+                child: TextFormField(
+                  controller: _reaction_controller,
+                  keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.orange[200],
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
+                    hintText: hint,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none),
+                  ),
+                ),
+              ),
+              TextField(
                 focusNode: AlwaysDisabledFocusNode(),
                 controller: _dateController,
                 onTap: () {
@@ -213,9 +240,10 @@ class _DataPageState extends State<DataPage>{
               "WEIGHT",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: TextFormField(
-
-              style: TextStyle(fontSize: 18.0),
+            subtitle: CustomTextField(
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Your Weight",
             ),
           ),
           Divider(),
@@ -224,9 +252,10 @@ class _DataPageState extends State<DataPage>{
               "LENGTH",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: TextFormField(
-
-              style: TextStyle(fontSize: 18.0),
+            subtitle: CustomTextField(
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Your Length",
             ),
           ),
           ListTile(
@@ -234,9 +263,10 @@ class _DataPageState extends State<DataPage>{
               "TIME",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: TextFormField(
-
-              style: TextStyle(fontSize: 18.0),
+            subtitle: CustomTextField(
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Time",
             ),
           ),
           Padding(

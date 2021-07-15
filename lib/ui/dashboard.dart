@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
               blurRadius: 6.0,
             ),
           ],
-          color: Colors.white,
+          color: Colors.grey[100],
         ),
         child: Center(
           child: Column(
@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                 height: 10,
               ),
               Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
             ],
           ),
         ),
@@ -155,13 +155,12 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdxrQu01qxumDHoBO_zODO670lIX05Kajlaw&usqp=CAU", 'DATA', '30', 1),
-                        cards("https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?ixid=MnwxMjA"
-                            "3fDB8MHxzZWFyY2h8MXx8cmVjaXBlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80", 'RECIPES', '37', 2),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPdyinzKIVsQbbZclbNtG098Iu0f700mmTQA&usqp=CAU", 'ADVICES', '22', 3),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1_hYpvoB_9-nKpbHbazxs3hmiawAlbvLgJg&usqp=CAU", 'HOSPITAL', '90', 4),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRczawYHR1wAMCUFzxyAFg0Klxpw8k0vOUAbQ&usqp=CAU", 'CALENDAR', '22', 5),
-                        cards("https://cdn0.iconfinder.com/data/icons/interface-10/128/_add_image-512.png", 'NEW', '90', 6),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdiWF8Y9ECX_MvZc80eM-zb8qXjMpJ5kiAfMQhoQzZeRjwUOgH6PeGKmqsv-wcbZUgjaw&usqp=CAU", 'DATA', '30', 1),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcResMNRWwEGnmKohXmIz1C8SMGYeBw0z97BO8M8tBqDM4QLUVBiKc1vBSC1ex52L2vg_RY&usqp=CAU", 'RECIPES', '37', 2),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MHT_T8A7dHCIh9C1gdi1PAq3d-tq0DpjeQ&usqp=CAU", 'ADVICES', '22', 3),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ33OZh9TB2x3HfPvRwlmRBPaHD8VXUefJhKA&usqp=CAU", 'HOSPITAL', '90', 4),
+                        cards("https://www.iconbunny.com/icons/media/catalog/product/cache/2/thumbnail/600x/1b89f2fc96fc819c2a7e15c7e545e8a9/6/3/638.7-calendar-icon-iconbunny.jpg", 'CALENDAR', '22', 5),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkw-6xtvGMAI7mhMS0ew-zPLedWxO-JhWqXw&usqp=CAU", 'NEW', '90', 6),
                       ],
                     ),
                   ),
