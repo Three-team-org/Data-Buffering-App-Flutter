@@ -96,7 +96,7 @@ class _CalendarPageState extends State<CalendarPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.red,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
@@ -110,7 +110,7 @@ class _CalendarPageState extends State<CalendarPage>{
         title: Text(
           "CALENDAR PAGE",
           style: TextStyle(
-            color: Color.fromRGBO(33, 45, 82, 1),
+            color: Colors.white,
           ),
         ),
       ),

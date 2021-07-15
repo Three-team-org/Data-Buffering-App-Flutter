@@ -113,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30)),
-                  color: Colors.blueAccent.shade700,
+                  color: Colors.orangeAccent.shade700,
                 ),
                 width: double.infinity,
               ),
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                             "3fDB8MHxzZWFyY2h8MXx8cmVjaXBlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80", 'RECIPES', '37', 2),
                         cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPdyinzKIVsQbbZclbNtG098Iu0f700mmTQA&usqp=CAU", 'ADVICES', '22', 3),
                         cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1_hYpvoB_9-nKpbHbazxs3hmiawAlbvLgJg&usqp=CAU", 'HOSPITAL', '90', 4),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGS1LgXBdnQ-ZoTuJ8PZby_J5iAsnjnXlm7Q&usqp=CAU", 'CALENDAR', '22', 5),
+                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRczawYHR1wAMCUFzxyAFg0Klxpw8k0vOUAbQ&usqp=CAU", 'CALENDAR', '22', 5),
                         cards("https://cdn0.iconfinder.com/data/icons/interface-10/128/_add_image-512.png", 'NEW', '90', 6),
                       ],
                     ),

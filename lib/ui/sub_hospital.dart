@@ -35,9 +35,9 @@ class _HospitalPageState extends State<HospitalPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.red,
         elevation: 0,
-        title: Text("Hospital Page", style: TextStyle(color: Colors.blueAccent, fontSize: 25),),
+        title: Text("Hospital Page", style: TextStyle(color: Colors.white, fontSize: 25),),
         automaticallyImplyLeading: false,
         actions: <Widget>[
 

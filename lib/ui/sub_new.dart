@@ -25,7 +25,7 @@ class _NewPageState extends State<NewPage>{
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
         title: Text("New PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red,
         elevation: 0,
       ),
       body: Center(

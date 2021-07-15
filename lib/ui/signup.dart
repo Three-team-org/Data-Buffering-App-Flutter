@@ -4,6 +4,8 @@ import 'package:data_buffer/ui/widgets/custom_shape.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 
 
@@ -19,7 +21,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  File _image;
 
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50
+    );
+
+    setState(() {
+      _image = image;
+
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await  ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50
+    );
+
+    setState(() {
+      _image = image;
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -99,13 +152,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
             shape: BoxShape.circle,
           ),
           child: GestureDetector(
-              onTap: (){
-                print('Adding photo');
-              },
-
-              child: Icon(Icons.add_a_photo, size: _large? 40: (_medium? 33: 31),color: Colors.orange[200],)),
-        ),
-
+            onTap: () {
+              _showPicker(context);
+            },
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.grey,
+              child: _image != null
+                  ? ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.file(
+                  _image,
+                  width: 100,
+                  height: 100,
+                  // fit: BoxFit.fitHeight,
+                ),
+              ) : CircleAvatar(
+                minRadius: 60,
+                backgroundColor: Colors.deepOrange.shade300,
+                child: Icon(Icons.add_a_photo, size: _large? 40: (_medium? 33: 31),color: Colors.orange[200],)),
+              ),
+            ),
+          ),
       ],
     );
   }
