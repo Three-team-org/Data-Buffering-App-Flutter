@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -176,30 +175,31 @@ class _DataPageState extends State<DataPage>{
             subtitle: Container(
               width: 150,
               padding: EdgeInsets.all(8.0),
-              child: Material(
+              child:
+              Material(
                 borderRadius: BorderRadius.circular(30.0),
-                elevation: large? 12 : (medium? 10 : 8),
+                elevation: 12,
                 child: TextFormField(
-                  controller: _reaction_controller,
+
+                  controller: _dateController,
                   keyboardType: TextInputType.multiline,
                   cursorColor: Colors.orange[200],
-                  maxLines: 3,
+                  maxLines: 1,
+                  focusNode: AlwaysDisabledFocusNode(),
+                  onTap: () {
+                    _selectDate(context);
+                  },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
-                    hintText: hint,
-                    border: OutlineInputBorder(
+                    prefixIcon: Icon(Icons.date_range, color: Colors.orange[200], size: 20),
+                    hintText: "Date...",
+                    border: new OutlineInputBorder(
+
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: BorderSide.none),
                   ),
                 ),
               ),
-              TextField(
-                focusNode: AlwaysDisabledFocusNode(),
-                controller: _dateController,
-                onTap: () {
-                  _selectDate(context);
-                },
-              ),
+
             ),
           ),
           Divider(),
@@ -208,31 +208,37 @@ class _DataPageState extends State<DataPage>{
               "GENDER",
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
-            subtitle: DropdownButton<Item>(
+            subtitle:
+            Material(
+              borderRadius: BorderRadius.circular(30.0),
+              elevation: 12,
+              child: DropdownButton<Item>(
 
-              hint:  Text("Select Gender"),
-              value: selectedGender,
-              onChanged: (Item Value) {
-                setState(() {
-                  selectedGender = Value;
-                });
-              },
-              items: Gender.map((Item user) {
-                return  DropdownMenuItem<Item>(
-                  value: user,
-                  child: Row(
-                    children: <Widget>[
-                      user.icon,
-                      SizedBox(width: 10,),
-                      Text(
-                        user.name,
-                        style:  TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                hint:  Text("              Select Gender"),
+                value: selectedGender,
+                onChanged: (Item Value) {
+                  setState(() {
+                    selectedGender = Value;
+                  });
+                },
+                items: Gender.map((Item user) {
+                  return  DropdownMenuItem<Item>(
+                    value: user,
+                    child: Row(
+                      children: <Widget>[
+                        user.icon,
+                        SizedBox(width: 10,),
+                        Text(
+                          user.name,
+                          style:  TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
+
           ),
           Divider(),
           ListTile(
@@ -288,15 +294,6 @@ class _DataPageState extends State<DataPage>{
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          FontAwesomeIcons.userPlus,
-          size: 20,
-        ),
       ),
     );
   }

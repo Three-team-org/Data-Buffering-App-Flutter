@@ -41,15 +41,6 @@ class _AdvicesPageState extends State<AdvicesPage>{
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          FontAwesomeIcons.userPlus,
-          size: 20,
-        ),
-      ),
     );
   }
 }

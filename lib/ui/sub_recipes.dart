@@ -41,15 +41,6 @@ class _RecipesPageState extends State<RecipesPage>{
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          FontAwesomeIcons.userPlus,
-          size: 20,
-        ),
-      ),
     );
   }
 }

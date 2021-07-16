@@ -41,15 +41,6 @@ class _NewPageState extends State<NewPage>{
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          FontAwesomeIcons.userPlus,
-          size: 20,
-        ),
-      ),
     );
   }
 }
