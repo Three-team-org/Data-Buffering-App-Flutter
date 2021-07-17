@@ -27,13 +27,14 @@ class Item {
 class _DataPageState extends State<DataPage>{
   User_data user_data;
 
+  bool avatar_exists = false;
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
-  Item selectedGender;
+  Item selectedGender ;
   File _image;
   List<Item> Gender = <Item>[
-    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF4500),)),
-    const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF4500),)),
+    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
+    const Item('Female',Icon(FontAwesomeIcons.female,color:  Colors.blue,)),
   ];
   TextEditingController textEditingController;
   TextEditingController _full_name_controller = TextEditingController();
@@ -55,6 +56,38 @@ class _DataPageState extends State<DataPage>{
       _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,
     );
     await db.saveUserData(user_data);
+  }
+  getRecord() async {
+    var db = new DatabaseHelper();
+    var maps = await db.getUserInfo();
+
+    if(maps.length !=0) {
+      String full_name_str = maps[0]['full_name'];
+      String birthday_str = maps[0]['birthday'];
+      String weight_str = maps[0]['weight'];
+      String length_str = maps[0]['length'];
+      String time_str = maps[0]['time'];
+      String avatar_str = maps[0]['avatar_path'];
+      final Directory directory = await getApplicationDocumentsDirectory();
+      if (await File('${directory.path}/avatar.png').exists()) {
+        _image = File('${directory.path}/avatar.png');
+      }
+      setState(() {
+        avatar_exists = true;
+
+
+        _full_name_controller = TextEditingController(text: full_name_str);
+        _dateController = TextEditingController(text: birthday_str);
+        _weight_controller = TextEditingController(text: weight_str);
+        _length_controller = TextEditingController(text: length_str);
+        _time_controller = TextEditingController(text: time_str);
+      });
+    }
+  }
+  saveImages() async{
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final File Image_face = await _image.copy('${directory.path}/avatar.png');
+
   }
   void _showPicker(context) {
     showModalBottomSheet(
@@ -234,7 +267,7 @@ class _DataPageState extends State<DataPage>{
               borderRadius: BorderRadius.circular(30.0),
               elevation: 12,
               child: DropdownButton<Item>(
-
+                
                 hint:  Text("              Select Gender"),
                 value: selectedGender,
                 onChanged: (Item Value) {
@@ -316,6 +349,7 @@ class _DataPageState extends State<DataPage>{
               ),
               onPressed: () {
                 addRecord();
+                saveImages();
                 Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
               },
             ),
@@ -359,7 +393,9 @@ class _DataPageState extends State<DataPage>{
   void initState(){
     super.initState();
     initAvatarPath();
+    getRecord();
   }
+
   void initAvatarPath() async{
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     setState(() {
