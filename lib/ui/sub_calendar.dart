@@ -16,7 +16,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
-
+import 'package:toast/toast.dart';
 class CalendarPage extends StatefulWidget{
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -46,22 +46,26 @@ class _CalendarPageState extends State<CalendarPage>{
   double _pixelRatio;
   bool large;
   bool medium;
-
+  List<String> _checked_water = [];
+  List<String> _checked_vit = [];
+  List<String> _checked_hygin = [];
   Future addRecord() async {
     var db = new DatabaseHelper();
-    var Form = new Form_draft(_groceries_controller.text, _picked_water,_picked_vit, _hex_color,
-        _reaction_controller.text, _picked_hygine, _selected_day_str,
+    String _checked_water_str = _checked_water.join(',');
+    String _checked_vit_str = _checked_vit.join(',');
+    String _checked_hygin_str = _checked_hygin.join(',');
+    var Form = new Form_draft(_groceries_controller.text, _checked_water_str,_checked_vit_str, _hex_color,
+        _reaction_controller.text, _checked_hygin_str, _selected_day_str,
         );
     await db.saveUser(Form);
     setState(() {
       _groceries_controller = TextEditingController(text: '');
-      _picked_water = "WATER ONE";
-      _picked_vit = "Vit. ONE";
-
+      _checked_water = [];
+      _checked_vit = [];
       Color otherColor = Colors.blue;
       _color = otherColor;
       _reaction_controller = TextEditingController(text: '');
-      _picked_hygine = "Morning";
+      _checked_hygin = [];
     });
 
   }
@@ -83,24 +87,23 @@ class _CalendarPageState extends State<CalendarPage>{
       int value = int.parse(valueString, radix: 16);
       setState(() {
         _groceries_controller = TextEditingController(text: grocery_name_str);
-        _picked_water = water_type_str;
-        _picked_vit = vit_type_str;
+        _checked_water = water_type_str.split(',');
+        _checked_vit = vit_type_str.split(',');
 
         Color otherColor = new Color(value);
         _color = otherColor;
         _reaction_controller = TextEditingController(text: reaction_str);
-        _picked_hygine = hygiene_str;
+        _checked_hygin = hygiene_str.split(',');
       });
     }
     else{
       _groceries_controller = TextEditingController(text: '');
-      _picked_water = "WATER ONE";
-      _picked_vit = "Vit. ONE";
-
+      _checked_water = [];
+      _checked_vit = [];
       Color otherColor = Colors.blue;
       _color = otherColor;
       _reaction_controller = TextEditingController(text: '');
-      _picked_hygine = "Morning";
+      _checked_hygin = [];
     }
   }
   @override
@@ -194,41 +197,41 @@ class _CalendarPageState extends State<CalendarPage>{
               ),
               Column(
                 children: <Widget>[
-                  RadioButtonGroup(
-                    activeColor: _color,
-                  orientation: GroupedButtonsOrientation.VERTICAL,
-                    margin: const EdgeInsets.only(left: 12.0),
-                    onSelected: (String selected) => setState((){
+              CheckboxGroup(
+              orientation: GroupedButtonsOrientation.VERTICAL,
+                activeColor: _color,
+                margin: const EdgeInsets.only(left: 12.0),
+                onSelected: (List selected) => setState((){
+                  _checked_water = selected;
+                  print(_checked_water);
+                }),
+                labels: <String>[
+                  "WATER ONE",
+                  "WATER TWO",
+                ],
+                checked: _checked_water,
+              ),
 
-                      _picked_water = selected;
-                    }),
-                    labels: <String>[
-                      "WATER ONE",
-                      "WATER TWO",
-                    ],
-                    picked: _picked_water,
-
-                  ),
                   Container(
                       color: Colors.grey.shade200,
                       padding: EdgeInsets.all(8.0),
                       width: double.infinity,
                       child: Text("VIT. D".toUpperCase())
                   ),
-                  RadioButtonGroup(
-                    activeColor: _color,
+                  CheckboxGroup(
                     orientation: GroupedButtonsOrientation.VERTICAL,
+                    activeColor: _color,
                     margin: const EdgeInsets.only(left: 12.0),
-                    onSelected: (String selected) => setState((){
-
-                      _picked_vit = selected;
+                    onSelected: (List selected) => setState((){
+                      _checked_vit = selected;
                     }),
                     labels: <String>[
                       "Vit. ONE",
                       "Vit. TWO",
                     ],
-                    picked: _picked_vit,
+                    checked: _checked_vit,
                   ),
+
                   Container(
                       color: Colors.grey.shade200,
                       padding: EdgeInsets.all(8.0),
@@ -298,26 +301,28 @@ class _CalendarPageState extends State<CalendarPage>{
                   width: double.infinity,
                   child: Text("Hygine".toUpperCase())
               ),
-              RadioButtonGroup(
-                activeColor: _color,
+              CheckboxGroup(
                 orientation: GroupedButtonsOrientation.VERTICAL,
+                activeColor: _color,
                 margin: const EdgeInsets.only(left: 12.0),
-                onSelected: (String selected) => setState((){
-
-                  _picked_hygine = selected;
+                onSelected: (List selected) => setState((){
+                  _checked_hygin = selected;
                 }),
                 labels: <String>[
                   "Morning",
                   "Evening",
                 ],
-                picked: _picked_hygine,
+                checked: _checked_hygin,
               ),
+
               Container(
                 width: double.infinity,
                 child: RaisedButton(
                   color: Colors.red,
                   onPressed: (){
                     addRecord();
+                    getRecord(_selected_day_str);
+                    Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                   },
                   child: Text("Confirm", style: TextStyle(
                       color: Colors.white
