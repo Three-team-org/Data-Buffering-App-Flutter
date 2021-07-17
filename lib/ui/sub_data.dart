@@ -5,7 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
-
+import 'package:data_buffer/database/model/user_data.dart';
+import 'package:data_buffer/database/database_helper.dart';
+import 'dart:async';
+import 'dart:io' as io;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:toast/toast.dart';
 class DataPage extends StatefulWidget{
   @override
   _DataPageState createState() => _DataPageState();
@@ -19,6 +25,7 @@ class Item {
 }
 
 class _DataPageState extends State<DataPage>{
+  User_data user_data;
 
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
@@ -29,6 +36,10 @@ class _DataPageState extends State<DataPage>{
     const Item('Female',Icon(FontAwesomeIcons.female,color:  const Color(0xFF4500),)),
   ];
   TextEditingController textEditingController;
+  TextEditingController _full_name_controller = TextEditingController();
+  TextEditingController _weight_controller = TextEditingController();
+  TextEditingController _length_controller = TextEditingController();
+  TextEditingController _time_controller = TextEditingController();
   TextInputType keyboardType;
   bool obscureText;
   IconData icon;
@@ -36,6 +47,15 @@ class _DataPageState extends State<DataPage>{
   double _pixelRatio;
   bool large;
   bool medium;
+  String avatar_path;
+  Future addRecord() async {
+    var db = new DatabaseHelper();
+    print(avatar_path);
+    var user_data = new User_data(_full_name_controller.text, _dateController.text,selectedGender.toString(),
+      _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,
+    );
+    await db.saveUserData(user_data);
+  }
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -161,6 +181,7 @@ class _DataPageState extends State<DataPage>{
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: CustomTextField(
+              textEditingController: _full_name_controller,
               keyboardType: TextInputType.text,
               icon: Icons.receipt,
               hint: "Your Full Name",
@@ -247,6 +268,7 @@ class _DataPageState extends State<DataPage>{
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: CustomTextField(
+              textEditingController: _weight_controller,
               keyboardType: TextInputType.text,
               icon: Icons.receipt,
               hint: "Your Weight",
@@ -259,6 +281,7 @@ class _DataPageState extends State<DataPage>{
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: CustomTextField(
+              textEditingController: _length_controller,
               keyboardType: TextInputType.text,
               icon: Icons.receipt,
               hint: "Your Length",
@@ -270,6 +293,7 @@ class _DataPageState extends State<DataPage>{
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: CustomTextField(
+              textEditingController: _time_controller,
               keyboardType: TextInputType.text,
               icon: Icons.receipt,
               hint: "Time",
@@ -290,7 +314,10 @@ class _DataPageState extends State<DataPage>{
                   fontSize: 18.0,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                addRecord();
+                Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+              },
             ),
           ),
         ],
@@ -326,6 +353,18 @@ class _DataPageState extends State<DataPage>{
             offset: _dateController.text.length,
             affinity: TextAffinity.upstream));
     }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    initAvatarPath();
+  }
+  void initAvatarPath() async{
+    io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    setState(() {
+      avatar_path = join(documentsDirectory.path, "avatar.png");
+    });
   }
 }
 class AlwaysDisabledFocusNode extends FocusNode {
