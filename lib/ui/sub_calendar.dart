@@ -9,7 +9,6 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:data_buffer/ui/widgets/primary_button.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
-import 'package:data_buffer/ui/widgets/custom_color_picker.dart';
 import 'package:data_buffer/database/model/form.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -277,30 +276,28 @@ class _CalendarPageState extends State<CalendarPage>{
                   width: double.infinity,
                   child: Text("Reaction".toUpperCase())
               ),
-              Material(
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: large? 12 : (medium? 10 : 8),
-                child: TextFormField(
-                  controller: _reaction_controller,
-                  keyboardType: TextInputType.multiline,
-                  cursorColor: Colors.orange[200],
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
-                    hintText: hint,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none),
+              Container(
+                width: _width/6,
+                child:
+                Material(
+                  borderRadius: BorderRadius.circular(30.0),
+                  elevation: large? 12 : (medium? 10 : 8),
+                  child: TextFormField(
+                    controller: _reaction_controller,
+                    keyboardType: TextInputType.multiline,
+                    cursorColor: Colors.orange[200],
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
+                      hintText: hint,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide.none),
+                    ),
                   ),
                 ),
               ),
 
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("Hygine".toUpperCase())
-              ),
               CheckboxGroup(
                 orientation: GroupedButtonsOrientation.VERTICAL,
                 activeColor: _color,
@@ -344,4 +341,3 @@ class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
-

@@ -5,7 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
+import 'package:table_calendar/table_calendar.dart';
+import 'package:data_buffer/ui/widgets/textformfield.dart';
+import 'package:data_buffer/ui/widgets/responsive_ui.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:toast/toast.dart';
 class HospitalPage extends StatefulWidget{
   @override
   _HospitalPageState createState() => _HospitalPageState();
@@ -19,12 +23,30 @@ class Item {
 }
 
 class _HospitalPageState extends State<HospitalPage>{
-
+  Color dialogPickerColor;
+  Color currentColor = Colors.limeAccent;
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
   TextEditingController timeinput = TextEditingController();
   //text editing controller for text field
-
+  DateTime _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+  String _selected_day_str = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  TextEditingController _doctor_controller = TextEditingController();
+  double _width;
+  double _pixelRatio;
+  bool large;
+  bool medium;
+  List<String> color_list =  List.filled(20, "${Colors.white.value.toRadixString(16)}");
+  Widget bigCircle = new Container(
+    width: 300.0,
+    height: 300.0,
+    decoration: new BoxDecoration(
+      color: Colors.orange,
+      shape: BoxShape.circle,
+    ),
+  );
+  void changeColor(Color color) => setState(() => currentColor = color);
   @override
   void initState() {
     timeinput.text = ""; //set the initial value of text field
@@ -33,6 +55,11 @@ class _HospitalPageState extends State<HospitalPage>{
 
   @override
   Widget build(BuildContext context) {
+    _width = MediaQuery.of(context).size.width;
+    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    medium=  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    Color _colors = new Color(20);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -54,273 +81,617 @@ class _HospitalPageState extends State<HospitalPage>{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildHeader(),
             Container(
-              margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(color: Colors.grey.shade200),
-              child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
-                      "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
-                      " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "
+              height: 350.0,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: TableCalendar(
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) {
+
+                  return isSameDay(_selectedDay, day);
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
+                    _focusedDay = focusedDay;
+
+                  });
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Doctor name".toUpperCase())
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    icon: Icons.receipt,
+                    hint: "Doctor name",
+                    textEditingController: _doctor_controller,
+                  ),
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Dentist name".toUpperCase())
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    icon: Icons.receipt,
+                    hint: "Dentist name",
+                    textEditingController: _doctor_controller,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 150,
+                        padding: EdgeInsets.all(8.0),
+                        child: TextField(
+                            // controller: ctrl_TipoDeSangre,
+                            autocorrect: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.orange, width: 2),
+                              ),
+                            ),
+                        ),
                       ),
-            ),
-            _buildTitle("ADVICES"),
-
-            Container(
-              margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(color: Colors.grey.shade200),
-              child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
-                      "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
-                      " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "
-              ),
-            ),
-            SizedBox(height: 30.0),
-            _buildTitle("REMARKS/ANNOTATIONS"),
-            _buildExperienceRow(
-                company: "REMARK 1",
-                position: "Description",
-                duration: "2010 - 2012"),
-            _buildExperienceRow(
-                company: "REMARK 2",
-                position: "Description",
-                duration: "2010 - 2012"),
-            _buildExperienceRow(
-                company: "REMARK 3",
-                position: "Description",
-                duration: "2010 - 2012"),
-
-            SizedBox(height: 20.0),
-
-          ],
-        ),
-      ),
-    );
-  }
-  Row _buildSocialsRow() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 20.0),
-        IconButton(
-          color: Colors.indigo,
-          icon: Icon(FontAwesomeIcons.facebookF),
-          onPressed: () {
-
-          },
-        ),
-        SizedBox(width: 5.0),
-        IconButton(
-          color: Colors.indigo,
-          icon: Icon(FontAwesomeIcons.github),
-          onPressed: () {
-
-          },
-        ),
-        SizedBox(width: 5.0),
-        IconButton(
-          color: Colors.red,
-          icon: Icon(FontAwesomeIcons.youtube),
-          onPressed: () {
-          },
-        ),
-        SizedBox(width: 10.0),
-      ],
-    );
-  }
-
-  ListTile _buildExperienceRow(
-      {String company, String position, String duration}) {
-    return ListTile(
-      leading: Padding(
-        padding: const EdgeInsets.only(top: 8.0, left: 20.0),
-        child: Icon(
-          FontAwesomeIcons.solidCircle,
-          size: 12.0,
-          color: Colors.black54,
-        ),
-      ),
-      title: Text(
-        company,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text("$position ($duration)"),
-    );
-  }
-
-  Row _buildSkillRow(String skill, double level) {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 16.0),
-        Expanded(
-            flex: 2,
-            child: Text(
-              skill.toUpperCase(),
-              textAlign: TextAlign.right,
-            )),
-        SizedBox(width: 10.0),
-        Expanded(
-          flex: 5,
-          child: LinearProgressIndicator(
-            value: level,
-          ),
-        ),
-        SizedBox(width: 16.0),
-      ],
-    );
-  }
-
-  Widget _buildTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title.toUpperCase(),
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          Divider(
-            color: Colors.black54,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Row _buildHeader() {
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 20.0),
-        Container(
-            width: 80.0,
-            height: 80.0,
-            child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.grey,
-                child: CircleAvatar(
-                    radius: 35.0, backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ4UHTr3Igbzm0b_2a0zH1DDxguhkeu7wDZA&usqp=CAU")))),
-        SizedBox(width: 20.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Doctor Name...",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.calendarDay,
-                  size: 12.0,
-                  color: Colors.black54,
-                ),
-                SizedBox(width: 10.0),
-                Text(
-                  "DATE: ",
-                  style: TextStyle(color: Colors.black54),
-                ),
-                Container(
-                  width: 150,
-                  padding: EdgeInsets.all(8.0),
-                  child: TextField(
-                    focusNode: AlwaysDisabledFocusNode(),
-                    controller: _dateController,
-                    onTap: () {
-                      _selectDate(context);
-                    },
+                      Text("KG", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.orange),)
+                    ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 5.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.timer,
-                  size: 12.0,
-                  color: Colors.black54,
-                ),
-                SizedBox(width: 10.0),
-                Text(
-                  "TIME: ",
-                  style: TextStyle(color: Colors.black54),
-                ),
-                Container(
-                  width: 150,
-
-                  child: TextField(
-                    controller: timeinput, //editing controller of this TextField
-                    decoration: InputDecoration(
-                        labelText: "Enter Time" //label text of field
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Advice".toUpperCase())
+                  ),
+                  Container(
+                    child:
+                    Material(
+                      borderRadius: BorderRadius.circular(30.0),
+                      elevation: large? 12 : (medium? 10 : 8),
+                      child: TextFormField(
+                        // controller: _reaction_controller,
+                        keyboardType: TextInputType.multiline,
+                        cursorColor: Colors.orange[200],
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
+                          hintText: "Advice...",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide.none),
+                        ),
+                      ),
                     ),
-                    readOnly: true,  //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      TimeOfDay pickedTime =  await showTimePicker(
-                        initialTime: TimeOfDay.now(),
-                        context: context,
-                      );
-
-                      if(pickedTime != null ){
-                        print(pickedTime.format(context));   //output 10:51 PM
-                        DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                        //converting to DateTime so that we can further format on different pattern.
-                        print(parsedTime); //output 1970-01-01 22:53:00.000
-                        String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
-                        print(formattedTime); //output 14:59:00
-                        //DateFormat() is from intl package, you can format the time on any pattern you need.
-
-                        setState(() {
-                          timeinput.text = formattedTime; //set the value of text field.
-                        });
-                      }else{
-                        print("Time is not selected");
-                      }
-                    },
                   ),
-                ),
-
-              ],
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Remarks".toUpperCase())
+                  ),
+                  Container(
+                    child:
+                    Material(
+                      borderRadius: BorderRadius.circular(30.0),
+                      elevation: large? 12 : (medium? 10 : 8),
+                      child: TextFormField(
+                        // controller: _reaction_controller,
+                        keyboardType: TextInputType.multiline,
+                        cursorColor: Colors.orange[200],
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
+                          hintText: "Remarks...",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide.none),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        )
-      ],
+          SizedBox(height: 20,),
+          Material(
+            color: Colors.grey[50],
+            child: new Center(
+              child: new Stack(
+                children: <Widget>[
+                  bigCircle,
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[0], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () async{
+                        final Color colorBeforeDialog = Colors.white;
+                        // Wait for the picker to close, if dialog was dismissed,
+                        // then restore the color we had before it was opened.
+                        if (!(await colorPickerDialog())) {
+                          setState(() {
+                            dialogPickerColor = colorBeforeDialog;
+                          });
+                        }
+                      },
+                    ),
+                    top: 0,
+                    left: 120.0,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[1], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 9,
+                    left: 155.3,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[2], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 25,
+                    left: 190.4,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[3], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 50,
+                    left: 215.9,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[4], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+
+                    top: 80,
+                    left: 233.1,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        primary: new Color(int.parse(color_list[5], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                        onPressed: () {},
+                    ),
+                    top: 120.0,
+                    left: 0.0,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[6], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 9,
+                    right: 155.3,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[7], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 25,
+                    right: 190.4,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[8], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 50,
+                    right: 215.9,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[9], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+
+                    top: 80,
+                    right: 233.1,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[10], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 120.0,
+                    right: 0.0,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[11], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 9,
+                    left: 155.3,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[12], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 25,
+                    left: 190.4,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[13], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 50,
+                    left: 215.9,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[14], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+
+                    bottom: 80,
+                    left: 233.1,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[15], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    top: 250.0,
+                    left: 120.0,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[16], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 9,
+                    right: 155.3,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[17], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 25,
+                    right: 190.4,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[18], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: 50,
+                    right: 215.9,
+                  ),
+                  new Positioned(
+                    child: new ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          primary: new Color(int.parse(color_list[19], radix: 16))
+                      ),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Container(),
+                      ),
+                      onPressed: () {},
+                    ),
+
+                    bottom: 80,
+                    right: 233.1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+            SizedBox(height: 30,),
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                color: Colors.red,
+                onPressed: (){
+
+                  Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                },
+                child: Text("Confirm", style: TextStyle(
+                    color: Colors.white
+                ),),
+              ),
+            ),
+          ]
+          ),
+      ),
     );
   }
-  _selectDate(BuildContext context) async {
-    DateTime newSelectedDate = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate != null ? _selectedDate : DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2040),
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: Colors.deepPurple,
-                onPrimary: Colors.white,
-                surface: Colors.blueGrey,
-                onSurface: Colors.yellow,
-              ),
-              dialogBackgroundColor: Colors.blue[500],
-            ),
-            child: child,
-          );
-        });
+  Future<bool> colorPickerDialog() async {
+    return ColorPicker(
+      color: dialogPickerColor,
+      onColorChanged: (Color color) =>
+          setState(() => dialogPickerColor = color),
+      width: 40,
+      height: 40,
+      borderRadius: 4,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      showMaterialName: true,
+      showColorName: true,
+      showColorCode: true,
+      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+        longPressMenu: true,
+      ),
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.bodyText2,
+      colorCodePrefixStyle: Theme.of(context).textTheme.caption,
+      selectedPickerTypeColor: Theme.of(context).colorScheme.primary,
+      pickersEnabled: const <ColorPickerType, bool>{
+        ColorPickerType.both: false,
+        ColorPickerType.primary: true,
+        ColorPickerType.accent: true,
+        ColorPickerType.bw: false,
+        ColorPickerType.custom: true,
+        ColorPickerType.wheel: true,
+      },
 
-    if (newSelectedDate != null) {
-      _selectedDate = newSelectedDate;
-      _dateController
-        ..text = DateFormat.yMd().format(_selectedDate)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: _dateController.text.length,
-            affinity: TextAffinity.upstream));
-    }
+    ).showPickerDialog(
+      context,
+      constraints:
+      const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
+    );
   }
 }
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
+}
+class CircleButton extends StatelessWidget {
+  final GestureTapCallback onTap;
+  final IconData iconData;
+
+  const CircleButton({Key key, this.onTap, this.iconData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double size = 25.0;
+
+    return new InkResponse(
+      onTap: onTap,
+      child: new Container(
+        width: size,
+        height: size,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+        child: new Icon(
+          iconData,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
 }

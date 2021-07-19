@@ -267,7 +267,7 @@ class _DataPageState extends State<DataPage>{
               borderRadius: BorderRadius.circular(30.0),
               elevation: 12,
               child: DropdownButton<Item>(
-                
+
                 hint:  Text("              Select Gender"),
                 value: selectedGender,
                 onChanged: (Item Value) {
