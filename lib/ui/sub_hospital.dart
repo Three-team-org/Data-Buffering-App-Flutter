@@ -133,28 +133,29 @@ class _HospitalPageState extends State<HospitalPage>{
                     hint: "Dentist name",
                     textEditingController: _doctor_controller,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: 150,
-                        padding: EdgeInsets.all(8.0),
-                        child: TextField(
-                            // controller: ctrl_TipoDeSangre,
-                            autocorrect: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.orange, width: 2),
-                              ),
-                            ),
-                        ),
-                      ),
-                      Text("KG", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.orange),)
-                    ],
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Weight ".toUpperCase())
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    icon: Icons.receipt,
+                    hint: "Your Weight",
+                    // textEditingController: _doctor_controller,
+                  ),
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Length".toUpperCase())
+                  ),
+                  CustomTextField(
+                    keyboardType: TextInputType.text,
+                    icon: Icons.receipt,
+                    hint: "Your Length",
+                    // textEditingController: _doctor_controller,
                   ),
                   Container(
                       color: Colors.grey.shade200,
@@ -212,389 +213,389 @@ class _HospitalPageState extends State<HospitalPage>{
               ),
             ),
           SizedBox(height: 20,),
-          Material(
-            color: Colors.grey[50],
-            child: new Center(
-              child: new Stack(
-                children: <Widget>[
-                  bigCircle,
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[0], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () async{
-                        final Color colorBeforeDialog = Colors.white;
-                        // Wait for the picker to close, if dialog was dismissed,
-                        // then restore the color we had before it was opened.
-                        if (!(await colorPickerDialog())) {
-                          setState(() {
-                            dialogPickerColor = colorBeforeDialog;
-                          });
-                        }
-                      },
-                    ),
-                    top: 0,
-                    left: 120.0,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[1], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 9,
-                    left: 155.3,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[2], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 25,
-                    left: 190.4,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[3], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 50,
-                    left: 215.9,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[4], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-
-                    top: 80,
-                    left: 233.1,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        primary: new Color(int.parse(color_list[5], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                        onPressed: () {},
-                    ),
-                    top: 120.0,
-                    left: 0.0,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[6], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 9,
-                    right: 155.3,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[7], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 25,
-                    right: 190.4,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[8], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 50,
-                    right: 215.9,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[9], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-
-                    top: 80,
-                    right: 233.1,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[10], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 120.0,
-                    right: 0.0,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[11], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 9,
-                    left: 155.3,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[12], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 25,
-                    left: 190.4,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[13], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 50,
-                    left: 215.9,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[14], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-
-                    bottom: 80,
-                    left: 233.1,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[15], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    top: 250.0,
-                    left: 120.0,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[16], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 9,
-                    right: 155.3,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[17], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 25,
-                    right: 190.4,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[18], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-                    bottom: 50,
-                    right: 215.9,
-                  ),
-                  new Positioned(
-                    child: new ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          primary: new Color(int.parse(color_list[19], radix: 16))
-                      ),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Container(),
-                      ),
-                      onPressed: () {},
-                    ),
-
-                    bottom: 80,
-                    right: 233.1,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Material(
+          //   color: Colors.grey[50],
+          //   child: new Center(
+          //     child: new Stack(
+          //       children: <Widget>[
+          //         bigCircle,
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[0], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () async{
+          //               final Color colorBeforeDialog = Colors.white;
+          //               // Wait for the picker to close, if dialog was dismissed,
+          //               // then restore the color we had before it was opened.
+          //               if (!(await colorPickerDialog())) {
+          //                 setState(() {
+          //                   dialogPickerColor = colorBeforeDialog;
+          //                 });
+          //               }
+          //             },
+          //           ),
+          //           top: 0,
+          //           left: 120.0,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[1], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 9,
+          //           left: 155.3,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[2], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 25,
+          //           left: 190.4,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[3], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 50,
+          //           left: 215.9,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[4], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //
+          //           top: 80,
+          //           left: 233.1,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //               shape: CircleBorder(),
+          //               primary: new Color(int.parse(color_list[5], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //               onPressed: () {},
+          //           ),
+          //           top: 120.0,
+          //           left: 0.0,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[6], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 9,
+          //           right: 155.3,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[7], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 25,
+          //           right: 190.4,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[8], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 50,
+          //           right: 215.9,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[9], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //
+          //           top: 80,
+          //           right: 233.1,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[10], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 120.0,
+          //           right: 0.0,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[11], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 9,
+          //           left: 155.3,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[12], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 25,
+          //           left: 190.4,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[13], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 50,
+          //           left: 215.9,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[14], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //
+          //           bottom: 80,
+          //           left: 233.1,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[15], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           top: 250.0,
+          //           left: 120.0,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[16], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 9,
+          //           right: 155.3,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[17], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 25,
+          //           right: 190.4,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[18], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //           bottom: 50,
+          //           right: 215.9,
+          //         ),
+          //         new Positioned(
+          //           child: new ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //                 shape: CircleBorder(),
+          //                 primary: new Color(int.parse(color_list[19], radix: 16))
+          //             ),
+          //             child: Container(
+          //               width: 8,
+          //               height: 8,
+          //               alignment: Alignment.center,
+          //               decoration: BoxDecoration(shape: BoxShape.circle),
+          //               child: Container(),
+          //             ),
+          //             onPressed: () {},
+          //           ),
+          //
+          //           bottom: 80,
+          //           right: 233.1,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
             SizedBox(height: 30,),
             Container(
               width: double.infinity,
