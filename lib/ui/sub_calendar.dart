@@ -277,7 +277,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   child: Text("Reaction".toUpperCase())
               ),
               Container(
-                width: _width/6,
+                width: _width,
                 child:
                 Material(
                   borderRadius: BorderRadius.circular(30.0),

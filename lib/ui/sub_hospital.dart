@@ -14,6 +14,7 @@ import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/database/model/hospital_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
+import 'package:data_buffer/ui/sub_advices.dart';
 class HospitalPage extends StatefulWidget{
   @override
   _HospitalPageState createState() => _HospitalPageState();
@@ -105,14 +106,14 @@ class _HospitalPageState extends State<HospitalPage>{
       });
     }
     else{
-      _doctor_controller = TextEditingController(text: "");
-      _dentist_controller = TextEditingController(text: "");
+      // _doctor_controller = TextEditingController(text: "");
+      // _dentist_controller = TextEditingController(text: "");
       _weight_controller = TextEditingController(text: "");
       _length_controller = TextEditingController(text: "");
       _advice_controller = TextEditingController(text: "");
       _remarks_controller = TextEditingController(text: "");
-      _checked_teeth_upper = [];
-      _checked_teeth_lower = [];
+      // _checked_teeth_upper = [];
+      // _checked_teeth_lower = [];
     }
   }
 
@@ -227,12 +228,19 @@ class _HospitalPageState extends State<HospitalPage>{
                     hint: "Your Length",
                     textEditingController: _length_controller,
                   ),
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Advice".toUpperCase())
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => AdvicesPage()));
+                    },
+                    child: Container(
+                        color: Colors.grey.shade200,
+                        padding: EdgeInsets.all(8.0),
+                        width: double.infinity,
+                        child: Text("Advice".toUpperCase())
+                    ),
                   ),
+
                   Container(
                     child:
                     Material(
