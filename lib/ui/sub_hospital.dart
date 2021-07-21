@@ -10,6 +10,10 @@ import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:toast/toast.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:data_buffer/database/model/hospital_data.dart';
+import 'package:data_buffer/database/database_helper.dart';
 class HospitalPage extends StatefulWidget{
   @override
   _HospitalPageState createState() => _HospitalPageState();
@@ -23,6 +27,9 @@ class Item {
 }
 
 class _HospitalPageState extends State<HospitalPage>{
+
+  Hospital_data hospital_data;
+
   Color dialogPickerColor;
   Color currentColor = Colors.limeAccent;
   TextEditingController _dateController = TextEditingController();
@@ -33,6 +40,12 @@ class _HospitalPageState extends State<HospitalPage>{
   DateTime _focusedDay = DateTime.now();
   String _selected_day_str = DateFormat("yyyy-MM-dd").format(DateTime.now());
   TextEditingController _doctor_controller = TextEditingController();
+  TextEditingController _dentist_controller = TextEditingController();
+  TextEditingController _weight_controller = TextEditingController();
+  TextEditingController _length_controller = TextEditingController();
+  TextEditingController _advice_controller = TextEditingController();
+  TextEditingController _remarks_controller = TextEditingController();
+
   double _width;
   double _pixelRatio;
   bool large;
@@ -46,11 +59,68 @@ class _HospitalPageState extends State<HospitalPage>{
       shape: BoxShape.circle,
     ),
   );
+  List<String> _checked_teeth_upper = [];
+  List<String> _checked_teeth_lower = [];
   void changeColor(Color color) => setState(() => currentColor = color);
+
+  Future addRecord() async {
+    var db = new DatabaseHelper();
+    String _checked_teeth_upper_str = _checked_teeth_upper.join(',');
+    String _checked_teeth_lower_str = _checked_teeth_lower.join(',');
+
+    var Form = new Hospital_data(_doctor_controller.text, _dentist_controller.text,_weight_controller.text,
+      _length_controller.text, _advice_controller.text, _remarks_controller.text,_checked_teeth_upper_str ,
+      _checked_teeth_lower_str,_selected_day_str,
+    );
+    await db.saveHospitalData(Form);
+    setState(() {
+    });
+
+  }
+
+  getRecord(String date) async {
+    var db = new DatabaseHelper();
+    var maps = await db.getHospitalData(date);
+
+    if(maps.length !=0) {
+      String doctor_name_str = maps[0]['doctor_name'];
+      String dentist_name_str = maps[0]['dentist_name'];
+      String weight_str = maps[0]['weight'];
+      String length_str = maps[0]['length'];
+      String advice_str = maps[0]['advice'];
+      String remarks_str = maps[0]['remarks'];
+      String upper_selected_str = maps[0]['upper_selected'];
+      String lower_selected_str = maps[0]['lower_selected'];
+
+      setState(() {
+        _doctor_controller = TextEditingController(text: doctor_name_str);
+        _dentist_controller = TextEditingController(text: dentist_name_str);
+        _weight_controller = TextEditingController(text: weight_str);
+        _length_controller = TextEditingController(text: length_str);
+        _advice_controller = TextEditingController(text: advice_str);
+        _remarks_controller = TextEditingController(text: remarks_str);
+        _checked_teeth_upper = upper_selected_str.split(',');
+        _checked_teeth_lower = lower_selected_str.split(',');
+
+      });
+    }
+    else{
+      _doctor_controller = TextEditingController(text: "");
+      _dentist_controller = TextEditingController(text: "");
+      _weight_controller = TextEditingController(text: "");
+      _length_controller = TextEditingController(text: "");
+      _advice_controller = TextEditingController(text: "");
+      _remarks_controller = TextEditingController(text: "");
+      _checked_teeth_upper = [];
+      _checked_teeth_lower = [];
+    }
+  }
+
   @override
   void initState() {
     timeinput.text = ""; //set the initial value of text field
     super.initState();
+    getRecord(_selected_day_str);
   }
 
   @override
@@ -100,7 +170,7 @@ class _HospitalPageState extends State<HospitalPage>{
                     _selectedDay = selectedDay;
                     _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
                     _focusedDay = focusedDay;
-
+                    getRecord(_selected_day_str);
                   });
                 },
               ),
@@ -118,7 +188,7 @@ class _HospitalPageState extends State<HospitalPage>{
                   CustomTextField(
                     keyboardType: TextInputType.text,
                     icon: Icons.receipt,
-                    hint: "Doctor name",
+                    hint: "Doctor Name",
                     textEditingController: _doctor_controller,
                   ),
                   Container(
@@ -130,8 +200,8 @@ class _HospitalPageState extends State<HospitalPage>{
                   CustomTextField(
                     keyboardType: TextInputType.text,
                     icon: Icons.receipt,
-                    hint: "Dentist name",
-                    textEditingController: _doctor_controller,
+                    hint: "Dentist Name",
+                    textEditingController: _dentist_controller,
                   ),
                   Container(
                       color: Colors.grey.shade200,
@@ -143,7 +213,7 @@ class _HospitalPageState extends State<HospitalPage>{
                     keyboardType: TextInputType.text,
                     icon: Icons.receipt,
                     hint: "Your Weight",
-                    // textEditingController: _doctor_controller,
+                    textEditingController: _weight_controller,
                   ),
                   Container(
                       color: Colors.grey.shade200,
@@ -155,7 +225,7 @@ class _HospitalPageState extends State<HospitalPage>{
                     keyboardType: TextInputType.text,
                     icon: Icons.receipt,
                     hint: "Your Length",
-                    // textEditingController: _doctor_controller,
+                    textEditingController: _length_controller,
                   ),
                   Container(
                       color: Colors.grey.shade200,
@@ -169,7 +239,7 @@ class _HospitalPageState extends State<HospitalPage>{
                       borderRadius: BorderRadius.circular(30.0),
                       elevation: large? 12 : (medium? 10 : 8),
                       child: TextFormField(
-                        // controller: _reaction_controller,
+                        controller: _advice_controller,
                         keyboardType: TextInputType.multiline,
                         cursorColor: Colors.orange[200],
                         maxLines: 3,
@@ -195,7 +265,7 @@ class _HospitalPageState extends State<HospitalPage>{
                       borderRadius: BorderRadius.circular(30.0),
                       elevation: large? 12 : (medium? 10 : 8),
                       child: TextFormField(
-                        // controller: _reaction_controller,
+                        controller: _remarks_controller,
                         keyboardType: TextInputType.multiline,
                         cursorColor: Colors.orange[200],
                         maxLines: 3,
@@ -213,396 +283,100 @@ class _HospitalPageState extends State<HospitalPage>{
               ),
             ),
           SizedBox(height: 20,),
-          // Material(
-          //   color: Colors.grey[50],
-          //   child: new Center(
-          //     child: new Stack(
-          //       children: <Widget>[
-          //         bigCircle,
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[0], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () async{
-          //               final Color colorBeforeDialog = Colors.white;
-          //               // Wait for the picker to close, if dialog was dismissed,
-          //               // then restore the color we had before it was opened.
-          //               if (!(await colorPickerDialog())) {
-          //                 setState(() {
-          //                   dialogPickerColor = colorBeforeDialog;
-          //                 });
-          //               }
-          //             },
-          //           ),
-          //           top: 0,
-          //           left: 120.0,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[1], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 9,
-          //           left: 155.3,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[2], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 25,
-          //           left: 190.4,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[3], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 50,
-          //           left: 215.9,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[4], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //
-          //           top: 80,
-          //           left: 233.1,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //               shape: CircleBorder(),
-          //               primary: new Color(int.parse(color_list[5], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //               onPressed: () {},
-          //           ),
-          //           top: 120.0,
-          //           left: 0.0,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[6], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 9,
-          //           right: 155.3,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[7], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 25,
-          //           right: 190.4,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[8], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 50,
-          //           right: 215.9,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[9], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //
-          //           top: 80,
-          //           right: 233.1,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[10], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 120.0,
-          //           right: 0.0,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[11], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 9,
-          //           left: 155.3,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[12], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 25,
-          //           left: 190.4,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[13], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 50,
-          //           left: 215.9,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[14], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //
-          //           bottom: 80,
-          //           left: 233.1,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[15], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           top: 250.0,
-          //           left: 120.0,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[16], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 9,
-          //           right: 155.3,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[17], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 25,
-          //           right: 190.4,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[18], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //           bottom: 50,
-          //           right: 215.9,
-          //         ),
-          //         new Positioned(
-          //           child: new ElevatedButton(
-          //             style: ElevatedButton.styleFrom(
-          //                 shape: CircleBorder(),
-          //                 primary: new Color(int.parse(color_list[19], radix: 16))
-          //             ),
-          //             child: Container(
-          //               width: 8,
-          //               height: 8,
-          //               alignment: Alignment.center,
-          //               decoration: BoxDecoration(shape: BoxShape.circle),
-          //               child: Container(),
-          //             ),
-          //             onPressed: () {},
-          //           ),
-          //
-          //           bottom: 80,
-          //           right: 233.1,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-            SizedBox(height: 30,),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Upper jaw".toUpperCase(), textAlign: TextAlign.center,)
+                  ),
+                  Container(
+                    height: 100,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        CheckboxGroup(
+                          activeColor: Colors.greenAccent,
+                          orientation: GroupedButtonsOrientation.HORIZONTAL,
+                          margin: const EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.all(2),
+                          onSelected: (List selected) => setState((){
+                            _checked_teeth_upper = selected;
+                          }),
+
+                          labels: <String>[
+                            "1", "2","3", "4","5", "6","7", "8","9", "10",
+                          ],
+                          checked: _checked_teeth_upper,
+                          itemBuilder: (Checkbox cb, Text txt, int i){
+                            return Column(
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.tooth),
+                                cb,
+                                txt,
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 100,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        CheckboxGroup(
+
+                          activeColor: Colors.greenAccent,
+                          orientation: GroupedButtonsOrientation.HORIZONTAL,
+                          margin: const EdgeInsets.only(left: 8.0),
+                          padding: const EdgeInsets.all(2),
+                          onSelected: (List selected) => setState((){
+                            _checked_teeth_lower = selected;
+                          }),
+
+                          labels: <String>[
+                            "1", "2","3", "4","5", "6","7", "8","9", "10",
+                          ],
+                          checked: _checked_teeth_lower,
+                          itemBuilder: (Checkbox cb, Text txt, int i){
+                            return Column(
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.tooth),
+                                cb,
+                                txt,
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("Lower jaw".toUpperCase(), textAlign: TextAlign.center,)
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10,),
             Container(
               width: double.infinity,
               child: RaisedButton(
                 color: Colors.red,
                 onPressed: (){
-
+                  addRecord();
                   Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                 },
                 child: Text("Confirm", style: TextStyle(
@@ -611,7 +385,7 @@ class _HospitalPageState extends State<HospitalPage>{
               ),
             ),
           ]
-          ),
+        ),
       ),
     );
   }
