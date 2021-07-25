@@ -64,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              PNetworkImage(
+              Image.asset(
                 image,
                 height: 80,
               ),
@@ -162,12 +162,12 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdiWF8Y9ECX_MvZc80eM-zb8qXjMpJ5kiAfMQhoQzZeRjwUOgH6PeGKmqsv-wcbZUgjaw&usqp=CAU", 'DATA', '30', 1),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcResMNRWwEGnmKohXmIz1C8SMGYeBw0z97BO8M8tBqDM4QLUVBiKc1vBSC1ex52L2vg_RY&usqp=CAU", 'RECIPES', '37', 2),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MHT_T8A7dHCIh9C1gdi1PAq3d-tq0DpjeQ&usqp=CAU", 'ADVICES', '22', 3),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq6Celc_cemA4gp7_3RvX1la2SPeIeg1OtWA&usqp=CAU", 'HOSPITAL', '90', 4),
-                        cards("https://www.iconbunny.com/icons/media/catalog/product/cache/2/thumbnail/600x/1b89f2fc96fc819c2a7e15c7e545e8a9/6/3/638.7-calendar-icon-iconbunny.jpg", 'CALENDAR', '22', 5),
-                        cards("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt6rfRMe-WHXuVHYD-qGfElvh7ljmZKF0fiw&usqp=CAU", 'NEW', '90', 6),
+                        cards("assets/images/icon_data.jfif", 'DATA', '30', 1),
+                        cards("assets/images/icon_recipe.png", 'RECIPES', '37', 2),
+                        cards("assets/images/icon_advice.jfif", 'ADVICES', '22', 3),
+                        cards("assets/images/icon_hospital.png", 'HOSPITAL', '90', 4),
+                        cards("assets/images/icon_calendar.jpg", 'CALENDAR', '22', 5),
+                        cards("assets/images/icon_new.png", 'NEW', '90', 6),
                       ],
                     ),
                   ),
