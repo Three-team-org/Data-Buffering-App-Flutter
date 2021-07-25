@@ -297,7 +297,12 @@ class _CalendarPageState extends State<CalendarPage>{
                   ),
                 ),
               ),
-
+              Container(
+                  color: Colors.grey.shade200,
+                  padding: EdgeInsets.all(8.0),
+                  width: double.infinity,
+                  child: Text("Hygiene".toUpperCase())
+              ),
               CheckboxGroup(
                 orientation: GroupedButtonsOrientation.VERTICAL,
                 activeColor: _color,
