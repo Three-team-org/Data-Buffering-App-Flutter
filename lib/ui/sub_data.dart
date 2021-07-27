@@ -52,7 +52,7 @@ class _DataPageState extends State<DataPage>{
   Future addRecord() async {
     var db = new DatabaseHelper();
     print(avatar_path);
-    var user_data = new User_data(_full_name_controller.text, _dateController.text,selectedGender.toString(),
+    var user_data = new User_data(_full_name_controller.text, _dateController.text,selectedGender.name,
       _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,
     );
     await db.saveUserData(user_data);
@@ -68,6 +68,8 @@ class _DataPageState extends State<DataPage>{
       String length_str = maps[0]['length'];
       String time_str = maps[0]['time'];
       String avatar_str = maps[0]['avatar_path'];
+      String gender_str =  maps[0]['gender'];
+      print(gender_str);
       final Directory directory = await getApplicationDocumentsDirectory();
       if (await File('${directory.path}/avatar.png').exists()) {
         _image = File('${directory.path}/avatar.png');
@@ -75,7 +77,12 @@ class _DataPageState extends State<DataPage>{
       setState(() {
         avatar_exists = true;
 
-
+        if(gender_str == 'Male'){
+          selectedGender = Gender[0];
+        }
+        else{
+          selectedGender = Gender[1];
+        }
         _full_name_controller = TextEditingController(text: full_name_str);
         _dateController = TextEditingController(text: birthday_str);
         _weight_controller = TextEditingController(text: weight_str);
@@ -264,33 +271,46 @@ class _DataPageState extends State<DataPage>{
             ),
             subtitle:
             Material(
+              
               borderRadius: BorderRadius.circular(30.0),
               elevation: 12,
-              child: DropdownButton<Item>(
+              child: 
+                  Row(
+                    children: <Widget>[
+                      Spacer(),
+                      DropdownButton<Item>(
 
-                hint:  Text("              Select Gender"),
-                value: selectedGender,
-                onChanged: (Item Value) {
-                  setState(() {
-                    selectedGender = Value;
-                  });
-                },
-                items: Gender.map((Item user) {
-                  return  DropdownMenuItem<Item>(
-                    value: user,
-                    child: Row(
-                      children: <Widget>[
-                        user.icon,
-                        SizedBox(width: 10,),
-                        Text(
-                          user.name,
-                          style:  TextStyle(color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
+                        hint:  Text("              Select Gender"),
+                        value: selectedGender,
+
+                        onChanged: (Item Value) {
+                          setState(() {
+                            // print(Value.name);
+                            selectedGender = Value;
+                          });
+                        },
+                        items: Gender.map((Item user) {
+                          return  DropdownMenuItem<Item>(
+                            value: user,
+                            child: Row(
+                              children: <Widget>[
+                                user.icon,
+                                SizedBox(width: 10,),
+                                Text(
+                                  user.name,
+                                  style:  TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      Spacer(),
+                      Spacer(),
+                      Spacer(),
+                    ],
+                  )
+              
             ),
 
           ),
