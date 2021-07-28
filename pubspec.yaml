@@ -73,12 +73,19 @@ flutter:
     - assets/images/login.png
     - assets/images/logo.png
     - assets/images/powered_by.png
-    - assets/images/icon_advice.jfif
+    - assets/images/icon_advice.png
     - assets/images/icon_calendar.jpg
     - assets/images/icon_data.jfif
     - assets/images/icon_hospital.png
     - assets/images/icon_new.png
     - assets/images/icon_recipe.png
+    - assets/images/15_border.png
+    - assets/images/20.png
+    - assets/images/check.png
+    - assets/images/cross.png
+    - assets/images/icon_dentist.png
+    - assets/images/icon_tooth.png
+    - assets/images/icon_doctor.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

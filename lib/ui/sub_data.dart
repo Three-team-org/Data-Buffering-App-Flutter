@@ -69,7 +69,7 @@ class _DataPageState extends State<DataPage>{
       String time_str = maps[0]['time'];
       String avatar_str = maps[0]['avatar_path'];
       String gender_str =  maps[0]['gender'];
-      print(gender_str);
+
       final Directory directory = await getApplicationDocumentsDirectory();
       if (await File('${directory.path}/avatar.png').exists()) {
         _image = File('${directory.path}/avatar.png');

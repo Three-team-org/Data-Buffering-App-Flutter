@@ -1,24 +1,20 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:data_buffer/ui/sub_new.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:data_buffer/ui/sub_advice_description_page.dart';
-class AdvicesPage extends StatefulWidget{
+import 'package:data_buffer/ui/sub_data.dart';
+import 'package:data_buffer/ui/sub_recipes.dart';
+import 'package:data_buffer/ui/sub_advices.dart';
+import 'package:data_buffer/ui/sub_hospital.dart';
+import 'package:data_buffer/ui/sub_calendar.dart';
+import 'package:data_buffer/ui/widgets/network_image.dart';
+
+class NewPageDashboardScreen extends StatefulWidget{
   @override
-  _AdvicesPageState createState() => _AdvicesPageState();
+  _NewPageDashboardScreenState createState() => _NewPageDashboardScreenState();
 
 }
-
-class Item {
-  const Item(this.name,this.icon);
-  final String name;
-  final Icon icon;
-}
-
-class _AdvicesPageState extends State<AdvicesPage>{
+class _NewPageDashboardScreenState extends State<NewPageDashboardScreen>{
   final TextStyle whiteText = TextStyle(color: Colors.white);
 
   Widget cards(image, title, price, page_num) {
@@ -27,19 +23,19 @@ class _AdvicesPageState extends State<AdvicesPage>{
         switch(page_num){
           case 1:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+                builder: (ctx) => NewPage()));
             break;
           case 2:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+                builder: (ctx) => NewPage()));
             break;
           case 3:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+                builder: (ctx) => NewPage()));
             break;
           case 4:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+                builder: (ctx) => NewPage()));
             break;
 
         }
@@ -138,7 +134,7 @@ class _AdvicesPageState extends State<AdvicesPage>{
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("ADVICE DASHBOARD",
+                              Text("NEW PAGE",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 32,
@@ -158,39 +154,30 @@ class _AdvicesPageState extends State<AdvicesPage>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("assets/images/icon_tooth.png", 'ORAL HYGIENE', '30', 1),
-                        cards("assets/images/icon_doctor.png", 'DOCTOR', '37', 2),
+                        cards("assets/images/15_border.png", 'DAYS', '30', 1),
+                        cards("assets/images/20.png", 'DAYS', '37', 2),
+                        cards("assets/images/check.png", 'YES', '22', 3),
+                        cards("assets/images/cross.png", 'NO', '90', 4),
 
                       ],
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              cards("assets/images/icon_dentist.png", 'DENTIST', '22', 3),
-                              Spacer(),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
-
+              Container(
+                margin: const EdgeInsets.only(top: 500.0),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(color: Colors.grey.shade200),
+                child: Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
+                        "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
+                        " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "
+                ),
+              ),
             ],
           ),
         ));
   }
-}
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
+
 }
