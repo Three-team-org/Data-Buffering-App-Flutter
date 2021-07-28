@@ -129,7 +129,7 @@ class _RecipesPageState extends State<RecipesPage>{
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("MY DASHBOARD",
+                              Text("RECIPE",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 32,

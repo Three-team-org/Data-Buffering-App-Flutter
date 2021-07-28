@@ -84,18 +84,15 @@ class _HospitalPageState extends State<HospitalPage>{
     var maps = await db.getHospitalData(date);
 
     if(maps.length !=0) {
-      String doctor_name_str = maps[0]['doctor_name'];
-      String dentist_name_str = maps[0]['dentist_name'];
-      String weight_str = maps[0]['weight'];
-      String length_str = maps[0]['length'];
-      String advice_str = maps[0]['advice'];
-      String remarks_str = maps[0]['remarks'];
-      String upper_selected_str = maps[0]['upper_selected'];
-      String lower_selected_str = maps[0]['lower_selected'];
+
+      String weight_str = maps[maps.length-1]['weight'];
+      String length_str = maps[maps.length-1]['length'];
+      String advice_str = maps[maps.length-1]['advice'];
+      String remarks_str = maps[maps.length-1]['remarks'];
+      String upper_selected_str = maps[maps.length-1]['upper_selected'];
+      String lower_selected_str = maps[maps.length-1]['lower_selected'];
 
       setState(() {
-        _doctor_controller = TextEditingController(text: doctor_name_str);
-        _dentist_controller = TextEditingController(text: dentist_name_str);
         _weight_controller = TextEditingController(text: weight_str);
         _length_controller = TextEditingController(text: length_str);
         _advice_controller = TextEditingController(text: advice_str);
@@ -106,8 +103,7 @@ class _HospitalPageState extends State<HospitalPage>{
       });
     }
     else{
-      // _doctor_controller = TextEditingController(text: "");
-      // _dentist_controller = TextEditingController(text: "");
+
       _weight_controller = TextEditingController(text: "");
       _length_controller = TextEditingController(text: "");
       _advice_controller = TextEditingController(text: "");
@@ -180,30 +176,7 @@ class _HospitalPageState extends State<HospitalPage>{
               padding: EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 children: <Widget>[
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Doctor name".toUpperCase())
-                  ),
-                  CustomTextField(
-                    keyboardType: TextInputType.text,
-                    icon: Icons.receipt,
-                    hint: "Doctor Name",
-                    textEditingController: _doctor_controller,
-                  ),
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Dentist name".toUpperCase())
-                  ),
-                  CustomTextField(
-                    keyboardType: TextInputType.text,
-                    icon: Icons.receipt,
-                    hint: "Dentist Name",
-                    textEditingController: _dentist_controller,
-                  ),
+
                   Container(
                       color: Colors.grey.shade200,
                       padding: EdgeInsets.all(8.0),

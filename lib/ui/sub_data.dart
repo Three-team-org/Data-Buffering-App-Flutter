@@ -41,6 +41,9 @@ class _DataPageState extends State<DataPage>{
   TextEditingController _weight_controller = TextEditingController();
   TextEditingController _length_controller = TextEditingController();
   TextEditingController _time_controller = TextEditingController();
+  TextEditingController _doctor_controller = TextEditingController();
+  TextEditingController _dentist_controller = TextEditingController();
+
   TextInputType keyboardType;
   bool obscureText;
   IconData icon;
@@ -51,8 +54,8 @@ class _DataPageState extends State<DataPage>{
   String avatar_path;
   Future addRecord() async {
     var db = new DatabaseHelper();
-    print(avatar_path);
-    var user_data = new User_data(_full_name_controller.text, _dateController.text,selectedGender.name,
+    print(_doctor_controller.text);
+    var user_data = new User_data(_full_name_controller.text,_doctor_controller.text,_dentist_controller.text, _dateController.text,selectedGender.name,
       _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,
     );
     await db.saveUserData(user_data);
@@ -62,13 +65,15 @@ class _DataPageState extends State<DataPage>{
     var maps = await db.getUserInfo();
 
     if(maps.length !=0) {
-      String full_name_str = maps[0]['full_name'];
-      String birthday_str = maps[0]['birthday'];
-      String weight_str = maps[0]['weight'];
-      String length_str = maps[0]['length'];
-      String time_str = maps[0]['time'];
-      String avatar_str = maps[0]['avatar_path'];
-      String gender_str =  maps[0]['gender'];
+      String full_name_str = maps[maps.length-1]['full_name'];
+      String doctor_name_str = maps[maps.length-1]['doctor_name'];
+      String dentist_name_str = maps[maps.length-1]['dentist_name'];
+      String birthday_str = maps[maps.length-1]['birthday'];
+      String weight_str = maps[maps.length-1]['weight'];
+      String length_str = maps[maps.length-1]['length'];
+      String time_str = maps[maps.length-1]['time'];
+      String avatar_str = maps[maps.length-1]['avatar_path'];
+      String gender_str =  maps[maps.length-1]['gender'];
 
       final Directory directory = await getApplicationDocumentsDirectory();
       if (await File('${directory.path}/avatar.png').exists()) {
@@ -84,6 +89,8 @@ class _DataPageState extends State<DataPage>{
           selectedGender = Gender[1];
         }
         _full_name_controller = TextEditingController(text: full_name_str);
+        _doctor_controller = TextEditingController(text: doctor_name_str);
+        _dentist_controller = TextEditingController(text: dentist_name_str);
         _dateController = TextEditingController(text: birthday_str);
         _weight_controller = TextEditingController(text: weight_str);
         _length_controller = TextEditingController(text: length_str);
@@ -201,20 +208,35 @@ class _DataPageState extends State<DataPage>{
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "User Name",
-                  style: TextStyle(fontSize: 22.0, color: Colors.white),
-                ),
-                Text(
-                  "Address",
-                  style: TextStyle(fontSize: 14.0, color: Colors.red.shade700),
-                )
               ],
             ),
           ),
+          ListTile(
+            title: Text(
+              "DOCTOR NAME",
+              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+            ),
+            subtitle: CustomTextField(
+              textEditingController: _doctor_controller,
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Doctor Name",
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              "DENTIST NAME",
+              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+            ),
+            subtitle: CustomTextField(
+              textEditingController: _dentist_controller,
+              keyboardType: TextInputType.text,
+              icon: Icons.receipt,
+              hint: "Dentist Name",
+            ),
+          ),
+          Divider(),
           ListTile(
             title: Text(
               "FULL NAME",

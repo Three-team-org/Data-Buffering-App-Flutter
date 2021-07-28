@@ -2,6 +2,8 @@ class User_data {
 
   int id;
   String _full_name;
+  String _doctor_name;
+  String _dentist_name;
   String _birthday;
   String _gender;
   String _weight;
@@ -10,11 +12,13 @@ class User_data {
   String _avatar_path;
 
 
-  User_data(this._full_name,this._birthday,this._gender,this._weight,this._length,
+  User_data(this._full_name,this._doctor_name,this._dentist_name,this._birthday,this._gender,this._weight,this._length,
       this._time, this._avatar_path);
 
   User_data.map(dynamic obj) {
     this._full_name = obj["full_name"];
+    this._doctor_name = obj["doctor_name"];
+    this._dentist_name = obj["dentist_name"];
     this._birthday = obj["birthday"];
     this._gender = obj["gender"];
     this._weight = obj["weight"];
@@ -24,6 +28,8 @@ class User_data {
   }
 
   String get full_name => _full_name;
+  String get doctor_name => _doctor_name;
+  String get dentist_name => _dentist_name;
   String get birthday => _birthday;
   String get gender => _gender;
   String get weight => _weight;
@@ -34,6 +40,8 @@ class User_data {
     var map = new Map<String, dynamic>();
 
     map["full_name"] = _full_name;
+    map["doctor_name"] = _doctor_name;
+    map["dentist_name"] = _dentist_name;
     map["birthday"] = _birthday;
     map["gender"] = _gender;
     map["weight"] = _weight;
