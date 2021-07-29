@@ -48,13 +48,17 @@ class _CalendarPageState extends State<CalendarPage>{
   List<String> _checked_water = [];
   List<String> _checked_vit = [];
   List<String> _checked_hygin = [];
+
+  List<String> _checked_spoon = [];
+
   Future addRecord() async {
     var db = new DatabaseHelper();
     String _checked_water_str = _checked_water.join(',');
     String _checked_vit_str = _checked_vit.join(',');
     String _checked_hygin_str = _checked_hygin.join(',');
+    String _checked_spoon_str = _checked_spoon.join(',');
     var Form = new Form_draft(_groceries_controller.text, _checked_water_str,_checked_vit_str, _hex_color,
-        _reaction_controller.text, _checked_hygin_str, _selected_day_str,
+        _reaction_controller.text, _checked_hygin_str, _selected_day_str,_checked_spoon_str
         );
     await db.saveUser(Form);
     setState(() {
@@ -73,17 +77,18 @@ class _CalendarPageState extends State<CalendarPage>{
     var maps = await db.getDraft(date);
 
     if(maps.length !=0) {
-      String grocery_name_str = maps[0]['grocery_name'];
-      String water_type_str = maps[0]['water_type'];
-      String vit_type_str = maps[0]['vit_type'];
-      String color_str = maps[0]['color'];
-      String reaction_str = maps[0]['reaction'];
-      String hygiene_str = maps[0]['hygiene'];
+      String grocery_name_str = maps[maps.length-1]['grocery_name'];
+      String water_type_str = maps[maps.length-1]['water_type'];
+      String vit_type_str = maps[maps.length-1]['vit_type'];
+      String color_str = maps[maps.length-1]['color'];
+      String reaction_str = maps[maps.length-1]['reaction'];
+      String hygiene_str = maps[maps.length-1]['hygiene'];
       String colorString = color_str.toString(); // Color(0x12345678)
       print(colorString);
       String valueString = colorString.split('0x')[1]; // kind of hacky..
       print(valueString);
       int value = int.parse(valueString, radix: 16);
+      String spoon_select_str = maps[maps.length-1]['spoon_select'];
       setState(() {
         _groceries_controller = TextEditingController(text: grocery_name_str);
         _checked_water = water_type_str.split(',');
@@ -93,6 +98,7 @@ class _CalendarPageState extends State<CalendarPage>{
         _color = otherColor;
         _reaction_controller = TextEditingController(text: reaction_str);
         _checked_hygin = hygiene_str.split(',');
+        _checked_spoon = spoon_select_str.split(',');
       });
     }
     else{
@@ -105,6 +111,12 @@ class _CalendarPageState extends State<CalendarPage>{
       _checked_hygin = [];
     }
   }
+
+  @override
+  void initState() {
+    getRecord(_selected_day_str);
+  }
+
   @override
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
@@ -187,7 +199,50 @@ class _CalendarPageState extends State<CalendarPage>{
                 hint: "Groceries name",
                 textEditingController: _groceries_controller,
               ),
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        color: Colors.grey.shade200,
+                        padding: EdgeInsets.all(8.0),
+                        width: double.infinity,
+                        child: Text("Table Spoon".toUpperCase(), textAlign: TextAlign.left,)
+                    ),
+                    SizedBox(height: 5,),
+                    Container(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          CheckboxGroup(
+                            activeColor: Colors.greenAccent,
+                            orientation: GroupedButtonsOrientation.HORIZONTAL,
+                            margin: const EdgeInsets.only(left: 8.0),
+                            padding: const EdgeInsets.all(2),
+                            onSelected: (List selected) => setState((){
+                              _checked_spoon = selected;
+                            }),
 
+                            labels: <String>[
+                              "1", "2","3", "4","5", "6","7",
+                            ],
+                            checked: _checked_spoon,
+                            itemBuilder: (Checkbox cb, Text txt, int i){
+                              return Column(
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.utensilSpoon),
+                                  cb,
+                                  txt,
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                   color: Colors.grey.shade200,
                   padding: EdgeInsets.all(8.0),

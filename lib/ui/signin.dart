@@ -30,8 +30,6 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
 
-
-
   @override
   Widget build(BuildContext context) {
      _height = MediaQuery.of(context).size.height;

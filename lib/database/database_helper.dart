@@ -33,7 +33,7 @@ class DatabaseHelper {
     // When creating the db, create the table
     await db.execute(
         "CREATE TABLE calendar_info(id INTEGER PRIMARY KEY, grocery_name TEXT, water_type TEXT,vit_type TEXT,"
-            "color TEXT,reaction TEXT,hygiene TEXT,date TEXT)");
+            "color TEXT,reaction TEXT,hygiene TEXT,date TEXT, spoon_select TEXT)");
     await db.execute(
         "CREATE TABLE user_info(id INTEGER PRIMARY KEY, full_name TEXT,doctor_name TEXT,dentist_name TEXT, birthday TEXT,gender TEXT,"
             "weight TEXT,length TEXT,time TEXT, avatar_path TEXT)");
@@ -65,7 +65,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new Form_draft(list[i]["grocery_name"], list[i]["water_type"], list[i]["vit_type"], list[i]["color"],
-          list[i]["reaction"], list[i]["hygiene"], list[i]["date"]);
+          list[i]["reaction"], list[i]["hygiene"], list[i]["date"], list[i]["spoon_select"]);
       user.setUserId(list[i]["id"]);
 
       employees.add(user);

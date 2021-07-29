@@ -163,10 +163,10 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       children: <Widget>[
                         cards("assets/images/icon_data.jfif", 'DATA', '30', 1),
                         cards("assets/images/icon_recipe.png", 'RECIPES', '37', 2),
-                        cards("assets/images/icon_advice.png", 'ADVICES', '22', 3),
+                        cards("assets/images/icon_new.png", 'ADVICES', '22', 3),
                         cards("assets/images/icon_hospital.png", 'HOSPITAL', '90', 4),
                         cards("assets/images/icon_calendar.jpg", 'CALENDAR', '22', 5),
-                        cards("assets/images/icon_new.png", 'NEW', '90', 6),
+                        cards("assets/images/icon_advice.png", 'NEW', '90', 6),
                       ],
                     ),
                   ),
@@ -176,5 +176,4 @@ class _DashboardScreenState extends State<DashboardScreen>{
           ),
         ));
   }
-
 }
