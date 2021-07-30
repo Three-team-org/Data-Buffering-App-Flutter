@@ -159,11 +159,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   lastDay: DateTime.utc(2030, 3, 14),
                   focusedDay: _focusedDay,
                   selectedDayPredicate: (day) {
-                    // Use `selectedDayPredicate` to determine which day is currently selected.
-                    // If this returns true, then `day` will be marked as selected.
 
-                    // Using `isSameDay` is recommended to disregard
-                    // the time-part of compared DateTime objects.
                     return isSameDay(_selectedDay, day);
                   },
                   onDaySelected: (selectedDay, focusedDay) {
@@ -226,6 +222,7 @@ class _CalendarPageState extends State<CalendarPage>{
                             labels: <String>[
                               "1", "2","3", "4","5", "6","7",
                             ],
+
                             checked: _checked_spoon,
                             itemBuilder: (Checkbox cb, Text txt, int i){
                               return Column(

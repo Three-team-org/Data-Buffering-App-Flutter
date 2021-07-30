@@ -31,11 +31,16 @@ class _DataPageState extends State<DataPage>{
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
   Item selectedGender ;
+  Item selected_option;
   File _image;
   List<Item> Gender = <Item>[
     const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
     const Item('Female',Icon(FontAwesomeIcons.female,color:  Colors.blue,)),
   ];
+  List<Item> choices = <Item>[
+    const Item('Add new User',Icon(FontAwesomeIcons.plus,color:  const Color(0xFF167F67),)),
+  ];
+
   TextEditingController textEditingController;
   TextEditingController _full_name_controller = TextEditingController();
   TextEditingController _weight_controller = TextEditingController();
@@ -161,6 +166,32 @@ class _DataPageState extends State<DataPage>{
         title: Text("DATA PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (Item item){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => DataPage()));
+            },
+            padding: EdgeInsets.zero,
+            itemBuilder: (BuildContext context) {
+              return choices.map((Item choice) {
+                return  PopupMenuItem<Item>(
+                  value: choice,
+                  child: Container(
+                    child: Row(
+                      children: <Widget>[
+                        choice.icon,
+                        Text(choice.name),
+                      ],
+                    ),
+                  )
+                );
+              }
+              ).toList();
+            },
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[
