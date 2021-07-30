@@ -16,6 +16,8 @@ import 'package:data_buffer/database/model/hospital_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
 class HospitalPage extends StatefulWidget{
+  String user_role = "", user_name = "";
+  HospitalPage(@required this.user_role, @required this.user_name);
   @override
   _HospitalPageState createState() => _HospitalPageState();
 
@@ -71,17 +73,23 @@ class _HospitalPageState extends State<HospitalPage>{
 
     var Form = new Hospital_data(_doctor_controller.text, _dentist_controller.text,_weight_controller.text,
       _length_controller.text, _advice_controller.text, _remarks_controller.text,_checked_teeth_upper_str ,
-      _checked_teeth_lower_str,_selected_day_str,
+      _checked_teeth_lower_str,_selected_day_str, widget.user_role, widget.user_name
     );
     await db.saveHospitalData(Form);
-    setState(() {
-    });
+
 
   }
 
   getRecord(String date) async {
     var db = new DatabaseHelper();
-    var maps = await db.getHospitalData(date);
+    var maps;
+    if(widget.user_role == "admin"){
+      maps = await db.getHospitalData_admin(date, widget.user_role);
+    }
+    else{
+      maps = await db.getHospitalData(date, widget.user_role, widget.user_name);
+    }
+
 
     if(maps.length !=0) {
 

@@ -12,14 +12,10 @@ import 'dart:io' as io;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:toast/toast.dart';
-import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
-
-class DataPage extends StatefulWidget{
-  String user_role = "", user_name = "";
-  DataPage(@required this.user_role, @required this.user_name);
+class NewUserDataPage extends StatefulWidget{
   @override
-  _DataPageState createState() => _DataPageState();
+  _NewUserDataPageState createState() => _NewUserDataPageState();
 
 }
 
@@ -29,7 +25,7 @@ class Item {
   final Icon icon;
 }
 
-class _DataPageState extends State<DataPage>{
+class _NewUserDataPageState extends State<NewUserDataPage>{
   User_data user_data;
 
   bool avatar_exists = false;
@@ -66,55 +62,13 @@ class _DataPageState extends State<DataPage>{
   Future addRecord(BuildContext context) async {
     var db = new DatabaseHelper();
     print(_doctor_controller.text);
-    if(widget.user_role == "admin"){
-      Toast.show("Successfully Saved!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-      var user_data = new User_data(_full_name_controller.text,_doctor_controller.text,_dentist_controller.text, _dateController.text,selectedGender.name,
-        _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,widget.user_role
-      );
-      await db.saveUserData(user_data);
-    }
-    else{
-      Toast.show("Admin already Exists!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-    }
+    var user_data = new User_data(_full_name_controller.text,_doctor_controller.text,_dentist_controller.text, _dateController.text,selectedGender.name,
+      _weight_controller.text, _length_controller.text, _time_controller.text, avatar_path,"user");
+    await db.saveUserData(user_data);
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => UsersListPage()));
   }
-  getRecord() async {
-    var db = new DatabaseHelper();
-    var maps = await db.getUserInfo("admin");
 
-    if(maps.length !=0) {
-      String full_name_str = maps[maps.length-1]['full_name'];
-      String doctor_name_str = maps[maps.length-1]['doctor_name'];
-      String dentist_name_str = maps[maps.length-1]['dentist_name'];
-      String birthday_str = maps[maps.length-1]['birthday'];
-      String weight_str = maps[maps.length-1]['weight'];
-      String length_str = maps[maps.length-1]['length'];
-      String time_str = maps[maps.length-1]['time'];
-      String avatar_str = maps[maps.length-1]['avatar_path'];
-      String gender_str =  maps[maps.length-1]['gender'];
-
-      final Directory directory = await getApplicationDocumentsDirectory();
-      if (await File('${directory.path}/avatar.png').exists()) {
-        _image = File('${directory.path}/avatar.png');
-      }
-      setState(() {
-        avatar_exists = true;
-
-        if(gender_str == 'Male'){
-          selectedGender = Gender[0];
-        }
-        else{
-          selectedGender = Gender[1];
-        }
-        _full_name_controller = TextEditingController(text: full_name_str);
-        _doctor_controller = TextEditingController(text: doctor_name_str);
-        _dentist_controller = TextEditingController(text: dentist_name_str);
-        _dateController = TextEditingController(text: birthday_str);
-        _weight_controller = TextEditingController(text: weight_str);
-        _length_controller = TextEditingController(text: length_str);
-        _time_controller = TextEditingController(text: time_str);
-      });
-    }
-  }
   saveImages() async{
     final Directory directory = await getApplicationDocumentsDirectory();
     final File Image_face = await _image.copy('${directory.path}/avatar.png');
@@ -175,43 +129,10 @@ class _DataPageState extends State<DataPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("DATA PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
+        title: Text("NEW USER DATA",style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
         automaticallyImplyLeading: false,
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: (Item item){
-              if(item.name == "Add new User"){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => NewUserDataPage()));
-              }
-              else{
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => UsersListPage()));
-              }
-
-            },
-            padding: EdgeInsets.zero,
-            itemBuilder: (BuildContext context) {
-              return choices.map((Item choice) {
-                return  PopupMenuItem<Item>(
-                  value: choice,
-                  child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        choice.icon,
-
-                        Text("   " + choice.name),
-                      ],
-                    ),
-                  )
-                );
-              }
-              ).toList();
-            },
-          )
-        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -344,46 +265,46 @@ class _DataPageState extends State<DataPage>{
             ),
             subtitle:
             Material(
-              
-              borderRadius: BorderRadius.circular(30.0),
-              elevation: 12,
-              child: 
-                  Row(
-                    children: <Widget>[
-                      Spacer(),
-                      DropdownButton<Item>(
 
-                        hint:  Text("              Select Gender"),
-                        value: selectedGender,
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: 12,
+                child:
+                Row(
+                  children: <Widget>[
+                    Spacer(),
+                    DropdownButton<Item>(
 
-                        onChanged: (Item Value) {
-                          setState(() {
-                            // print(Value.name);
-                            selectedGender = Value;
-                          });
-                        },
-                        items: Gender.map((Item user) {
-                          return  DropdownMenuItem<Item>(
-                            value: user,
-                            child: Row(
-                              children: <Widget>[
-                                user.icon,
-                                SizedBox(width: 10,),
-                                Text(
-                                  user.name,
-                                  style:  TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      Spacer(),
-                      Spacer(),
-                      Spacer(),
-                    ],
-                  )
-              
+                      hint:  Text("              Select Gender"),
+                      value: selectedGender,
+
+                      onChanged: (Item Value) {
+                        setState(() {
+                          // print(Value.name);
+                          selectedGender = Value;
+                        });
+                      },
+                      items: Gender.map((Item user) {
+                        return  DropdownMenuItem<Item>(
+                          value: user,
+                          child: Row(
+                            children: <Widget>[
+                              user.icon,
+                              SizedBox(width: 10,),
+                              Text(
+                                user.name,
+                                style:  TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    Spacer(),
+                    Spacer(),
+                    Spacer(),
+                  ],
+                )
+
             ),
 
           ),
@@ -443,7 +364,7 @@ class _DataPageState extends State<DataPage>{
               onPressed: () {
                 addRecord(context);
                 saveImages();
-                
+                Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
               },
             ),
           ),
@@ -486,7 +407,6 @@ class _DataPageState extends State<DataPage>{
   void initState(){
     super.initState();
     initAvatarPath();
-    getRecord();
   }
 
   void initAvatarPath() async{

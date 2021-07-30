@@ -17,6 +17,8 @@ import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:toast/toast.dart';
 class CalendarPage extends StatefulWidget{
+  String user_role = "", user_name = "";
+  CalendarPage(@required this.user_role, @required this.user_name);
   @override
   _CalendarPageState createState() => _CalendarPageState();
 
@@ -58,7 +60,7 @@ class _CalendarPageState extends State<CalendarPage>{
     String _checked_hygin_str = _checked_hygin.join(',');
     String _checked_spoon_str = _checked_spoon.join(',');
     var Form = new Form_draft(_groceries_controller.text, _checked_water_str,_checked_vit_str, _hex_color,
-        _reaction_controller.text, _checked_hygin_str, _selected_day_str,_checked_spoon_str
+        _reaction_controller.text, _checked_hygin_str, _selected_day_str,_checked_spoon_str, widget.user_role, widget.user_name
         );
     await db.saveUser(Form);
     setState(() {
@@ -74,8 +76,13 @@ class _CalendarPageState extends State<CalendarPage>{
   }
   getRecord(String date) async {
     var db = new DatabaseHelper();
-    var maps = await db.getDraft(date);
-
+    var maps;
+    if(widget.user_role == "admin"){
+      maps = await db.getDraft_admin(date, widget.user_role);
+    }
+    else{
+      maps = await db.getDraft(date, widget.user_role, widget.user_name);
+    }
     if(maps.length !=0) {
       String grocery_name_str = maps[maps.length-1]['grocery_name'];
       String water_type_str = maps[maps.length-1]['water_type'];

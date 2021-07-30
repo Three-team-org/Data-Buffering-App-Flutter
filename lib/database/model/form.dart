@@ -9,8 +9,10 @@ class Form_draft {
   String _hygiene;
   String _date;
   String _spoon_select;
+  String _user_role;
+  String _user_name;
   Form_draft(this._grocery_name,this._water_type,this._vit_type,this._color,this._reaction,
-      this._hygiene,this._date, this._spoon_select);
+      this._hygiene,this._date, this._spoon_select, this._user_role, this._user_name);
 
   Form_draft.map(dynamic obj) {
     this._grocery_name = obj["grocery_name"];
@@ -21,6 +23,8 @@ class Form_draft {
     this._hygiene = obj["hygiene"];
     this._date = obj["date"];
     this._spoon_select = obj["spoon_select"];
+    this._user_role = obj["user_role"];
+    this._user_name = obj["user_name"];
   }
 
   String get grocery_name => _grocery_name;
@@ -31,6 +35,8 @@ class Form_draft {
   String get hygiene => _hygiene;
   String get date => _date;
   String get spoon_select =>_spoon_select;
+  String get user_role =>_user_role;
+  String get user_name =>_user_name;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
@@ -43,6 +49,8 @@ class Form_draft {
     map["hygiene"] = _hygiene;
     map["date"] = _date;
     map["spoon_select"] = _spoon_select;
+    map["user_role"] = _user_role;
+    map["user_name"] = _user_name;
     return map;
   }
 

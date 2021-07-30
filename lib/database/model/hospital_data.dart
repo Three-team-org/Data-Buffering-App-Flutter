@@ -10,9 +10,10 @@ class Hospital_data {
   String _upper_selected;
   String _lower_selected;
   String _date_save;
-
+  String _user_role;
+  String _user_name;
   Hospital_data(this._doctor_name,this._dentist_name,this._weight,this._length,this._advice,
-      this._remarks, this._upper_selected, this._lower_selected, this._date_save);
+      this._remarks, this._upper_selected, this._lower_selected, this._date_save, this._user_role, this._user_name);
 
   Hospital_data.map(dynamic obj) {
     this._doctor_name = obj["doctor_name"];
@@ -24,6 +25,8 @@ class Hospital_data {
     this._upper_selected = obj["upper_selected"];
     this._lower_selected = obj["lower_selected"];
     this._date_save = obj["date_save"];
+    this._user_role = obj["user_role"];
+    this._user_name = obj["user_name"];
   }
 
   String get doctor_name => _doctor_name;
@@ -35,6 +38,8 @@ class Hospital_data {
   String get upper_selected => _upper_selected;
   String get lower_selected => _lower_selected;
   String get date_save => _date_save;
+  String get user_role =>_user_role;
+  String get user_name =>_user_name;
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
 
@@ -47,7 +52,8 @@ class Hospital_data {
     map["upper_selected"] = _upper_selected;
     map["lower_selected"] = _lower_selected;
     map["date_save"] = _date_save;
-
+    map["user_role"] = _user_role;
+    map["user_name"] = _user_name;
 
     return map;
   }

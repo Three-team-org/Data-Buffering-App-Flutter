@@ -43,6 +43,7 @@ dependencies:
   flex_color_picker: ^2.1.1
   toast: ^0.1.5
   flutter_colorpicker: ^0.5.0
+  syncfusion_flutter_datagrid: ^19.2.49-beta
 
 dev_dependencies:
   flutter_test:

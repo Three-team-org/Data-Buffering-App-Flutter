@@ -10,10 +10,11 @@ class User_data {
   String _length;
   String _time;
   String _avatar_path;
-
+  String _user_role;
+  String _user_name;
 
   User_data(this._full_name,this._doctor_name,this._dentist_name,this._birthday,this._gender,this._weight,this._length,
-      this._time, this._avatar_path);
+      this._time, this._avatar_path,  this._user_role);
 
   User_data.map(dynamic obj) {
     this._full_name = obj["full_name"];
@@ -25,6 +26,7 @@ class User_data {
     this._length = obj["length"];
     this._time = obj["time"];
     this._avatar_path = obj["avatar_path"];
+    this._user_role = obj["user_role"];
   }
 
   String get full_name => _full_name;
@@ -36,6 +38,8 @@ class User_data {
   String get length => _length;
   String get time => _time;
   String get avatar_path => _avatar_path;
+  String get user_role =>_user_role;
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
 
@@ -48,7 +52,7 @@ class User_data {
     map["length"] = _length;
     map["time"] = _time;
     map["avatar_path"] = _avatar_path;
-
+    map["user_role"] = _user_role;
 
     return map;
   }

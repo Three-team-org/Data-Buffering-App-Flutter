@@ -214,7 +214,7 @@ class _SignInScreenState extends State<SignInScreen> {
       onPressed: () {
           print("Routing to your account");
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => DashboardScreen()));
+              builder: (ctx) => DashboardScreen("admin", "")));
           Scaffold
               .of(context)
               .showSnackBar(SnackBar(content: Text('Login Successful')));

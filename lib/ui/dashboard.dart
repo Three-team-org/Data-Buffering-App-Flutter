@@ -10,6 +10,8 @@ import 'package:data_buffer/ui/sub_calendar.dart';
 import 'package:data_buffer/ui/widgets/network_image.dart';
 import 'package:data_buffer/ui/sub_new_page_dashboard.dart';
 class DashboardScreen extends StatefulWidget{
+  String user_role = "", user_name = "";
+  DashboardScreen(@required this.user_role, @required this.user_name);
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 
@@ -23,7 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
           switch(page_num){
             case 1:
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => DataPage()));
+                  builder: (ctx) => DataPage(widget.user_role, widget.user_name)));
               break;
             case 2:
               Navigator.of(context).push(MaterialPageRoute(
@@ -35,11 +37,11 @@ class _DashboardScreenState extends State<DashboardScreen>{
               break;
             case 4:
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => HospitalPage()));
+                  builder: (ctx) => HospitalPage(widget.user_role, widget.user_name)));
               break;
             case 5:
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => CalendarPage()));
+                  builder: (ctx) => CalendarPage(widget.user_role, widget.user_name)));
               break;
             case 6:
               Navigator.of(context).push(MaterialPageRoute(
