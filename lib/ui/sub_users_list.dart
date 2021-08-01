@@ -1,5 +1,6 @@
 
 import 'package:data_buffer/database/model/form.dart';
+import 'package:data_buffer/ui/sub_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +12,8 @@ import 'package:data_buffer/database/model/user_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:data_buffer/ui/dashboard.dart';
+import 'package:toast/toast.dart';
+import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 class UsersListPage extends StatefulWidget{
   @override
   _UsersListPageState createState() => _UsersListPageState();
@@ -71,7 +74,14 @@ class _UsersListPageState extends State<UsersListPage>{
                         Spacer(),
                         Text(snapshot.data[position].row[4]),
                         Spacer(),
-                        Text(snapshot.data[position].row[10]),
+                        IconButton(
+                          icon: new Icon(FontAwesomeIcons.trashAlt),
+                          iconSize: 25,
+                          highlightColor: Colors.pink,
+                          onPressed: (){
+                            _showerrorDialog(snapshot.data[position].row[0],snapshot.data[position].row[1] );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -84,6 +94,29 @@ class _UsersListPageState extends State<UsersListPage>{
             child: CircularProgressIndicator(),
           );
         },
+      ),
+    );
+  }
+  void _showerrorDialog(int user_id, String user_name) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'Alert!',
+          style: TextStyle(color: Colors.blue),
+        ),
+        content: Text("Are you sure you want to delete $user_name ? "),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              db.deleteUsers(user_id);
+              Toast.show("Removed Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => DataPage("admin", "")));
+            },
+          )
+        ],
       ),
     );
   }
