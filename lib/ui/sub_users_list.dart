@@ -115,7 +115,13 @@ class _UsersListPageState extends State<UsersListPage>{
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => DataPage("admin", "")));
             },
-          )
+          ),
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ],
       ),
     );
