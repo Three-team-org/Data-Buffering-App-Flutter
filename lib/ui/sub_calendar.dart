@@ -218,7 +218,7 @@ class _CalendarPageState extends State<CalendarPage>{
                         scrollDirection: Axis.horizontal,
                         children: <Widget>[
                           CheckboxGroup(
-                            activeColor: _color,
+                            activeColor: Colors.blue,
                             orientation: GroupedButtonsOrientation.HORIZONTAL,
                             margin: const EdgeInsets.only(left: 8.0),
                             padding: const EdgeInsets.all(2),
@@ -257,7 +257,7 @@ class _CalendarPageState extends State<CalendarPage>{
                 children: <Widget>[
               CheckboxGroup(
               orientation: GroupedButtonsOrientation.VERTICAL,
-                activeColor: _color,
+                activeColor: Colors.blue,
                 margin: const EdgeInsets.only(left: 12.0),
                 onSelected: (List selected) => setState((){
                   _checked_water = selected;
@@ -278,7 +278,7 @@ class _CalendarPageState extends State<CalendarPage>{
                   ),
                   CheckboxGroup(
                     orientation: GroupedButtonsOrientation.VERTICAL,
-                    activeColor: _color,
+                    activeColor: Colors.blue,
                     margin: const EdgeInsets.only(left: 12.0),
                     onSelected: (List selected) => setState((){
                       _checked_vit = selected;
@@ -364,7 +364,7 @@ class _CalendarPageState extends State<CalendarPage>{
               ),
               CheckboxGroup(
                 orientation: GroupedButtonsOrientation.VERTICAL,
-                activeColor: _color,
+                activeColor: Colors.blue,
                 margin: const EdgeInsets.only(left: 12.0),
                 onSelected: (List selected) => setState((){
                   _checked_hygin = selected;

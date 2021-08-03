@@ -102,7 +102,7 @@ class _UsersListPageState extends State<UsersListPage>{
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          'Alert!',
+          'Warning!',
           style: TextStyle(color: Colors.blue),
         ),
         content: Text("Are you sure you want to delete $user_name ? "),
@@ -116,6 +116,7 @@ class _UsersListPageState extends State<UsersListPage>{
                   builder: (ctx) => DataPage("admin", "")));
             },
           ),
+          Spacer(),
           FlatButton(
             child: Text('Cancel'),
             onPressed: () {

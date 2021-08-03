@@ -44,33 +44,6 @@ class _NewPageState extends State<NewPage>{
                       "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
                       " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "
               ),
-              Spacer(),
-              Container(
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => NewPageFirst()));
-                  },
-                  child: Text("NEW BUTTON 1", style: TextStyle(
-                      color: Colors.white
-                  ),),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => NewPageSecond()));
-                  },
-                  child: Text("NEW BUTTON 2", style: TextStyle(
-                      color: Colors.white
-                  ),),
-                ),
-              ),
             ],
           )
         ),
