@@ -38,30 +38,36 @@ class _SignInScreenState extends State<SignInScreen> {
      _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
      _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
-      child: Container(
-        height: _height,
-        width: _width,
-        padding: EdgeInsets.only(bottom: 5),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              clipShape(),
-              welcomeTextRow(),
-              signInTextRow(),
-              form(),
-              forgetPassTextRow(),
-              SizedBox(height: _height / 20),
-              button(),
-              signUpTextRow(),
-              Row(children: <Widget>[
-                googleLoginRow(),
-                facebookLoginRow(),
-              ],)
+      child: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
+          height: _height,
+          width: _width,
+          padding: EdgeInsets.only(bottom: 5),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                clipShape(),
+                welcomeTextRow(),
+                signInTextRow(),
+                form(),
+                forgetPassTextRow(),
+                SizedBox(height: _height / 20),
+                button(),
+                signUpTextRow(),
+                Row(children: <Widget>[
+                  googleLoginRow(),
+                  facebookLoginRow(),
+                ],)
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
+
     );
   }
 
@@ -215,10 +221,6 @@ class _SignInScreenState extends State<SignInScreen> {
           print("Routing to your account");
           Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => DashboardScreen("admin", "")));
-          Scaffold
-              .of(context)
-              .showSnackBar(SnackBar(content: Text('Login Successful')));
-
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),

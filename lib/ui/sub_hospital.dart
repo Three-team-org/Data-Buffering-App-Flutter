@@ -152,230 +152,237 @@ class _HospitalPageState extends State<HospitalPage>{
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: 350.0,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: TableCalendar(
-                firstDay: DateTime.utc(2010, 10, 16),
-                lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: _focusedDay,
-                selectedDayPredicate: (day) {
-
-                  return isSameDay(_selectedDay, day);
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
-                    _focusedDay = focusedDay;
-                    getRecord(_selected_day_str);
-                  });
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                children: <Widget>[
-
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Weight ".toUpperCase())
-                  ),
-                  CustomTextField(
-                    keyboardType: TextInputType.text,
-                    icon: Icons.receipt,
-                    hint: "Your Weight",
-                    textEditingController: _weight_controller,
-                  ),
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Length".toUpperCase())
-                  ),
-                  CustomTextField(
-                    keyboardType: TextInputType.text,
-                    icon: Icons.receipt,
-                    hint: "Your Length",
-                    textEditingController: _length_controller,
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => AdvicesPage()));
-                    },
-                    child: Container(
-                        color: Colors.grey.shade200,
-                        padding: EdgeInsets.all(8.0),
-                        width: double.infinity,
-                        child: Text("Advice".toUpperCase())
-                    ),
-                  ),
-
-                  Container(
-                    child:
-                    Material(
-                      borderRadius: BorderRadius.circular(30.0),
-                      elevation: large? 12 : (medium? 10 : 8),
-                      child: TextFormField(
-                        controller: _advice_controller,
-                        keyboardType: TextInputType.multiline,
-                        cursorColor: Colors.orange[200],
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
-                          hintText: "Advice...",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: BorderSide.none),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Remarks".toUpperCase())
-                  ),
-                  Container(
-                    child:
-                    Material(
-                      borderRadius: BorderRadius.circular(30.0),
-                      elevation: large? 12 : (medium? 10 : 8),
-                      child: TextFormField(
-                        controller: _remarks_controller,
-                        keyboardType: TextInputType.multiline,
-                        cursorColor: Colors.orange[200],
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
-                          hintText: "Remarks...",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: BorderSide.none),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          SizedBox(height: 20,),
-            Container(
-              child: Column(
+      body:
+        GestureDetector(
+          onTap: (){
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Upper jaw".toUpperCase(), textAlign: TextAlign.center,)
+                    height: 350.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: TableCalendar(
+                      firstDay: DateTime.utc(2010, 10, 16),
+                      lastDay: DateTime.utc(2030, 3, 14),
+                      focusedDay: _focusedDay,
+                      selectedDayPredicate: (day) {
+
+                        return isSameDay(_selectedDay, day);
+                      },
+                      onDaySelected: (selectedDay, focusedDay) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
+                          _focusedDay = focusedDay;
+                          getRecord(_selected_day_str);
+                        });
+                      },
+                    ),
                   ),
                   Container(
-                    height: 100,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
                       children: <Widget>[
-                        CheckboxGroup(
-                          activeColor: Colors.greenAccent,
-                          orientation: GroupedButtonsOrientation.HORIZONTAL,
-                          margin: const EdgeInsets.only(left: 8.0),
-                          padding: const EdgeInsets.all(2),
-                          onSelected: (List selected) => setState((){
-                            _checked_teeth_upper = selected;
-                          }),
 
-                          labels: <String>[
-                            "1", "2","3", "4","5", "6","7", "8","9", "10",
-                          ],
-                          checked: _checked_teeth_upper,
-                          itemBuilder: (Checkbox cb, Text txt, int i){
-                            return Column(
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.tooth),
-                                cb,
-                                txt,
-                              ],
-                            );
+                        Container(
+                            color: Colors.grey.shade200,
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            child: Text("Weight ".toUpperCase())
+                        ),
+                        CustomTextField(
+                          keyboardType: TextInputType.text,
+                          icon: Icons.receipt,
+                          hint: "Your Weight",
+                          textEditingController: _weight_controller,
+                        ),
+                        Container(
+                            color: Colors.grey.shade200,
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            child: Text("Length".toUpperCase())
+                        ),
+                        CustomTextField(
+                          keyboardType: TextInputType.text,
+                          icon: Icons.receipt,
+                          hint: "Your Length",
+                          textEditingController: _length_controller,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => AdvicesPage()));
                           },
+                          child: Container(
+                              color: Colors.grey.shade200,
+                              padding: EdgeInsets.all(8.0),
+                              width: double.infinity,
+                              child: Text("Advice".toUpperCase())
+                          ),
+                        ),
+
+                        Container(
+                          child:
+                          Material(
+                            borderRadius: BorderRadius.circular(30.0),
+                            elevation: large? 12 : (medium? 10 : 8),
+                            child: TextFormField(
+                              controller: _advice_controller,
+                              keyboardType: TextInputType.multiline,
+                              cursorColor: Colors.orange[200],
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
+                                hintText: "Advice...",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                            color: Colors.grey.shade200,
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            child: Text("Remarks".toUpperCase())
+                        ),
+                        Container(
+                          child:
+                          Material(
+                            borderRadius: BorderRadius.circular(30.0),
+                            elevation: large? 12 : (medium? 10 : 8),
+                            child: TextFormField(
+                              controller: _remarks_controller,
+                              keyboardType: TextInputType.multiline,
+                              cursorColor: Colors.orange[200],
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
+                                hintText: "Remarks...",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: <Widget>[
+                  SizedBox(height: 20,),
                   Container(
-                    height: 100,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+                    child: Column(
                       children: <Widget>[
-                        CheckboxGroup(
+                        Container(
+                            color: Colors.grey.shade200,
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            child: Text("Upper jaw".toUpperCase(), textAlign: TextAlign.center,)
+                        ),
+                        Container(
+                          height: 100,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              CheckboxGroup(
+                                activeColor: Colors.greenAccent,
+                                orientation: GroupedButtonsOrientation.HORIZONTAL,
+                                margin: const EdgeInsets.only(left: 8.0),
+                                padding: const EdgeInsets.all(2),
+                                onSelected: (List selected) => setState((){
+                                  _checked_teeth_upper = selected;
+                                }),
 
-                          activeColor: Colors.greenAccent,
-                          orientation: GroupedButtonsOrientation.HORIZONTAL,
-                          margin: const EdgeInsets.only(left: 8.0),
-                          padding: const EdgeInsets.all(2),
-                          onSelected: (List selected) => setState((){
-                            _checked_teeth_lower = selected;
-                          }),
-
-                          labels: <String>[
-                            "1", "2","3", "4","5", "6","7", "8","9", "10",
-                          ],
-                          checked: _checked_teeth_lower,
-                          itemBuilder: (Checkbox cb, Text txt, int i){
-                            return Column(
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.tooth),
-                                cb,
-                                txt,
-                              ],
-                            );
-                          },
+                                labels: <String>[
+                                  "1", "2","3", "4","5", "6","7", "8","9", "10",
+                                ],
+                                checked: _checked_teeth_upper,
+                                itemBuilder: (Checkbox cb, Text txt, int i){
+                                  return Column(
+                                    children: <Widget>[
+                                      Icon(FontAwesomeIcons.tooth),
+                                      cb,
+                                      txt,
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Lower jaw".toUpperCase(), textAlign: TextAlign.center,)
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              CheckboxGroup(
+
+                                activeColor: Colors.greenAccent,
+                                orientation: GroupedButtonsOrientation.HORIZONTAL,
+                                margin: const EdgeInsets.only(left: 8.0),
+                                padding: const EdgeInsets.all(2),
+                                onSelected: (List selected) => setState((){
+                                  _checked_teeth_lower = selected;
+                                }),
+
+                                labels: <String>[
+                                  "1", "2","3", "4","5", "6","7", "8","9", "10",
+                                ],
+                                checked: _checked_teeth_lower,
+                                itemBuilder: (Checkbox cb, Text txt, int i){
+                                  return Column(
+                                    children: <Widget>[
+                                      Icon(FontAwesomeIcons.tooth),
+                                      cb,
+                                      txt,
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            color: Colors.grey.shade200,
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            child: Text("Lower jaw".toUpperCase(), textAlign: TextAlign.center,)
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      color: Colors.red,
+                      onPressed: (){
+                        addRecord();
+                        Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                      },
+                      child: Text("Confirm", style: TextStyle(
+                          color: Colors.white
+                      ),),
+                    ),
+                  ),
+                ]
             ),
-            SizedBox(height: 10,),
-            Container(
-              width: double.infinity,
-              child: RaisedButton(
-                color: Colors.red,
-                onPressed: (){
-                  addRecord();
-                  Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-                },
-                child: Text("Confirm", style: TextStyle(
-                    color: Colors.white
-                ),),
-              ),
-            ),
-          ]
+          ),
         ),
-      ),
+
     );
   }
   Future<bool> colorPickerDialog() async {

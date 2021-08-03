@@ -47,7 +47,6 @@ class _NewPageState extends State<NewPage>{
             ],
           )
         ),
-
       ),
     );
   }

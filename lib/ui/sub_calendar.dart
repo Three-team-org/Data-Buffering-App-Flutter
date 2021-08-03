@@ -150,251 +150,256 @@ class _CalendarPageState extends State<CalendarPage>{
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              Container(
-                height: 350.0,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(12.0),
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child:  SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 350.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: TableCalendar(
+                    firstDay: DateTime.utc(2010, 10, 16),
+                    lastDay: DateTime.utc(2030, 3, 14),
+                    focusedDay: _focusedDay,
+                    selectedDayPredicate: (day) {
+
+                      return isSameDay(_selectedDay, day);
+                    },
+                    onDaySelected: (selectedDay, focusedDay) {
+                      setState(() {
+                        _selectedDay = selectedDay;
+
+                        _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
+                        getRecord(_selected_day_str);
+
+                        _focusedDay = focusedDay;
+
+                      });
+                    },
+                  ),
                 ),
-                child: TableCalendar(
-                  firstDay: DateTime.utc(2010, 10, 16),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) {
-
-                    return isSameDay(_selectedDay, day);
-                  },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-
-                      _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
-                      getRecord(_selected_day_str);
-
-                      _focusedDay = focusedDay;
-
-                    });
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("Total", style: Theme.of(context).textTheme.title,),
-
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("New Groceries".toUpperCase())
-              ),
-              CustomTextField(
-                keyboardType: TextInputType.text,
-                icon: Icons.receipt,
-                hint: "Groceries name",
-                textEditingController: _groceries_controller,
-              ),
-              Container(
-                child: Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Text("Total", style: Theme.of(context).textTheme.title,),
+
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Container(
+                    color: Colors.grey.shade200,
+                    padding: EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    child: Text("New Groceries".toUpperCase())
+                ),
+                CustomTextField(
+                  keyboardType: TextInputType.text,
+                  icon: Icons.receipt,
+                  hint: "Groceries name",
+                  textEditingController: _groceries_controller,
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Table Spoon".toUpperCase(), textAlign: TextAlign.left,)
+                      ),
+                      SizedBox(height: 5,),
+                      Container(
+                        height: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            CheckboxGroup(
+                              activeColor: Colors.blue,
+                              orientation: GroupedButtonsOrientation.HORIZONTAL,
+                              margin: const EdgeInsets.only(left: 8.0),
+                              padding: const EdgeInsets.all(2),
+                              onSelected: (List selected) => setState((){
+                                _checked_spoon = selected;
+                              }),
+
+                              labels: <String>[
+                                "1", "2","3", "4","5", "6","7",
+                              ],
+
+                              checked: _checked_spoon,
+                              itemBuilder: (Checkbox cb, Text txt, int i){
+                                return Column(
+                                  children: <Widget>[
+                                    Icon(FontAwesomeIcons.utensilSpoon),
+                                    cb,
+                                    txt,
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    color: Colors.grey.shade200,
+                    padding: EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    child: Text("WATER".toUpperCase())
+                ),
+                Column(
+                  children: <Widget>[
+                    CheckboxGroup(
+                      orientation: GroupedButtonsOrientation.VERTICAL,
+                      activeColor: Colors.blue,
+                      margin: const EdgeInsets.only(left: 12.0),
+                      onSelected: (List selected) => setState((){
+                        _checked_water = selected;
+                        print(_checked_water);
+                      }),
+                      labels: <String>[
+                        "WATER ONE",
+                        "WATER TWO",
+                      ],
+                      checked: _checked_water,
+                    ),
+
                     Container(
                         color: Colors.grey.shade200,
                         padding: EdgeInsets.all(8.0),
                         width: double.infinity,
-                        child: Text("Table Spoon".toUpperCase(), textAlign: TextAlign.left,)
+                        child: Text("VIT. D".toUpperCase())
                     ),
-                    SizedBox(height: 5,),
+                    CheckboxGroup(
+                      orientation: GroupedButtonsOrientation.VERTICAL,
+                      activeColor: Colors.blue,
+                      margin: const EdgeInsets.only(left: 12.0),
+                      onSelected: (List selected) => setState((){
+                        _checked_vit = selected;
+                      }),
+                      labels: <String>[
+                        "Vit. ONE",
+                        "Vit. TWO",
+                      ],
+                      checked: _checked_vit,
+                    ),
+
                     Container(
-                      height: 100,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          CheckboxGroup(
-                            activeColor: Colors.blue,
-                            orientation: GroupedButtonsOrientation.HORIZONTAL,
-                            margin: const EdgeInsets.only(left: 8.0),
-                            padding: const EdgeInsets.all(2),
-                            onSelected: (List selected) => setState((){
-                              _checked_spoon = selected;
-                            }),
-
-                            labels: <String>[
-                              "1", "2","3", "4","5", "6","7",
-                            ],
-
-                            checked: _checked_spoon,
-                            itemBuilder: (Checkbox cb, Text txt, int i){
-                              return Column(
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.utensilSpoon),
-                                  cb,
-                                  txt,
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        color: Colors.grey.shade200,
+                        padding: EdgeInsets.all(8.0),
+                        width: double.infinity,
+                        child: Text("Color".toUpperCase())
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("WATER".toUpperCase())
-              ),
-              Column(
-                children: <Widget>[
-              CheckboxGroup(
-              orientation: GroupedButtonsOrientation.VERTICAL,
-                activeColor: Colors.blue,
-                margin: const EdgeInsets.only(left: 12.0),
-                onSelected: (List selected) => setState((){
-                  _checked_water = selected;
-                  print(_checked_water);
-                }),
-                labels: <String>[
-                  "WATER ONE",
-                  "WATER TWO",
-                ],
-                checked: _checked_water,
-              ),
-
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
+                    SizedBox(
                       width: double.infinity,
-                      child: Text("VIT. D".toUpperCase())
-                  ),
-                  CheckboxGroup(
-                    orientation: GroupedButtonsOrientation.VERTICAL,
-                    activeColor: Colors.blue,
-                    margin: const EdgeInsets.only(left: 12.0),
-                    onSelected: (List selected) => setState((){
-                      _checked_vit = selected;
-                    }),
-                    labels: <String>[
-                      "Vit. ONE",
-                      "Vit. TWO",
-                    ],
-                    checked: _checked_vit,
-                  ),
-
-                  Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("Color".toUpperCase())
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Card(
-                        elevation: 2,
-                        child: ColorPicker(
-                          // Use the screenPickerColor as start color.
-                          color: _color,
-                          // Update the screenPickerColor using the callback.
-                          onColorChanged: (Color color) =>
-                              setState((){
-                                _color = color;
-                                _hex_color = '0x${_color.value.toRadixString(16)}';
-                              }),
-                          width: 44,
-                          height: 44,
-                          borderRadius: 22,
-                          heading: Text(
-                            'Select color',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          subheading: Text(
-                            'Select color shade',
-                            style: Theme.of(context).textTheme.subtitle1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Card(
+                          elevation: 2,
+                          child: ColorPicker(
+                            // Use the screenPickerColor as start color.
+                            color: _color,
+                            // Update the screenPickerColor using the callback.
+                            onColorChanged: (Color color) =>
+                                setState((){
+                                  _color = color;
+                                  _hex_color = '0x${_color.value.toRadixString(16)}';
+                                }),
+                            width: 44,
+                            height: 44,
+                            borderRadius: 22,
+                            heading: Text(
+                              'Select color',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            subheading: Text(
+                              'Select color shade',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("Reaction".toUpperCase())
-              ),
-              Container(
-                width: _width,
-                child:
-                Material(
-                  borderRadius: BorderRadius.circular(30.0),
-                  elevation: large? 12 : (medium? 10 : 8),
-                  child: TextFormField(
-                    controller: _reaction_controller,
-                    keyboardType: TextInputType.multiline,
-                    cursorColor: Colors.orange[200],
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
-                      hintText: hint,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none),
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Container(
+                    color: Colors.grey.shade200,
+                    padding: EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    child: Text("Reaction".toUpperCase())
+                ),
+                Container(
+                  width: _width,
+                  child:
+                  Material(
+                    borderRadius: BorderRadius.circular(30.0),
+                    elevation: large? 12 : (medium? 10 : 8),
+                    child: TextFormField(
+                      controller: _reaction_controller,
+                      keyboardType: TextInputType.multiline,
+                      cursorColor: Colors.orange[200],
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
+                        hintText: hint,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                  color: Colors.grey.shade200,
-                  padding: EdgeInsets.all(8.0),
-                  width: double.infinity,
-                  child: Text("Hygiene".toUpperCase())
-              ),
-              CheckboxGroup(
-                orientation: GroupedButtonsOrientation.VERTICAL,
-                activeColor: Colors.blue,
-                margin: const EdgeInsets.only(left: 12.0),
-                onSelected: (List selected) => setState((){
-                  _checked_hygin = selected;
-                }),
-                labels: <String>[
-                  "Morning",
-                  "Evening",
-                ],
-                checked: _checked_hygin,
-              ),
-
-              Container(
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: (){
-                    addRecord();
-                    getRecord(_selected_day_str);
-                    Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-                  },
-                  child: Text("Confirm", style: TextStyle(
-                      color: Colors.white
-                  ),),
+                Container(
+                    color: Colors.grey.shade200,
+                    padding: EdgeInsets.all(8.0),
+                    width: double.infinity,
+                    child: Text("Hygiene".toUpperCase())
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
+                CheckboxGroup(
+                  orientation: GroupedButtonsOrientation.VERTICAL,
+                  activeColor: Colors.blue,
+                  margin: const EdgeInsets.only(left: 12.0),
+                  onSelected: (List selected) => setState((){
+                    _checked_hygin = selected;
+                  }),
+                  labels: <String>[
+                    "Morning",
+                    "Evening",
+                  ],
+                  checked: _checked_hygin,
+                ),
 
-            ],
+                Container(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Colors.red,
+                    onPressed: (){
+                      addRecord();
+                      getRecord(_selected_day_str);
+                      Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                    },
+                    child: Text("Confirm", style: TextStyle(
+                        color: Colors.white
+                    ),),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+
+              ],
+            ),
           ),
         ),
       ),

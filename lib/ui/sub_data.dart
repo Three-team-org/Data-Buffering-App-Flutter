@@ -213,141 +213,145 @@ class _DataPageState extends State<DataPage>{
           )
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    stops: [0.5, 0.9],
-                    colors: [Colors.red, Colors.deepOrange.shade300])),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        _showPicker(context);
-                      },
-                      child: CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Colors.grey,
-                        child: _image != null
-                            ? ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.file(
-                            _image,
-                            width: 100,
-                            height: 100,
-                            // fit: BoxFit.fitHeight,
-                          ),
-                        ) : CircleAvatar(
-                          minRadius: 60,
-                          backgroundColor: Colors.deepOrange.shade300,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
-                            minRadius: 50,
+      body:GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: ListView(
+          children: <Widget>[
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      stops: [0.5, 0.9],
+                      colors: [Colors.red, Colors.deepOrange.shade300])),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          _showPicker(context);
+                        },
+                        child: CircleAvatar(
+                          radius: 55,
+                          backgroundColor: Colors.grey,
+                          child: _image != null
+                              ? ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.file(
+                              _image,
+                              width: 100,
+                              height: 100,
+                              // fit: BoxFit.fitHeight,
+                            ),
+                          ) : CircleAvatar(
+                            minRadius: 60,
+                            backgroundColor: Colors.deepOrange.shade300,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
+                              minRadius: 50,
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "DOCTOR NAME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _doctor_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Doctor Name",
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                "DENTIST NAME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _dentist_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Dentist Name",
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                "FULL NAME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _full_name_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Your Full Name",
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                "DATE OF BIRTH",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: Container(
+                width: 150,
+                padding: EdgeInsets.all(8.0),
+                child:
+                Material(
+                  borderRadius: BorderRadius.circular(30.0),
+                  elevation: 12,
+                  child: TextFormField(
+
+                    controller: _dateController,
+                    keyboardType: TextInputType.multiline,
+                    cursorColor: Colors.orange[200],
+                    maxLines: 1,
+                    focusNode: AlwaysDisabledFocusNode(),
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.date_range, color: Colors.orange[200], size: 20),
+                      hintText: "Date...",
+                      border: new OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide.none),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "DOCTOR NAME",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _doctor_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Doctor Name",
-            ),
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "DENTIST NAME",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _dentist_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Dentist Name",
-            ),
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "FULL NAME",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _full_name_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Your Full Name",
-            ),
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "DATE OF BIRTH",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: Container(
-              width: 150,
-              padding: EdgeInsets.all(8.0),
-              child:
-              Material(
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 12,
-                child: TextFormField(
-
-                  controller: _dateController,
-                  keyboardType: TextInputType.multiline,
-                  cursorColor: Colors.orange[200],
-                  maxLines: 1,
-                  focusNode: AlwaysDisabledFocusNode(),
-                  onTap: () {
-                    _selectDate(context);
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.date_range, color: Colors.orange[200], size: 20),
-                    hintText: "Date...",
-                    border: new OutlineInputBorder(
-
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none),
                   ),
                 ),
-              ),
 
+              ),
             ),
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "GENDER",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle:
-            Material(
-              
-              borderRadius: BorderRadius.circular(30.0),
-              elevation: 12,
-              child: 
+            Divider(),
+            ListTile(
+              title: Text(
+                "GENDER",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle:
+              Material(
+
+                  borderRadius: BorderRadius.circular(30.0),
+                  elevation: 12,
+                  child:
                   Row(
                     children: <Widget>[
                       Spacer(),
@@ -383,72 +387,74 @@ class _DataPageState extends State<DataPage>{
                       Spacer(),
                     ],
                   )
-              
-            ),
 
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "WEIGHT",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _weight_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Your Weight",
-            ),
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              "LENGTH",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _length_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Your Length",
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "TIME",
-              style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-            ),
-            subtitle: CustomTextField(
-              textEditingController: _time_controller,
-              keyboardType: TextInputType.text,
-              icon: Icons.receipt,
-              hint: "Time",
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8.0),
-            child: RaisedButton(
-              padding: const EdgeInsets.all(16.0),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0)),
-              color: Colors.yellow.shade700,
-              child: Text(
-                "Confirm",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
               ),
-              onPressed: () {
-                addRecord(context);
-                saveImages();
-                
-              },
+
             ),
-          ),
-        ],
+            Divider(),
+            ListTile(
+              title: Text(
+                "WEIGHT",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _weight_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Your Weight",
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                "LENGTH",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _length_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Your Length",
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "TIME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _time_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Time",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8.0),
+              child: RaisedButton(
+                padding: const EdgeInsets.all(16.0),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+                color: Colors.yellow.shade700,
+                child: Text(
+                  "Confirm",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+                onPressed: () {
+                  addRecord(context);
+                  saveImages();
+
+                },
+              ),
+            ),
+          ],
+        ),
       ),
+
     );
   }
   _selectDate(BuildContext context) async {
