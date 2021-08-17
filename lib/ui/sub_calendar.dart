@@ -16,6 +16,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:toast/toast.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 class CalendarPage extends StatefulWidget{
   String user_role = "", user_name = "";
   CalendarPage(@required this.user_role, @required this.user_name);
@@ -52,6 +53,8 @@ class _CalendarPageState extends State<CalendarPage>{
   List<String> _checked_hygin = [];
 
   List<String> _checked_spoon = [];
+  GifController controller_gif;
+
 
   Future addRecord() async {
     var db = new DatabaseHelper();
@@ -121,6 +124,7 @@ class _CalendarPageState extends State<CalendarPage>{
 
   @override
   void initState() {
+    super.initState();
     getRecord(_selected_day_str);
   }
 
@@ -257,8 +261,10 @@ class _CalendarPageState extends State<CalendarPage>{
                     width: double.infinity,
                     child: Text("WATER".toUpperCase())
                 ),
+
                 Column(
                   children: <Widget>[
+
                     CheckboxGroup(
                       orientation: GroupedButtonsOrientation.VERTICAL,
                       activeColor: Colors.blue,

@@ -33,12 +33,9 @@ class _DashboardScreenState extends State<DashboardScreen>{
               break;
             case 3:
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => AdvicesPage()));
+                  builder: (ctx) => AdvicesPage(widget.user_role, widget.user_name)));
               break;
-            case 4:
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => HospitalPage(widget.user_role, widget.user_name)));
-              break;
+
             case 5:
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => CalendarPage(widget.user_role, widget.user_name)));
@@ -166,7 +163,6 @@ class _DashboardScreenState extends State<DashboardScreen>{
                         cards("assets/images/icon_data.jfif", 'DATA', '30', 1),
                         cards("assets/images/icon_recipe.png", 'RECIPES', '37', 2),
                         cards("assets/images/icon_new.png", 'ADVICES', '22', 3),
-                        cards("assets/images/icon_hospital.png", 'HOSPITAL', '90', 4),
                         cards("assets/images/icon_calendar.jpg", 'CALENDAR', '22', 5),
                         cards("assets/images/icon_advice.png", 'NEW', '90', 6),
                       ],

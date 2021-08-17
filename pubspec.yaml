@@ -44,6 +44,7 @@ dependencies:
   toast: ^0.1.5
   flutter_colorpicker: ^0.5.0
   syncfusion_flutter_datagrid: ^19.2.49-beta
+  flutter_gifimage: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,7 @@ flutter:
     - assets/images/icon_dentist.png
     - assets/images/icon_tooth.png
     - assets/images/icon_doctor.png
+    - assets/images/drinkwater.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

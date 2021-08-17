@@ -217,7 +217,7 @@ class _HospitalPageState extends State<HospitalPage>{
                         GestureDetector(
                           onTap: (){
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => AdvicesPage()));
+                                builder: (ctx) => AdvicesPage(widget.user_role, widget.user_name)));
                           },
                           child: Container(
                               color: Colors.grey.shade200,

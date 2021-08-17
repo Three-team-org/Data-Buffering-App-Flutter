@@ -6,7 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:data_buffer/ui/sub_advice_description_page.dart';
+import 'package:data_buffer/ui/sub_hospital.dart';
 class AdvicesPage extends StatefulWidget{
+  String user_role = "", user_name = "";
+  AdvicesPage(@required this.user_role, @required this.user_name);
+
   @override
   _AdvicesPageState createState() => _AdvicesPageState();
 
@@ -31,7 +35,7 @@ class _AdvicesPageState extends State<AdvicesPage>{
             break;
           case 2:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+                builder: (ctx) => HospitalPage(widget.user_role, widget.user_name)));
             break;
           case 3:
             Navigator.of(context).push(MaterialPageRoute(
