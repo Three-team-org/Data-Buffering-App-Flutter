@@ -62,18 +62,15 @@ class _HospitalPageState extends State<HospitalPage>{
       shape: BoxShape.circle,
     ),
   );
-  List<String> _checked_teeth_upper = [];
-  List<String> _checked_teeth_lower = [];
+
   void changeColor(Color color) => setState(() => currentColor = color);
 
   Future addRecord() async {
     var db = new DatabaseHelper();
-    String _checked_teeth_upper_str = _checked_teeth_upper.join(',');
-    String _checked_teeth_lower_str = _checked_teeth_lower.join(',');
+
 
     var Form = new Hospital_data(_doctor_controller.text, _dentist_controller.text,_weight_controller.text,
-      _length_controller.text, _advice_controller.text, _remarks_controller.text,_checked_teeth_upper_str ,
-      _checked_teeth_lower_str,_selected_day_str, widget.user_role, widget.user_name
+      _length_controller.text, _advice_controller.text, _remarks_controller.text,_selected_day_str, widget.user_role, widget.user_name
     );
     await db.saveHospitalData(Form);
 
@@ -97,16 +94,14 @@ class _HospitalPageState extends State<HospitalPage>{
       String length_str = maps[maps.length-1]['length'];
       String advice_str = maps[maps.length-1]['advice'];
       String remarks_str = maps[maps.length-1]['remarks'];
-      String upper_selected_str = maps[maps.length-1]['upper_selected'];
-      String lower_selected_str = maps[maps.length-1]['lower_selected'];
+
 
       setState(() {
         _weight_controller = TextEditingController(text: weight_str);
         _length_controller = TextEditingController(text: length_str);
         _advice_controller = TextEditingController(text: advice_str);
         _remarks_controller = TextEditingController(text: remarks_str);
-        _checked_teeth_upper = upper_selected_str.split(',');
-        _checked_teeth_lower = lower_selected_str.split(',');
+
 
       });
     }
@@ -277,93 +272,7 @@ class _HospitalPageState extends State<HospitalPage>{
                     ),
                   ),
                   SizedBox(height: 20,),
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            color: Colors.grey.shade200,
-                            padding: EdgeInsets.all(8.0),
-                            width: double.infinity,
-                            child: Text("Upper jaw".toUpperCase(), textAlign: TextAlign.center,)
-                        ),
-                        Container(
-                          height: 100,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              CheckboxGroup(
-                                activeColor: Colors.greenAccent,
-                                orientation: GroupedButtonsOrientation.HORIZONTAL,
-                                margin: const EdgeInsets.only(left: 8.0),
-                                padding: const EdgeInsets.all(2),
-                                onSelected: (List selected) => setState((){
-                                  _checked_teeth_upper = selected;
-                                }),
 
-                                labels: <String>[
-                                  "1", "2","3", "4","5", "6","7", "8","9", "10",
-                                ],
-                                checked: _checked_teeth_upper,
-                                itemBuilder: (Checkbox cb, Text txt, int i){
-                                  return Column(
-                                    children: <Widget>[
-                                      Icon(FontAwesomeIcons.tooth),
-                                      cb,
-                                      txt,
-                                    ],
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 100,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              CheckboxGroup(
-
-                                activeColor: Colors.greenAccent,
-                                orientation: GroupedButtonsOrientation.HORIZONTAL,
-                                margin: const EdgeInsets.only(left: 8.0),
-                                padding: const EdgeInsets.all(2),
-                                onSelected: (List selected) => setState((){
-                                  _checked_teeth_lower = selected;
-                                }),
-
-                                labels: <String>[
-                                  "1", "2","3", "4","5", "6","7", "8","9", "10",
-                                ],
-                                checked: _checked_teeth_lower,
-                                itemBuilder: (Checkbox cb, Text txt, int i){
-                                  return Column(
-                                    children: <Widget>[
-                                      Icon(FontAwesomeIcons.tooth),
-                                      cb,
-                                      txt,
-                                    ],
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                            color: Colors.grey.shade200,
-                            padding: EdgeInsets.all(8.0),
-                            width: double.infinity,
-                            child: Text("Lower jaw".toUpperCase(), textAlign: TextAlign.center,)
-                        ),
-                      ],
-                    ),
-                  ),
                   SizedBox(height: 10,),
                   Container(
                     width: double.infinity,

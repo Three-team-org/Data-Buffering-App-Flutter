@@ -55,6 +55,8 @@ class _CalendarPageState extends State<CalendarPage>{
   List<String> _checked_spoon = [];
   GifController controller_gif;
 
+  List<String> _checked_teeth_upper = [];
+  List<String> _checked_teeth_lower = [];
 
   Future addRecord() async {
     var db = new DatabaseHelper();
@@ -62,8 +64,13 @@ class _CalendarPageState extends State<CalendarPage>{
     String _checked_vit_str = _checked_vit.join(',');
     String _checked_hygin_str = _checked_hygin.join(',');
     String _checked_spoon_str = _checked_spoon.join(',');
+
+    String _checked_teeth_upper_str = _checked_teeth_upper.join(',');
+    String _checked_teeth_lower_str = _checked_teeth_lower.join(',');
+
     var Form = new Form_draft(_groceries_controller.text, _checked_water_str,_checked_vit_str, _hex_color,
-        _reaction_controller.text, _checked_hygin_str, _selected_day_str,_checked_spoon_str, widget.user_role, widget.user_name
+        _reaction_controller.text, _checked_hygin_str, _selected_day_str,_checked_spoon_str,_checked_teeth_upper_str ,
+        _checked_teeth_lower_str, widget.user_role, widget.user_name
         );
     await db.saveUser(Form);
     setState(() {
@@ -99,6 +106,8 @@ class _CalendarPageState extends State<CalendarPage>{
       print(valueString);
       int value = int.parse(valueString, radix: 16);
       String spoon_select_str = maps[maps.length-1]['spoon_select'];
+      String upper_selected_str = maps[maps.length-1]['upper_selected'];
+      String lower_selected_str = maps[maps.length-1]['lower_selected'];
       setState(() {
         _groceries_controller = TextEditingController(text: grocery_name_str);
         _checked_water = water_type_str.split(',');
@@ -109,6 +118,8 @@ class _CalendarPageState extends State<CalendarPage>{
         _reaction_controller = TextEditingController(text: reaction_str);
         _checked_hygin = hygiene_str.split(',');
         _checked_spoon = spoon_select_str.split(',');
+        _checked_teeth_upper = upper_selected_str.split(',');
+        _checked_teeth_lower = lower_selected_str.split(',');
       });
     }
     else{
@@ -385,7 +396,93 @@ class _CalendarPageState extends State<CalendarPage>{
                   ],
                   checked: _checked_hygin,
                 ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Upper jaw".toUpperCase(), textAlign: TextAlign.center,)
+                      ),
+                      Container(
+                        height: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            CheckboxGroup(
+                              activeColor: Colors.blueAccent,
+                              orientation: GroupedButtonsOrientation.HORIZONTAL,
+                              margin: const EdgeInsets.only(left: 8.0),
+                              padding: const EdgeInsets.all(2),
+                              onSelected: (List selected) => setState((){
+                                _checked_teeth_upper = selected;
+                              }),
 
+                              labels: <String>[
+                                "1", "2","3", "4","5", "6","7", "8","9", "10",
+                              ],
+                              checked: _checked_teeth_upper,
+                              itemBuilder: (Checkbox cb, Text txt, int i){
+                                return Column(
+                                  children: <Widget>[
+                                    Icon(FontAwesomeIcons.tooth),
+                                    cb,
+                                    txt,
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            CheckboxGroup(
+
+                              activeColor: Colors.blueAccent,
+                              orientation: GroupedButtonsOrientation.HORIZONTAL,
+                              margin: const EdgeInsets.only(left: 8.0),
+                              padding: const EdgeInsets.all(2),
+                              onSelected: (List selected) => setState((){
+                                _checked_teeth_lower = selected;
+                              }),
+
+                              labels: <String>[
+                                "1", "2","3", "4","5", "6","7", "8","9", "10",
+                              ],
+                              checked: _checked_teeth_lower,
+                              itemBuilder: (Checkbox cb, Text txt, int i){
+                                return Column(
+                                  children: <Widget>[
+                                    Icon(FontAwesomeIcons.tooth),
+                                    cb,
+                                    txt,
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Lower jaw".toUpperCase(), textAlign: TextAlign.center,)
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   width: double.infinity,
                   child: RaisedButton(

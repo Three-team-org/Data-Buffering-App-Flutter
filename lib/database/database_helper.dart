@@ -34,13 +34,13 @@ class DatabaseHelper {
     // When creating the db, create the table
     await db.execute(
         "CREATE TABLE calendar_info(id INTEGER PRIMARY KEY, grocery_name TEXT, water_type TEXT,vit_type TEXT,"
-            "color TEXT,reaction TEXT,hygiene TEXT,date TEXT, spoon_select TEXT, user_role TEXT, user_name TEXT)");
+            "color TEXT,reaction TEXT,hygiene TEXT,date TEXT, spoon_select TEXT, upper_selected TEXT, lower_selected TEXT, user_role TEXT, user_name TEXT)");
     await db.execute(
         "CREATE TABLE user_info(id INTEGER PRIMARY KEY, full_name TEXT,doctor_name TEXT,dentist_name TEXT, birthday TEXT,gender TEXT,"
             "weight TEXT,length TEXT,time TEXT, avatar_path TEXT, user_role TEXT)");
     await db.execute(
         "CREATE TABLE hospital_info(id INTEGER PRIMARY KEY, doctor_name TEXT, dentist_name TEXT,weight TEXT,"
-            "length TEXT,advice TEXT,remarks TEXT, upper_selected TEXT, lower_selected TEXT, date_save TEXT"
+            "length TEXT,advice TEXT,remarks TEXT,  date_save TEXT"
             ", user_role TEXT, user_name TEXT)");
   }
 
@@ -67,7 +67,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new Form_draft(list[i]["grocery_name"], list[i]["water_type"], list[i]["vit_type"], list[i]["color"],
-          list[i]["reaction"], list[i]["hygiene"], list[i]["date"], list[i]["spoon_select"], list[i]["user_role"], list[i]["user_name"]);
+          list[i]["reaction"], list[i]["hygiene"], list[i]["date"], list[i]["spoon_select"],list[i]["upper_selected"], list[i]["lower_selected"], list[i]["user_role"], list[i]["user_name"]);
       user.setUserId(list[i]["id"]);
 
       employees.add(user);
@@ -83,7 +83,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new Form_draft(list[i]["grocery_name"], list[i]["water_type"], list[i]["vit_type"], list[i]["color"],
-          list[i]["reaction"], list[i]["hygiene"], list[i]["date"], list[i]["spoon_select"], list[i]["user_role"], list[i]["user_name"]);
+          list[i]["reaction"], list[i]["hygiene"], list[i]["date"], list[i]["spoon_select"], list[i]["upper_selected"], list[i]["lower_selected"],list[i]["user_role"], list[i]["user_name"]);
       user.setUserId(list[i]["id"]);
 
       employees.add(user);
@@ -133,7 +133,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new Hospital_data(list[i]["doctor_name"], list[i]["dentist_name"], list[i]["weight"], list[i]["length"],
-          list[i]["advice"], list[i]["remarks"], list[i]["upper_selected"], list[i]["lower_selected"], list[i]["date_save"], list[i]["user_role"], list[i]["user_name"]);
+          list[i]["advice"], list[i]["remarks"],  list[i]["date_save"], list[i]["user_role"], list[i]["user_name"]);
       user.setUserId(list[i]["id"]);
 
       employees.add(user);
@@ -149,7 +149,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new Hospital_data(list[i]["doctor_name"], list[i]["dentist_name"], list[i]["weight"], list[i]["length"],
-          list[i]["advice"], list[i]["remarks"], list[i]["upper_selected"], list[i]["lower_selected"], list[i]["date_save"], list[i]["user_role"], list[i]["user_name"]);
+          list[i]["advice"], list[i]["remarks"], list[i]["date_save"], list[i]["user_role"], list[i]["user_name"]);
       user.setUserId(list[i]["id"]);
 
       employees.add(user);
