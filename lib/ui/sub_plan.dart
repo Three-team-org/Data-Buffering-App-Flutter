@@ -1,46 +1,42 @@
-import 'package:data_buffer/ui/sub_new.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:data_buffer/ui/sub_data.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:data_buffer/ui/sub_recipe_month_page.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
-import 'package:data_buffer/ui/sub_advices.dart';
-import 'package:data_buffer/ui/sub_hospital.dart';
 import 'package:data_buffer/ui/sub_calendar.dart';
-import 'package:data_buffer/ui/widgets/network_image.dart';
-import 'package:data_buffer/ui/sub_new_page_dashboard.dart';
-import 'package:data_buffer/ui/sub_plan.dart';
-class DashboardScreen extends StatefulWidget{
+class PlanPage extends StatefulWidget{
   String user_role = "", user_name = "";
-  DashboardScreen(@required this.user_role, @required this.user_name);
+  PlanPage(@required this.user_role, @required this.user_name);
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _PlanPageState createState() => _PlanPageState();
 
 }
-class _DashboardScreenState extends State<DashboardScreen>{
-  final TextStyle whiteText = TextStyle(color: Colors.white);
+
+class Item {
+  const Item(this.name,this.icon);
+  final String name;
+  final Icon icon;
+}
+
+class _PlanPageState extends State<PlanPage>{
 
   Widget cards(image, title, price, page_num) {
     return GestureDetector(
       onTap: (){
-          switch(page_num){
-            case 1:
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => DataPage(widget.user_role, widget.user_name)));
-              break;
-            case 2:
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => PlanPage(widget.user_role, widget.user_name)));
-              break;
-            case 3:
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => AdvicesPage(widget.user_role, widget.user_name)));
-              break;
-            case 4:
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => NewPageDashboardScreen()));
-              break;
-          }
+        switch(page_num){
+          case 1:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipesPage()));
+            break;
+          case 2:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => CalendarPage(widget.user_role, widget.user_name)));
+            break;
+        }
       },
       child:Container(
         height: 200,
@@ -78,27 +74,12 @@ class _DashboardScreenState extends State<DashboardScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // bottomNavigationBar: BottomNavigationBar(
-        //   currentIndex: 1,
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.calendar_today),
-        //       title: Text("Today's Special"),
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(
-        //           Icons.fastfood,
-        //           color: Colors.deepOrange,
-        //         ),
-        //         title: Text(
-        //           "Foods",
-        //           style: TextStyle(color: Colors.deepOrange),
-        //         )),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.settings), title: Text("Settings")),
-        //   ],
-        // ),
-        backgroundColor: Colors.white70.withOpacity(0.9),
+      // backgroundColor: Colors.deepOrange,
+        appBar: AppBar(
+          title: Text("PLANS",style: TextStyle(color: Colors.white, fontSize: 25),),
+          backgroundColor: Colors.red,
+          elevation: 0,
+        ),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
@@ -136,7 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("MY DASHBOARD",
+                              Text("RECIPE",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 32,
@@ -156,10 +137,9 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("assets/images/icon_data.jfif", 'DATA', '30', 1),
-                        cards("assets/images/icon_plan.png", 'PLAN', '37', 2),
-                        cards("assets/images/icon_new.png", 'ADVICES', '22', 3),
-                        cards("assets/images/icon_advice.png", 'NEW', '90', 4),
+                        cards("assets/images/icon_recipe.png", 'RECIPES', '37', 1),
+                        cards("assets/images/icon_calendar.jpg", 'CALENDAR', '22', 2),
+
                       ],
                     ),
                   ),
@@ -169,4 +149,8 @@ class _DashboardScreenState extends State<DashboardScreen>{
           ),
         ));
   }
+}
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

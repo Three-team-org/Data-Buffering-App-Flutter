@@ -448,7 +448,6 @@ class _CalendarPageState extends State<CalendarPage>{
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
                             CheckboxGroup(
-
                               activeColor: Colors.blueAccent,
                               orientation: GroupedButtonsOrientation.HORIZONTAL,
                               margin: const EdgeInsets.only(left: 8.0),
