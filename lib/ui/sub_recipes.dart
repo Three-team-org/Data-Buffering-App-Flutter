@@ -21,32 +21,70 @@ class Item {
 class _RecipesPageState extends State<RecipesPage>{
 
   Widget cards(image, title, price, page_num) {
+    String str_recipes_months = "";
+
     return GestureDetector(
       onTap: (){
         switch(page_num){
           case 1:
+            str_recipes_months = "This recipe is for January";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
           case 2:
+            str_recipes_months = "This recipe is for February";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
           case 3:
+            str_recipes_months = "This recipe is for March";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
           case 4:
+            str_recipes_months = "This recipe is for April";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
           case 5:
+            str_recipes_months = "This recipe is for May";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
           case 6:
+            str_recipes_months = "This recipe is for June";
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => RecipeMonthPage()));
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 7:
+            str_recipes_months = "This recipe is for July";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 8:
+            str_recipes_months = "This recipe is for August";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 9:
+            str_recipes_months = "This recipe is for September";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 10:
+            str_recipes_months = "This recipe is for October";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 11:
+            str_recipes_months = "This recipe is for November";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
+            break;
+          case 12:
+            str_recipes_months = "This recipe is for December";
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => RecipeMonthPage(str_recipes_months)));
             break;
         }
       },

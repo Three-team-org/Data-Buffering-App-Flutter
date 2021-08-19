@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 class RecipeMonthPage extends StatefulWidget{
+  String str_show = "";
+  RecipeMonthPage(@required this.str_show);
   @override
   _RecipeMonthPageState createState() => _RecipeMonthPageState();
 
@@ -21,6 +23,7 @@ class _RecipeMonthPageState extends State<RecipeMonthPage>{
 
   @override
   Widget build(BuildContext context) {
+    print(widget.str_show);
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
@@ -34,7 +37,12 @@ class _RecipeMonthPageState extends State<RecipeMonthPage>{
           margin: const EdgeInsets.all(16.0),
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(color: Colors.grey.shade200),
-          child: Container(),
+          child: Container(
+            child: Text(
+              widget.str_show,
+              style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+            ),
+          ),
         ),
       ),
     );
