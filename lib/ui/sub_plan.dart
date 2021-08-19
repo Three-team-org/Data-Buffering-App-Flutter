@@ -117,7 +117,7 @@ class _PlanPageState extends State<PlanPage>{
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("RECIPE",
+                              Text("PLANS",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 32,

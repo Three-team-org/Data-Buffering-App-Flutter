@@ -268,32 +268,6 @@ class _DataPageState extends State<DataPage>{
             ),
             ListTile(
               title: Text(
-                "DOCTOR NAME",
-                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-              ),
-              subtitle: CustomTextField(
-                textEditingController: _doctor_controller,
-                keyboardType: TextInputType.text,
-                icon: Icons.receipt,
-                hint: "Doctor Name",
-              ),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(
-                "DENTIST NAME",
-                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
-              ),
-              subtitle: CustomTextField(
-                textEditingController: _dentist_controller,
-                keyboardType: TextInputType.text,
-                icon: Icons.receipt,
-                hint: "Dentist Name",
-              ),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(
                 "FULL NAME",
                 style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
               ),
@@ -429,6 +403,32 @@ class _DataPageState extends State<DataPage>{
                 hint: "Time",
               ),
             ),
+            ListTile(
+              title: Text(
+                "DOCTOR NAME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _doctor_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Doctor Name",
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                "DENTIST NAME",
+                style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+              ),
+              subtitle: CustomTextField(
+                textEditingController: _dentist_controller,
+                keyboardType: TextInputType.text,
+                icon: Icons.receipt,
+                hint: "Dentist Name",
+              ),
+            ),
+            Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8.0),
               child: RaisedButton(

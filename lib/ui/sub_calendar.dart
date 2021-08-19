@@ -1,4 +1,5 @@
 
+import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -209,11 +210,17 @@ class _CalendarPageState extends State<CalendarPage>{
                   ],
                 ),
                 SizedBox(height: 20.0,),
-                Container(
-                    color: Colors.grey.shade200,
-                    padding: EdgeInsets.all(8.0),
-                    width: double.infinity,
-                    child: Text("New Groceries".toUpperCase())
+                GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => RecipesPage()));
+                  },
+                  child: Container(
+                      color: Colors.grey.shade200,
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      child: Text("New Groceries".toUpperCase())
+                  ),
                 ),
                 CustomTextField(
                   keyboardType: TextInputType.text,

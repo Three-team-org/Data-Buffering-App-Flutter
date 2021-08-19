@@ -74,30 +74,64 @@ class _DashboardScreenState extends State<DashboardScreen>{
       ) ,
     );
   }
+  Widget cards_one(image, title, price, page_num) {
+    return GestureDetector(
+      onTap: (){
+        switch(page_num){
+          case 1:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => DataPage(widget.user_role, widget.user_name)));
+            break;
+          case 2:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => PlanPage(widget.user_role, widget.user_name)));
+            break;
+          case 3:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => AdvicesPage(widget.user_role, widget.user_name)));
+            break;
+          case 4:
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => NewPageDashboardScreen()));
+            break;
+        }
+      },
+      child:Container(
+        height: 100,
+        width: MediaQuery.of(context).size.width-50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 6.0,
+            ),
+          ],
+          color: Colors.grey[100],
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                image,
+                height: 80,
+              ),
+              SizedBox(
+                width: 30,
+              ),
 
+              Text(title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
+            ],
+          ),
+        ),
+      ) ,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // bottomNavigationBar: BottomNavigationBar(
-        //   currentIndex: 1,
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.calendar_today),
-        //       title: Text("Today's Special"),
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(
-        //           Icons.fastfood,
-        //           color: Colors.deepOrange,
-        //         ),
-        //         title: Text(
-        //           "Foods",
-        //           style: TextStyle(color: Colors.deepOrange),
-        //         )),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.settings), title: Text("Settings")),
-        //   ],
-        // ),
         backgroundColor: Colors.white70.withOpacity(0.9),
         body: SafeArea(
           child: Stack(
@@ -149,6 +183,24 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       ),
                     ),
                   ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              cards_one("assets/images/icon_data.jfif", 'DATA', '30', 1),
+                              Spacer(),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                   SliverPadding(
                     padding: const EdgeInsets.all(20.0),
                     sliver: SliverGrid.count(
@@ -156,11 +208,27 @@ class _DashboardScreenState extends State<DashboardScreen>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("assets/images/icon_data.jfif", 'DATA', '30', 1),
                         cards("assets/images/icon_plan.png", 'PLAN', '37', 2),
-                        cards("assets/images/icon_new.png", 'ADVICES', '22', 3),
                         cards("assets/images/icon_advice.png", 'NEW', '90', 4),
                       ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              cards_one("assets/images/icon_new.png", 'ADVICES', '22', 3),
+                              Spacer(),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
