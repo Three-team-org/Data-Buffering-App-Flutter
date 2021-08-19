@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 class RecipeMonthPage extends StatefulWidget{
   String str_show = "";
-  RecipeMonthPage(@required this.str_show);
+  String str_month = "";
+  RecipeMonthPage(@required this.str_show, @required this.str_month);
   @override
   _RecipeMonthPageState createState() => _RecipeMonthPageState();
 
@@ -27,7 +28,7 @@ class _RecipeMonthPageState extends State<RecipeMonthPage>{
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
-        title: Text("RECIPE MONTH",style: TextStyle(color: Colors.white, fontSize: 25),),
+        title: Text(widget.str_month,style: TextStyle(color: Colors.white, fontSize: 25),),
         backgroundColor: Colors.red,
         elevation: 0,
       ),
