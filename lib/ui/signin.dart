@@ -21,6 +21,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
 
+  final double infoHeight = 400.0;
   double _height;
   double _width;
   double _pixelRatio;
@@ -37,37 +38,79 @@ class _SignInScreenState extends State<SignInScreen> {
      _pixelRatio = MediaQuery.of(context).devicePixelRatio;
      _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
      _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+     final double tempHeight = MediaQuery.of(context).size.height -
+         (MediaQuery.of(context).size.width) +
+         70.0;
     return Material(
       child: GestureDetector(
         onTap: (){
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.topRight,
+                  colors: [ Color(0xFFD85858), Color(0xFFFD7900),])),
           height: _height,
           width: _width,
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(bottom: 0),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 clipShape(),
                 welcomeTextRow(),
                 signInTextRow(),
-                form(),
-                forgetPassTextRow(),
-                SizedBox(height: _height / 20),
-                button(),
-                signUpTextRow(),
-                Row(children: <Widget>[
-                  googleLoginRow(),
-                  facebookLoginRow(),
-                ],)
-
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(32.0),
+                        topRight: Radius.circular(32.0)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Color(0xFF3A5160).withOpacity(0.2),
+                          offset: const Offset(1.1, 1.1),
+                          blurRadius: 10.0),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: SingleChildScrollView(
+                      child:
+                      Container(
+                        constraints: BoxConstraints(
+                            minHeight: 400,
+                            maxHeight: tempHeight > infoHeight
+                                ? tempHeight
+                                : infoHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            form(),
+                            SizedBox(height: _height / 50),
+                            button(),
+                            forgetPassTextRow(),
+                            signUpTextRow(),
+                            Row(
+                              children: <Widget>[
+                              googleLoginRow(),
+                              facebookLoginRow(),
+                            ],),
+                            SizedBox(height: _height/15,),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
-
     );
   }
 
@@ -75,38 +118,16 @@ class _SignInScreenState extends State<SignInScreen> {
     //double height = MediaQuery.of(context).size.height;
     return Stack(
       children: <Widget>[
-        Opacity(
-          opacity: 0.75,
-          child: ClipPath(
-            clipper: CustomShapeClipper(),
-            child: Container(
-              height:_large? _height/4 : (_medium? _height/3.75 : _height/3.5),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.red[400], Colors.redAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Opacity(
-          opacity: 0.5,
-          child: ClipPath(
-            clipper: CustomShapeClipper2(),
-            child: Container(
-              height: _large? _height/4.5 : (_medium? _height/4.25 : _height/4),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.red[400], Colors.redAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
         Container(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           margin: EdgeInsets.only(top: _large? _height/15 : (_medium? _height/12.5 : _height/10)),
-          child: Text("Your Logo Goes Here!", style: TextStyle(fontSize: 25, color: Colors.yellow),)
+          child:
+            Image.asset(
+              'assets/images/baby_tooth.gif',
+              height: _height*0.25,
+              width: _width*0.8,
+              fit: BoxFit.fill,
+            ),
         ),
       ],
     );
@@ -121,8 +142,11 @@ class _SignInScreenState extends State<SignInScreen> {
             "Welcome",
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
               fontSize: _large? 40 : (_medium? 30 : 20),
+              color: Colors.white
             ),
+
           ),
         ],
       ),
@@ -137,8 +161,9 @@ class _SignInScreenState extends State<SignInScreen> {
           Text(
             "Sign in to your account",
             style: TextStyle(
+              color: Colors.white.withOpacity(0.61),
               fontWeight: FontWeight.normal,
-              fontSize: _large? 15 : (_medium? 12.5 : 10),
+              fontSize: _large? 17 : (_medium? 15 : 14),
             ),
           ),
         ],
@@ -151,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen> {
       margin: EdgeInsets.only(
           left: _width / 12.0,
           right: _width / 12.0,
-          top: _height / 30.0),
+          ),
       child: Form(
         key: _key,
         child: Column(
@@ -170,7 +195,7 @@ class _SignInScreenState extends State<SignInScreen> {
       keyboardType: TextInputType.emailAddress,
       textEditingController: emailController,
       icon: Icons.email,
-      hint: "Email ID",
+      hint: "Email",
     );
 
   }
@@ -187,25 +212,19 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget forgetPassTextRow() {
     return Container(
-      margin: EdgeInsets.only(top: _height / 40.0),
+      margin: EdgeInsets.only(top: _height / 100.0, left: _width/2.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "Forgot your password?",
-            style: TextStyle(fontWeight: FontWeight.normal,fontSize: _large? 14: (_medium? 12: 10)),
-          ),
-          SizedBox(
-            width: 5,
-          ),
+
           GestureDetector(
             onTap: () {
               print("Routing");
             },
             child: Text(
-              "Recover",
+              "Forgot your password?",
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.orange[200]),
+                  fontWeight: FontWeight.bold, color: Color(0xFF313131)),
             ),
           )
         ],
@@ -214,40 +233,64 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget button() {
-    return RaisedButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-          print("Routing to your account");
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => DashboardScreen("admin", "")));
-      },
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
-      child: Container(
-        alignment: Alignment.center,
-        width: _large? _width/2 : (_medium? _width/2: _width/2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: LinearGradient(
-            colors: <Color>[Colors.orange[200], Colors.pinkAccent],
-          ),
-        ),
-        padding: const EdgeInsets.all(12.0),
-        child: Text('LOGIN',style: TextStyle(fontSize: _large? 14: (_medium? 12: 10))),
+    return Container(
+      width: _width,
+      child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children:<Widget>[
+            RaisedButton(
+
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => DashboardScreen("admin", "")));
+              },
+              textColor: Colors.white,
+              padding: EdgeInsets.all(0.0),
+              child: Container(
+                alignment: Alignment.center,
+                width: _large? _width*.8 : (_medium? _width*.8: _width*.8),
+                height: _large? _height/15 : (_medium? _height/15: _height/15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  color: Color(0xFFF46C20),
+                ),
+                padding: const EdgeInsets.all(12.0),
+                child:Row(
+                  children: <Widget>[
+                    Spacer(),
+                    Text('sign in'.toUpperCase(),style: TextStyle(fontSize: _large? 22: (_medium? 20: 18))),
+                    Spacer(),
+                    Icon(
+                      FontAwesomeIcons.longArrowAltRight,
+
+                    ),
+                  ],
+                )
+
+              ),
+            ),
+          ]
       ),
     );
+
   }
 
   Widget signUpTextRow() {
     return Container(
-      margin: EdgeInsets.only(top: _height / 120.0),
+      margin: EdgeInsets.only(top: _height / 50.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             "New Here?",
-            style: TextStyle(fontWeight: FontWeight.normal,fontSize: _large? 14: (_medium? 12: 10)),
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: _large? 20: (_medium? 18: 16),
+                color: Color(0xFF313131)),
           ),
           SizedBox(
             width: 5,
@@ -260,7 +303,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Text(
               "Create Account",
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.orange[200], fontSize: _large? 19: (_medium? 17: 15)),
+                  fontWeight: FontWeight.bold, color: Color(0xFFFF7A00), fontSize: _large? 20: (_medium? 18: 16), ),
             ),
           )
         ],
@@ -270,9 +313,9 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget googleLoginRow(){
     return InkWell(
             child: Container(
-                width: _large? _width/2 : (_medium? _width/2: _width/2),
+
                 height: _large? _height/18 : (_medium? _height/18: _height/18),
-                margin: EdgeInsets.only(top: 25),
+                margin: EdgeInsets.only(top: 25, left: _width/7),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                 ),
@@ -285,19 +328,20 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: 30.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
+
                           ),
                         ),
                         RaisedButton.icon(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.0)),
-                          color: Colors.red,
+                          color: Color(0xFFFFDBDB),
                           icon: Icon(
                             FontAwesomeIcons.google,
-                            color: Colors.white,
+                            color: Color(0xFFDA483F),
                           ),
                           label: Text(
                             "Google  ",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Color(0xFFDA483F)),
                           ),
                           onPressed: () {},
                         ),
@@ -314,7 +358,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget facebookLoginRow(){
     return InkWell(
       child: Container(
-          width: _large? _width/2 : (_medium? _width/2: _width/2),
+
           height: _large? _height/18 : (_medium? _height/18: _height/18),
           margin: EdgeInsets.only(top: 25),
           child: Center(
@@ -324,14 +368,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   RaisedButton.icon(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(2.0)),
-                    color: Colors.indigo,
+                    color: Color(0xFFE0E3FF),
                     icon: Icon(
                       FontAwesomeIcons.facebook,
-                      color: Colors.white,
+                      color: Color(0xFF3D5A96),
                     ),
                     label: Text(
                       "Facebook",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Color(0xFF3D5A96)),
                     ),
                     onPressed: () {},
                   ),

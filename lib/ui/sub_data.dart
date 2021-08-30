@@ -39,8 +39,8 @@ class _DataPageState extends State<DataPage>{
   Item selected_option;
   File _image;
   List<Item> Gender = <Item>[
-    const Item('Male',Icon(FontAwesomeIcons.male,color:  const Color(0xFF167F67),)),
-    const Item('Female',Icon(FontAwesomeIcons.female,color:  Colors.blue,)),
+    const Item('Male',Icon(FontAwesomeIcons.male,color:  Colors.blueAccent,)),
+    const Item('Female',Icon(FontAwesomeIcons.female,color:  Colors.pinkAccent,)),
   ];
   List<Item> choices = <Item>[
     const Item('Add new User',Icon(FontAwesomeIcons.plus,color:  const Color(0xFF167F67),)),

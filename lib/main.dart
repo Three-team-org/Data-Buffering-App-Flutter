@@ -5,7 +5,10 @@ import 'package:data_buffer/ui/signin.dart';
 import 'package:data_buffer/ui/signup.dart';
 import 'package:data_buffer/ui/splashscreen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  Paint.enableDithering = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
