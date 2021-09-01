@@ -6,8 +6,7 @@ import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final double infoHeight = 400.0;
   bool checkBoxValue = false;
   double _height;
   double _width;
@@ -81,23 +81,72 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
-
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width) +
+        70.0;
     return Material(
-      child: Scaffold(
-        body: Container(
+      child: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.topRight,
+                  colors: [ Color(0xFFD85858), Color(0xFFFD7900),])),
           height: _height,
           width: _width,
-          margin: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(bottom: 0),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Opacity(opacity: 0.88,child: CustomAppBar()),
+                SizedBox(height: _height/20,),
                 clipShape(),
-                form(),
-                acceptTermsTextRow(),
-                SizedBox(height: _height/35,),
-                button(),
-                //signInTextRow(),
+                SizedBox(height: _height/20,),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(32.0),
+                        topRight: Radius.circular(32.0)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Color(0xFF3A5160).withOpacity(0.2),
+                          offset: const Offset(1.1, 1.1),
+                          blurRadius: 10.0),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: SingleChildScrollView(
+                      child:
+                      Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left:_width/ 12.0,
+                                    right: _width / 12.0,
+                                    top: _height / 20.0),
+                                child:
+                                  Text('sign up'.toUpperCase(),style: TextStyle(fontSize: _large? 30: (_medium? 28: 25),
+                                      color: Color(0xFFCE4A00), fontStyle: FontStyle.italic)),
+                                  ),
+                            form(),
+                            SizedBox(height: _height/35,),
+                            button(),
+                            SizedBox(height: _height/3,),
+                            //signInTextRow(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -109,34 +158,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget clipShape() {
     return Stack(
       children: <Widget>[
-        Opacity(
-          opacity: 0.75,
-          child: ClipPath(
-            clipper: CustomShapeClipper(),
-            child: Container(
-              height: _large? _height/8 : (_medium? _height/7 : _height/6.5),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Opacity(
-          opacity: 0.5,
-          child: ClipPath(
-            clipper: CustomShapeClipper2(),
-            child: Container(
-              height: _large? _height/12 : (_medium? _height/11 : _height/10),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
-                ),
-              ),
-            ),
-          ),
-        ),
         Container(
           height: _height / 5.5,
           alignment: Alignment.center,
@@ -188,7 +209,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             emailTextFormField(),
-            SizedBox(height: _height / 60.0),
+            SizedBox(height: _height / 50.0),
             passwordTextFormField(),
           ],
         ),
@@ -237,40 +258,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget acceptTermsTextRow() {
-    return Container(
-      margin: EdgeInsets.only(top: _height / 100.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
 
-        ],
-      ),
-    );
-  }
 
   Widget button() {
-    return RaisedButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-        print("Routing to your account");
-      },
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
-      child: Container(
-        alignment: Alignment.center,
-        width:_large? _width/2 : (_medium? _width/2: _width/2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          gradient: LinearGradient(
-            colors: <Color>[Colors.orange[200], Colors.pinkAccent],
-          ),
-        ),
-        padding: const EdgeInsets.all(12.0),
-        child: Text('REGISTER', style: TextStyle(fontSize: _large? 14: (_medium? 12: 10)),),
+    return Container(
+      width: _width,
+      child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children:<Widget>[
+            RaisedButton(
+
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              textColor: Colors.white,
+              padding: EdgeInsets.all(0.0),
+              child: Container(
+                  alignment: Alignment.center,
+                  width: _large? _width*.8 : (_medium? _width*.8: _width*.8),
+                  height: _large? _height/15 : (_medium? _height/15: _height/15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color(0xFFF46C20),
+                  ),
+                  padding: const EdgeInsets.all(12.0),
+                  child:Row(
+                    children: <Widget>[
+                      Spacer(),
+                      Text('Register'.toUpperCase(),style: TextStyle(fontSize: _large? 22: (_medium? 20: 18), color: Colors.white)),
+                      Spacer(),
+                      Icon(
+                        FontAwesomeIcons.arrowCircleRight,
+                        color: Colors.white,
+                      ),
+                    ],
+                  )
+
+              ),
+            ),
+          ]
       ),
     );
+
   }
 
   Widget infoTextRow() {

@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/ui/sub_data.dart';
-import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
-import 'package:data_buffer/ui/sub_hospital.dart';
-import 'package:data_buffer/ui/sub_calendar.dart';
-import 'package:data_buffer/ui/widgets/network_image.dart';
 import 'package:data_buffer/ui/sub_new_page_dashboard.dart';
 import 'package:data_buffer/ui/sub_plan.dart';
+import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 class DashboardScreen extends StatefulWidget{
   String user_role = "", user_name = "";
   DashboardScreen(@required this.user_role, @required this.user_name);
@@ -19,7 +16,12 @@ class DashboardScreen extends StatefulWidget{
 }
 class _DashboardScreenState extends State<DashboardScreen>{
   final TextStyle whiteText = TextStyle(color: Colors.white);
-
+  final double infoHeight = 400.0;
+  double _height;
+  double _width;
+  double _pixelRatio;
+  bool _large;
+  bool _medium;
   Widget cards(image, title, price, page_num) {
     return GestureDetector(
       onTap: (){
@@ -43,33 +45,14 @@ class _DashboardScreenState extends State<DashboardScreen>{
           }
       },
       child:Container(
-        height: 200,
-        width: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6.0,
-            ),
-          ],
-          color: Colors.grey[100],
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                image,
-                height: 80,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
-            ],
-          ),
+        height: _height/3,
+        width: _width-100,
+
+        child: Image.asset(
+          image,
+          height: _height/3,
+          width: _width-50,
+          fit: BoxFit.fill,
         ),
       ) ,
     );
@@ -97,142 +80,167 @@ class _DashboardScreenState extends State<DashboardScreen>{
         }
       },
       child:Container(
-        height: 100,
-        width: MediaQuery.of(context).size.width-50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6.0,
-            ),
-          ],
-          color: Colors.grey[100],
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                image,
-                height: 80,
-              ),
-              SizedBox(
-                width: 30,
-              ),
+        height: _height/5,
+        width: _width-50,
 
-              Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
-            ],
-          ),
+        child: Image.asset(
+          image,
+          height: _height/5,
+          width: _width-50,
+          fit: BoxFit.fill,
         ),
       ) ,
     );
   }
   @override
   Widget build(BuildContext context) {
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width) +
+        70.0;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
         backgroundColor: Colors.white70.withOpacity(0.9),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
               Container(
-                height: 250,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  color: Colors.orangeAccent.shade700,
-                ),
-                width: double.infinity,
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                        colors: [ Color(0xFFF65901), Color(0xFFF69401),])),
+                height: _height,
+                width: _width,
+                child:
+                    Container(
+                      margin: EdgeInsets.only(top: 20, left: 20),
+                      child:
+                      Text("Welcome !",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white)),
+                    )
               ),
               Container(
-                margin: EdgeInsets.only(left: 90, bottom: 20),
-                width: 200,
-                height: 180,
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
-                    color: Colors.orangeAccent.shade200,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(160),
-                        bottomLeft: Radius.circular(290),
-                        bottomRight: Radius.circular(160),
-                        topRight: Radius.circular(10))),
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(18.0),
+                      topRight: Radius.circular(18.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Color(0xFF3A5160).withOpacity(0.2),
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SingleChildScrollView(
+                    child:
+                    Container(
+                      constraints: BoxConstraints(
+                          minHeight: 400,
+                          maxHeight: 700),
+                      child:
+                      CustomScrollView(
+                        slivers: <Widget>[
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      Text("my dashboard".toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black)),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      Text("Please visit everywhere",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black)),
+                                      Spacer(),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      cards_one("assets/images/icon_data.png", 'DATA', '30', 1),
+                                      Spacer(),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SliverPadding(
+                            padding: const EdgeInsets.all(20.0),
+                            sliver: SliverGrid.count(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              children: <Widget>[
+                                cards("assets/images/icon_plan.png", 'PLAN', '37', 2),
+                                cards("assets/images/icon_new.png", 'NEW', '90', 4),
+                              ],
+                            ),
+                          ),
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      cards_one("assets/images/icon_advice.png", 'ADVICES', '22', 3),
+                                      Spacer(),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              CustomScrollView(
-                slivers: <Widget>[
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              Text("MY DASHBOARD",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.white)),
-                              Spacer(),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              cards_one("assets/images/icon_data.jfif", 'DATA', '30', 1),
-                              Spacer(),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(20.0),
-                    sliver: SliverGrid.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      children: <Widget>[
-                        cards("assets/images/icon_plan.png", 'PLAN', '37', 2),
-                        cards("assets/images/icon_advice.png", 'NEW', '90', 4),
-                      ],
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              cards_one("assets/images/icon_new.png", 'ADVICES', '22', 3),
-                              Spacer(),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+
             ],
           ),
         ));

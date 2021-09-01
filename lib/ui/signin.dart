@@ -265,7 +265,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text('sign in'.toUpperCase(),style: TextStyle(fontSize: _large? 22: (_medium? 20: 18))),
                     Spacer(),
                     Icon(
-                      FontAwesomeIcons.longArrowAltRight,
+                      FontAwesomeIcons.arrowCircleRight,
 
                     ),
                   ],

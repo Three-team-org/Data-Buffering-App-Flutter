@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:toast/toast.dart';
 import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
+import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 
 class DataPage extends StatefulWidget{
   String user_role = "", user_name = "";
@@ -30,6 +31,13 @@ class Item {
 }
 
 class _DataPageState extends State<DataPage>{
+
+  double _height;
+  double _width;
+  double _pixelRatio;
+  bool _large;
+  bool _medium;
+
   User_data user_data;
 
   bool avatar_exists = false;
@@ -58,8 +66,7 @@ class _DataPageState extends State<DataPage>{
   TextInputType keyboardType;
   bool obscureText;
   IconData icon;
-  double _width;
-  double _pixelRatio;
+
   bool large;
   bool medium;
   String avatar_path;
@@ -172,10 +179,16 @@ class _DataPageState extends State<DataPage>{
   }
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       appBar: AppBar(
         title: Text("DATA PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
+
         backgroundColor: Colors.red,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -220,13 +233,12 @@ class _DataPageState extends State<DataPage>{
         child: ListView(
           children: <Widget>[
             Container(
-              height: 200,
+              height: 150,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      stops: [0.5, 0.9],
-                      colors: [Colors.red, Colors.deepOrange.shade300])),
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                      colors: [ Color(0xFFF65901), Color(0xFFF69401),])),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,7 +267,7 @@ class _DataPageState extends State<DataPage>{
                             backgroundColor: Colors.deepOrange.shade300,
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
+                                  "https://getstisla.com/dist/img/avatar/avatar-5.png"),
                               minRadius: 50,
                             ),
                           ),
@@ -285,33 +297,25 @@ class _DataPageState extends State<DataPage>{
                 style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
               ),
               subtitle: Container(
-                width: 150,
                 padding: EdgeInsets.all(8.0),
                 child:
-                Material(
-                  borderRadius: BorderRadius.circular(30.0),
-                  elevation: 12,
-                  child: TextFormField(
-
-                    controller: _dateController,
-                    keyboardType: TextInputType.multiline,
-                    cursorColor: Colors.orange[200],
-                    maxLines: 1,
-                    focusNode: AlwaysDisabledFocusNode(),
-                    onTap: () {
-                      _selectDate(context);
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.date_range, color: Colors.orange[200], size: 20),
-                      hintText: "Date...",
-                      border: new OutlineInputBorder(
-
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none),
-                    ),
+                TextFormField(
+                  controller: _dateController,
+                  keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.orange[200],
+                  maxLines: 1,
+                  focusNode: AlwaysDisabledFocusNode(),
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.date_range, color: Colors.orange[200], size: 20),
+                    hintText: "Date",
+                    border: new OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none),
                   ),
                 ),
-
               ),
             ),
             Divider(),
@@ -321,47 +325,33 @@ class _DataPageState extends State<DataPage>{
                 style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
               ),
               subtitle:
-              Material(
-
-                  borderRadius: BorderRadius.circular(30.0),
-                  elevation: 12,
-                  child:
-                  Row(
-                    children: <Widget>[
-                      Spacer(),
-                      DropdownButton<Item>(
-
-                        hint:  Text("              Select Gender"),
-                        value: selectedGender,
-
-                        onChanged: (Item Value) {
-                          setState(() {
-                            // print(Value.name);
-                            selectedGender = Value;
-                          });
-                        },
-                        items: Gender.map((Item user) {
-                          return  DropdownMenuItem<Item>(
-                            value: user,
-                            child: Row(
-                              children: <Widget>[
-                                user.icon,
-                                SizedBox(width: 10,),
-                                Text(
-                                  user.name,
-                                  style:  TextStyle(color: Colors.black),
-                                ),
-                              ],
+              Row(
+                children: <Widget>[
+                  DropdownButton<Item>(
+                    hint:  Text("Select Gender"),
+                    value: selectedGender,
+                    onChanged: (Item Value) {
+                      setState(() {
+                        selectedGender = Value;
+                      });
+                    },
+                    items: Gender.map((Item user) {
+                      return  DropdownMenuItem<Item>(
+                        value: user,
+                        child: Row(
+                          children: <Widget>[
+                            user.icon,
+                            SizedBox(width: 10,),
+                            Text(
+                              user.name,
+                              style:  TextStyle(color: Colors.black),
                             ),
-                          );
-                        }).toList(),
-                      ),
-                      Spacer(),
-                      Spacer(),
-                      Spacer(),
-                    ],
-                  )
-
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ),
 
             ),
