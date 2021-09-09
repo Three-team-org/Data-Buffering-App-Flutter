@@ -57,7 +57,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
       ) ,
     );
   }
-  Widget cards_one(image, title, price, page_num) {
+  Widget cards_one(image, title, price, page_num, height, width) {
     return GestureDetector(
       onTap: (){
         switch(page_num){
@@ -80,8 +80,8 @@ class _DashboardScreenState extends State<DashboardScreen>{
         }
       },
       child:Container(
-        height: _height/5,
-        width: _width-50,
+        height: height,
+        width: width,
 
         child: Image.asset(
           image,
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                     )
               ),
               Container(
-                margin: EdgeInsets.only(top: 60),
+                margin: EdgeInsets.only(top: 80),
                 decoration: BoxDecoration(
                   color: Color(0xFFFFFFFF),
                   borderRadius: const BorderRadius.only(
@@ -147,95 +147,124 @@ class _DashboardScreenState extends State<DashboardScreen>{
                     child:
                     Container(
                       constraints: BoxConstraints(
-                          minHeight: 400,
-                          maxHeight: 700),
+                          minHeight: _height - 120,
+                          maxHeight: _height),
                       child:
-                      CustomScrollView(
-                        slivers: <Widget>[
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Spacer(),
-                                      Text("my dashboard".toUpperCase(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w800,
-                                              color: Colors.black)),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Spacer(),
-                                      Text("Please visit everywhere",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black)),
-                                      Spacer(),
-                                    ],
-                                  )
-                                ],
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: _height/50,),
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              Text("my dashboard".toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black)),
+                              Spacer(),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              Text("Please visit everywhere",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black)),
+                              Spacer(),
+                            ],
+                          ),
+                          SizedBox(height: _height/50,),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      height: _height / 2,
+                                      color: Colors.transparent,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Spacer(),
+                                              cards_one("assets/images/icon_data.png", 'DATA', '30', 1, 400.0, 200.0),
+                                              Spacer(),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    Container(
+                                      height: 200,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Spacer(),
+                                              cards_one("assets/images/icon_new.png", 'NEW', '90', 4, 200.0, 200.0),
+                                              Spacer(),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Spacer(),
-                                      cards_one("assets/images/icon_data.png", 'DATA', '30', 1),
-                                      Spacer(),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SliverPadding(
-                            padding: const EdgeInsets.all(20.0),
-                            sliver: SliverGrid.count(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              children: <Widget>[
-                                cards("assets/images/icon_plan.png", 'PLAN', '37', 2),
-                                cards("assets/images/icon_new.png", 'NEW', '90', 4),
-                              ],
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Spacer(),
-                                      cards_one("assets/images/icon_advice.png", 'ADVICES', '22', 3),
-                                      Spacer(),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 200,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Spacer(),
+                                              cards_one("assets/images/icon_plan.png", 'PLAN', '37', 2, 200.0, 200.0),
+                                              Spacer(),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20.0),
+                                    Container(
+                                      height: 400,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Spacer(),
+                                              cards_one("assets/images/icon_advice.png", 'ADVICE', '22', 3, 400.0, 200.0),
+                                              Spacer(),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
                         ],
                       ),
+
                     ),
                   ),
                 ),

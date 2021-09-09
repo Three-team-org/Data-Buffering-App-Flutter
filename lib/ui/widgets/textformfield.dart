@@ -12,7 +12,6 @@ class CustomTextField extends StatelessWidget {
   bool large;
   bool medium;
 
-
   CustomTextField(
     {this.hint,
       this.textEditingController,
@@ -28,9 +27,7 @@ class CustomTextField extends StatelessWidget {
     large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     medium=  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Container(
-
       child: TextFormField(
-
         controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: Colors.orange[200],
@@ -39,7 +36,6 @@ class CustomTextField extends StatelessWidget {
           fillColor: Colors.white,
           prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
           hintText: hint,
-          
         ),
       ),
     );

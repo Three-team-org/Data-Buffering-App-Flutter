@@ -190,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ) : CircleAvatar(
                 minRadius: 60,
-                backgroundColor: Colors.deepOrange.shade300,
+                backgroundColor: Colors.deepOrange,
                 child: Icon(Icons.add_a_photo, size: _large? 40: (_medium? 33: 31),color: Colors.orange[200],)),
               ),
             ),
