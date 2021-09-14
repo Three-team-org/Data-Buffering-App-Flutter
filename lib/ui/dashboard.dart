@@ -185,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      height: _height / 2,
+                                      height: _height / 2 - 30,
                                       color: Colors.transparent,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,23 +193,23 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_data.png", 'DATA', '30', 1, 400.0, 200.0),
+                                              cards_one("assets/images/icon_data.png", 'DATA', '30', 1, _height / 2 - 30, _width / 2 - 50),
                                               Spacer(),
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
-
+                                    const SizedBox(height: 20.0),
                                     Container(
-                                      height: 200,
+                                      height: _height / 4,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_new.png", 'NEW', '90', 4, 200.0, 200.0),
+                                              cards_one("assets/images/icon_new.png", 'NEW', '90', 4, _height / 4, _width / 2 - 50),
                                               Spacer(),
                                             ],
                                           ),
@@ -217,6 +217,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                         ],
                                       ),
                                     ),
+                                    const SizedBox(height: 20.0),
                                   ],
                                 ),
                               ),
@@ -224,14 +225,14 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      height: 200,
+                                      height: _height / 4,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_plan.png", 'PLAN', '37', 2, 200.0, 200.0),
+                                              cards_one("assets/images/icon_plan.png", 'PLAN', '37', 2, _height / 4, _width / 2 - 50),
                                               Spacer(),
                                             ],
                                           ),
@@ -241,14 +242,14 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                     ),
                                     const SizedBox(height: 20.0),
                                     Container(
-                                      height: 400,
+                                      height: _height / 2 - 30,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_advice.png", 'ADVICE', '22', 3, 400.0, 200.0),
+                                              cards_one("assets/images/icon_advice.png", 'ADVICE', '22', 3, _height / 2 - 30, _width / 2 - 50),
                                               Spacer(),
                                             ],
                                           ),
@@ -256,7 +257,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                         ],
                                       ),
                                     ),
-
+                                    const SizedBox(height: 20.0),
                                   ],
                                 ),
                               )
