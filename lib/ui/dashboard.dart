@@ -193,7 +193,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_data.png", 'DATA', '30', 1, _height / 2 - 30, _width / 2 - 50),
+                                              cards_one("assets/images/icon_data.png", 'DATA', '30', 1, _height / 2 - 30, _width / 2 - 30),
                                               Spacer(),
                                             ],
                                           ),
@@ -209,7 +209,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_new.png", 'NEW', '90', 4, _height / 4, _width / 2 - 50),
+                                              cards_one("assets/images/icon_new.png", 'NEW', '90', 4, _height / 4, _width / 2 - 30),
                                               Spacer(),
                                             ],
                                           ),
@@ -232,7 +232,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_plan.png", 'PLAN', '37', 2, _height / 4, _width / 2 - 50),
+                                              cards_one("assets/images/icon_plan.png", 'PLAN', '37', 2, _height / 4, _width / 2 - 30),
                                               Spacer(),
                                             ],
                                           ),
@@ -249,7 +249,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                           Row(
                                             children: <Widget>[
                                               Spacer(),
-                                              cards_one("assets/images/icon_advice.png", 'ADVICE', '22', 3, _height / 2 - 30, _width / 2 - 50),
+                                              cards_one("assets/images/icon_advice.png", 'ADVICE', '22', 3, _height / 2 - 30, _width / 2 - 30),
                                               Spacer(),
                                             ],
                                           ),

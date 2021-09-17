@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,8 +26,10 @@ class Item {
 
 class _AdvicesPageState extends State<AdvicesPage>{
   final TextStyle whiteText = TextStyle(color: Colors.white);
+  double _height;
+  double _width;
 
-  Widget cards(image, title, price, page_num) {
+  Widget cards(image, bgcolor, title, subtitle, price, page_num) {
     return GestureDetector(
       onTap: (){
         switch(page_num){
@@ -50,7 +54,6 @@ class _AdvicesPageState extends State<AdvicesPage>{
       },
       child:Container(
         height: 200,
-        width: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
@@ -59,21 +62,46 @@ class _AdvicesPageState extends State<AdvicesPage>{
               blurRadius: 6.0,
             ),
           ],
-          color: Colors.grey[100],
+          color: bgcolor,
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Image.asset(
                 image,
-                height: 80,
+                height: 200,
               ),
               SizedBox(
-                height: 10,
+                width: _width / 40,
               ),
-              Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(title,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: _width / 19, color: Colors.black)),
+                      SizedBox(height: _width / 40),
+                      Text(subtitle,
+                          style: TextStyle(fontSize: _width / 30, fontWeight: FontWeight.w500, color: Colors.black)),
+                      ],
+                  ),
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     Text(subtitle,
+                  //         softWrap: false,
+                  //         overflow: TextOverflow.visible,
+                  //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black,)),
+                  //   ],
+                  // ),
+                ],
+              ),
+
             ],
           ),
         ),
@@ -83,6 +111,8 @@ class _AdvicesPageState extends State<AdvicesPage>{
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       // bottomNavigationBar: BottomNavigationBar(
       //   currentIndex: 1,
@@ -104,88 +134,136 @@ class _AdvicesPageState extends State<AdvicesPage>{
       //         icon: Icon(Icons.settings), title: Text("Settings")),
       //   ],
       // ),
-        backgroundColor: Colors.white70.withOpacity(0.9),
+        backgroundColor: Colors.white70.withOpacity(1),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
-              Container(
-                height: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  color: Colors.orangeAccent.shade700,
+              Row(
+                children: <Widget>[
+                  Container(
+                  height: _height * 3 / 7,
+                    margin: EdgeInsets.zero,
+                    width: _width,
+                    child: Container(
+                        child: Image.asset("assets/images/advice_bg.png",
+                          fit: BoxFit.fill,)
+                    )
                 ),
-                width: double.infinity,
+                ]
               ),
-              Container(
-                margin: EdgeInsets.only(left: 90, bottom: 20),
-                width: 200,
-                height: 180,
-                decoration: BoxDecoration(
-                    color: Colors.orangeAccent.shade200,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(160),
-                        bottomLeft: Radius.circular(290),
-                        bottomRight: Radius.circular(160),
-                        topRight: Radius.circular(10))),
+              Row(
+                  children: <Widget>[
+                    SizedBox(height: _height),
+                    Container(
+                        height: _height / 1.5,
+                        margin: EdgeInsets.zero,
+                        width: _width,
+                        child: Container(
+                            child: Text("ADVICE DASHBOARD",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white)),
+                        )
+                    ),
+                  ]
               ),
+              Row(
+                  children: <Widget>[
+                    SizedBox(height: _height,),
+                    Container(
+                      padding: EdgeInsets.only(left: 30, right: 30),
+                        height: _height / 1.9,
+                        margin: EdgeInsets.zero,
+                        width: _width,
+                        child: Container(
+                          child: Text("If you get into difficulties, don't hesitate to ask for advice.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 19,
+                                  letterSpacing: 1,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white)),
+                        )
+                    ),
+                  ]
+              ),
+              // Container(
+              //   margin: EdgeInsets.only(left: 90, bottom: 20),
+              //   width: 200,
+              //   height: 180,
+              //
+              //   decoration: BoxDecoration(
+              //       color: Colors.orangeAccent.shade200,
+              //       borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(160),
+              //           bottomLeft: Radius.circular(290),
+              //           bottomRight: Radius.circular(160),
+              //           topRight: Radius.circular(10))),
+              // ),
               CustomScrollView(
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(20),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              Text("ADVICE DASHBOARD",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.white)),
-                              Spacer(),
-                            ],
-                          )
+                          SizedBox(height: _height / 3.5,),
                         ],
                       ),
                     ),
                   ),
                   SliverPadding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.fromLTRB(_width / 12, 0, _width / 12, 0),
                     sliver: SliverGrid.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: 2.5,
                       children: <Widget>[
-                        cards("assets/images/icon_tooth.png", 'ORAL HYGIENE', '30', 1),
-                        cards("assets/images/icon_doctor.png", 'DOCTOR', '37', 2),
-
+                        cards("assets/images/advice_oral_hygiene.png",
+                            Color.fromRGBO(255, 240, 240, 1),
+                            'ORAL HYGIENE',
+                            // 'Lorem ipsum dolor sit amt,\nconsectetur adipiscing elit.\nFusce porta enim id nisi int',
+                            'Keeping one\'s mouth clean\nand free of disease and\nother problems',
+                            '30',
+                            1),
+                        cards("assets/images/advice_doctor.png",
+                            Color.fromRGBO(255, 255, 240, 1),
+                            'DOCTOR',
+                            'Don\'t be afraid of seeing the\ndoctor. Doctors give you big\nchance.',
+                            '37',
+                            2),
+                        cards("assets/images/advice_dentist.png",
+                            Color.fromRGBO(255, 240, 255, 1),
+                            'DENTIST',
+                            'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
+                            '22',
+                            3),
                       ],
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              cards("assets/images/icon_dentist.png", 'DENTIST', '22', 3),
-                              Spacer(),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Column(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: <Widget>[
+                  //         Row(
+                  //           children: <Widget>[
+                  //             Spacer(),
+                  //             cards("assets/images/icon_dentist.png", 'DENTIST', '22', 3),
+                  //             Spacer(),
+                  //           ],
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
 
