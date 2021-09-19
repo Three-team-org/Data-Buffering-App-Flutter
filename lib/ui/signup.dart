@@ -94,14 +94,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
-                  colors: [ Color(0xFFD85858), Color(0xFFFD7900),])),
+                  colors: [ Color(0xFFE14C37), Color(0xFFF5A327),])),
           height: _height,
           width: _width,
           padding: EdgeInsets.only(bottom: 0),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Opacity(opacity: 0.88,child: CustomAppBar()),
+                SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Opacity(opacity: 1,child: CustomAppBar()),
+                  ],
+                ),
                 SizedBox(height: _height/20,),
                 clipShape(),
                 SizedBox(height: _height/20,),

@@ -7,12 +7,12 @@ class CustomAppBar extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Material(
       child: Container(
-        height: height/10,
-        width: width,
-        padding: EdgeInsets.only(left: 15, top: 25),
+        height: height/15,
+        width: width / 2,
+        padding: EdgeInsets.only(left: 15, top: 15),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors:[Color(0xFFD85858), Color(0xFFFD7900)]
+              colors: [ Color(0xFFE14C37), Color(0xFFEA7330),]
           ),
         ),
         child: Row(

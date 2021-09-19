@@ -96,6 +96,7 @@ flutter:
     - assets/images/advice_oral_hygiene.png
     - assets/images/advice_doctor.png
     - assets/images/advice_dentist.png
+    - assets/images/footer.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
