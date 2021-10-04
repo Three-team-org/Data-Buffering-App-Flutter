@@ -33,7 +33,7 @@ class _CalendarPageState extends State<CalendarPage>{
   String _picked_water = "WATER ONE";
   String _picked_vit = "Vit. ONE";
   String _picked_hygine = "Morning";
-  Color _color = Colors.blue;
+  Color _color = Colors.brown;
   String _hex_color = '0x${Colors.blue.value.toRadixString(16)}';
   String _selected_day_str = DateFormat("yyyy-MM-dd").format(DateTime.now());
   DateTime _selectedDay;
@@ -148,7 +148,7 @@ class _CalendarPageState extends State<CalendarPage>{
     medium=  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.deepOrange,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
@@ -176,7 +176,7 @@ class _CalendarPageState extends State<CalendarPage>{
             child: Column(
               children: [
                 Container(
-                  height: 350.0,
+                  height: 430.0,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(12.0),
@@ -282,7 +282,6 @@ class _CalendarPageState extends State<CalendarPage>{
 
                 Column(
                   children: <Widget>[
-
                     CheckboxGroup(
                       orientation: GroupedButtonsOrientation.VERTICAL,
                       activeColor: Colors.blue,
@@ -332,6 +331,9 @@ class _CalendarPageState extends State<CalendarPage>{
                           elevation: 2,
                           child: ColorPicker(
                             // Use the screenPickerColor as start color.
+                            pickersEnabled: const <ColorPickerType, bool>{
+                              ColorPickerType.accent: false,
+                            },
                             color: _color,
                             // Update the screenPickerColor using the callback.
                             onColorChanged: (Color color) =>

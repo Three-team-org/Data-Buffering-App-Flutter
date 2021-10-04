@@ -1,4 +1,4 @@
-
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,8 +23,9 @@ class Item {
 }
 
 class _PlanPageState extends State<PlanPage>{
-
-  Widget cards(image, title, price, page_num) {
+  double _height;
+  double _width;
+  Widget cards(image, title, subtitle, price, page_num) {
     return GestureDetector(
       onTap: (){
         switch(page_num){
@@ -39,16 +40,14 @@ class _PlanPageState extends State<PlanPage>{
         }
       },
       child:Container(
-        height: 200,
-        width: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6.0,
+              color: Colors.grey.shade50,
             ),
           ],
+          border: Border.all(color: Colors.black26, width: 0.5),
           color: Colors.grey[100],
         ),
         child: Center(
@@ -57,13 +56,19 @@ class _PlanPageState extends State<PlanPage>{
             children: <Widget>[
               Image.asset(
                 image,
-                height: 80,
+                height: 150,
               ),
               SizedBox(
                 height: 10,
               ),
               Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Color.fromRGBO(45, 35, 25, 1))),
+              SizedBox(
+                height: 10,
+              ),
+              Text(subtitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: Colors.black38, fontStyle: FontStyle.italic)),
             ],
           ),
         ),
@@ -73,73 +78,121 @@ class _PlanPageState extends State<PlanPage>{
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
-        appBar: AppBar(
-          title: Text("PLANS",style: TextStyle(color: Colors.white, fontSize: 25),),
-          backgroundColor: Colors.red,
-          elevation: 0,
-        ),
+      //   appBar: AppBar(
+      //     title: Text("PLANS",style: TextStyle(color: Colors.white, fontSize: 25),),
+      //     backgroundColor: Colors.red,
+      //     elevation: 0,
+      //   ),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
               Container(
-                height: 250,
+                height: _height,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  color: Colors.orangeAccent.shade700,
-                ),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                        colors: [ Color(0xFFE14C37), Color(0xFFF5A327),])),
                 width: double.infinity,
               ),
               Container(
-                margin: EdgeInsets.only(left: 90, bottom: 20),
-                width: 200,
-                height: 180,
+                width: _width,
+                margin: EdgeInsets.only(top: _height / 3),
                 decoration: BoxDecoration(
-                    color: Colors.orangeAccent.shade200,
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(160),
-                        bottomLeft: Radius.circular(290),
-                        bottomRight: Radius.circular(160),
-                        topRight: Radius.circular(10))),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))
+                ),
+              ),
+              Container(
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))
+                  ),
+                  child: Column(
+                    children: <Widget>[
+
+                    ],
+                  )
               ),
               CustomScrollView(
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Opacity(opacity: 1,child: CustomAppBar()),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(height: 40,)
+                            ],
+                          ),
                           Row(
                             children: <Widget>[
                               Spacer(),
                               Text("PLANS",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: 36,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.white)),
                               Spacer(),
                             ],
-                          )
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Failing to plan is planning to fail. ",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(height: 60)
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
                   SliverPadding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     sliver: SliverGrid.count(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
+                      childAspectRatio: 0.6,
                       children: <Widget>[
-                        cards("assets/images/icon_recipe.png", 'RECIPES', '37', 1),
-                        cards("assets/images/icon_calendar.jpg", 'CALENDAR', '22', 2),
-
+                        cards("assets/images/icon_recipe.png",
+                            'RECIPES',
+                            "Our recipe is much of course, it is all important; but it is not all.",
+                            '37', 1),
+                        cards("assets/images/icon_calendar.png",
+                            'CALENDAR',
+                            "All of this will be understood by examining our calendar.",
+                            '22', 2),
                       ],
                     ),
                   ),

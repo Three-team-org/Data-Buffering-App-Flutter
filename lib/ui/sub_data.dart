@@ -216,7 +216,7 @@ class _DataPageState extends State<DataPage>{
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Opacity(opacity: 0.9,child: CustomAppBar()),
+                        Opacity(opacity: 1,child: CustomAppBar()),
                         SizedBox(width: _width / 2 - 50,),
                         PopupMenuButton(
                           onSelected: (Item item){
@@ -238,9 +238,7 @@ class _DataPageState extends State<DataPage>{
                                   child: Container(
                                     child: Row(
                                       children: <Widget>[
-                                        choice.icon,
-
-                                        Text("   " + choice.name),
+                                        choice.icon, Text("   " + choice.name),
                                       ],
                                     ),
                                   )
@@ -505,7 +503,7 @@ class _DataPageState extends State<DataPage>{
         builder: (BuildContext context, Widget child) {
           return Theme(
             data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
+              colorScheme: ColorScheme.light(
                 primary: Colors.orange,
                 onPrimary: Colors.white,
                 surface: Colors.red.shade300,
