@@ -97,6 +97,19 @@ flutter:
     - assets/images/advice_doctor.png
     - assets/images/advice_dentist.png
     - assets/images/footer.png
+    - assets/images/calendar.png
+    - assets/images/recipe_0.png
+    - assets/images/recipe_1.png
+    - assets/images/recipe_2.png
+    - assets/images/recipe_3.png
+    - assets/images/recipe_4.png
+    - assets/images/recipe_5.png
+    - assets/images/recipe_6.png
+    - assets/images/recipe_7.png
+    - assets/images/recipe_8.png
+    - assets/images/recipe_9.png
+    - assets/images/recipe_10.png
+    - assets/images/recipe_12.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

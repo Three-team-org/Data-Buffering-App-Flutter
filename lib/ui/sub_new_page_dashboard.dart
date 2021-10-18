@@ -8,6 +8,7 @@ import 'package:data_buffer/ui/sub_advices.dart';
 import 'package:data_buffer/ui/sub_hospital.dart';
 import 'package:data_buffer/ui/sub_calendar.dart';
 import 'package:data_buffer/ui/widgets/network_image.dart';
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 
 class NewPageDashboardScreen extends StatefulWidget{
   @override
@@ -16,6 +17,8 @@ class NewPageDashboardScreen extends StatefulWidget{
 }
 class _NewPageDashboardScreenState extends State<NewPageDashboardScreen>{
   final TextStyle whiteText = TextStyle(color: Colors.white);
+  double _height;
+  double _width;
 
   Widget cards(image, title, price, page_num) {
     return GestureDetector(
@@ -75,6 +78,8 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen>{
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       // bottomNavigationBar: BottomNavigationBar(
       //   currentIndex: 1,
@@ -101,48 +106,86 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen>{
           child: Stack(
             children: <Widget>[
               Container(
-                height: 250,
+                height: _height,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  color: Colors.orangeAccent.shade700,
-                ),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                        colors: [ Color(0xFFE14C37), Color(0xFFF5A327),])),
                 width: double.infinity,
               ),
               Container(
-                margin: EdgeInsets.only(left: 90, bottom: 20),
-                width: 200,
-                height: 180,
+                width: _width,
+                margin: EdgeInsets.only(top: _height / 3),
                 decoration: BoxDecoration(
-                    color: Colors.orangeAccent.shade200,
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(160),
-                        bottomLeft: Radius.circular(290),
-                        bottomRight: Radius.circular(160),
-                        topRight: Radius.circular(10))),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))
+                ),
+              ),
+              Container(
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))
+                  ),
+                  child: Column(
+                    children: <Widget>[
+
+                    ],
+                  )
               ),
               CustomScrollView(
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
+                              Opacity(opacity: 1,child: CustomAppBar()),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
                               Spacer(),
                               Text("NEW PAGE",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: 36,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.white)),
                               Spacer(),
                             ],
-                          )
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(height: 30,)
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              Text("Lorem ipsum dolor sit amet, consectetur \n adipiscing elit. Aenean tellus justo,",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white)),
+                              Spacer(),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(height: 30,)
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -166,7 +209,7 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen>{
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(top: 500.0),
+                margin: const EdgeInsets.only(top: 750),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(color: Colors.grey.shade200),
                 child: Text(

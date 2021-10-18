@@ -45,6 +45,7 @@ class _CalendarPageState extends State<CalendarPage>{
   TextInputType keyboardType;
   bool obscureText;
   IconData icon;
+  double _height;
   double _width;
   double _pixelRatio;
   bool large;
@@ -142,6 +143,7 @@ class _CalendarPageState extends State<CalendarPage>{
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
     large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
@@ -176,31 +178,52 @@ class _CalendarPageState extends State<CalendarPage>{
             child: Column(
               children: [
                 Container(
-                  height: 430.0,
+                  height: _height / 2,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
-                  child: TableCalendar(
-                    firstDay: DateTime.utc(2010, 10, 16),
-                    lastDay: DateTime.utc(2030, 3, 14),
-                    focusedDay: _focusedDay,
-                    selectedDayPredicate: (day) {
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: <Widget>[
+                          Image.asset('assets/images/calendar.png', fit: BoxFit.fill, height: _height / 2.1,),
+                          Center(
+                            heightFactor: 1.2,
+                            child: Container(
+                              width: _width / 1.3,
+                              height: _height / 2.6,
+                              child: TableCalendar(
+                                rowHeight: _height / 20,
+                                firstDay: DateTime.utc(2010, 10, 16),
+                                lastDay: DateTime.utc(2030, 3, 14),
+                                focusedDay: _focusedDay,
+                                selectedDayPredicate: (day) {
+                                  return isSameDay(_selectedDay, day);
+                                },
+                                onDaySelected: (selectedDay, focusedDay) {
+                                  setState(() {
+                                    _selectedDay = selectedDay;
 
-                      return isSameDay(_selectedDay, day);
-                    },
-                    onDaySelected: (selectedDay, focusedDay) {
-                      setState(() {
-                        _selectedDay = selectedDay;
+                                    _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
+                                    getRecord(_selected_day_str);
 
-                        _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
-                        getRecord(_selected_day_str);
+                                    _focusedDay = focusedDay;
 
-                        _focusedDay = focusedDay;
+                                  });
+                                },
+                              ),
+                            )
+                          ),
 
-                      });
-                    },
-                  ),
+
+
+                        ],
+                      )
+                    ],
+                  )
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:data_buffer/ui/sub_recipe_month_page.dart';
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 class RecipesPage extends StatefulWidget{
   @override
   _RecipesPageState createState() => _RecipesPageState();
@@ -19,7 +19,8 @@ class Item {
 }
 
 class _RecipesPageState extends State<RecipesPage>{
-
+  double _height;
+  double _width;
   Widget cards(image, title, price, page_num) {
     String str_recipes_months = "";
     String str_month_name = "";
@@ -104,7 +105,7 @@ class _RecipesPageState extends State<RecipesPage>{
         height: 200,
         width: 200,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
@@ -119,13 +120,13 @@ class _RecipesPageState extends State<RecipesPage>{
             children: <Widget>[
               Image.asset(
                 image,
-                height: 80,
+                height: 200,
               ),
               SizedBox(
-                height: 10,
+                height: 1,
               ),
               Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.orangeAccent.shade200,)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 1, color: Colors.orangeAccent.shade200,)),
             ],
           ),
         ),
@@ -135,47 +136,64 @@ class _RecipesPageState extends State<RecipesPage>{
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
-      appBar: AppBar(
-        title: Text("RECIPE PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
-        backgroundColor: Colors.red,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: Text("RECIPE PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
+      //   backgroundColor: Colors.red,
+      //   elevation: 0,
+      // ),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
               Container(
-                height: 250,
+                height: _height,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  color: Colors.orangeAccent.shade700,
-                ),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.topRight,
+                        colors: [ Color(0xFFE14C37), Color(0xFFF5A327),])),
                 width: double.infinity,
               ),
               Container(
-                margin: EdgeInsets.only(left: 90, bottom: 20),
-                width: 200,
-                height: 180,
+                width: _width,
+                margin: EdgeInsets.only(top: _height / 3),
                 decoration: BoxDecoration(
-                    color: Colors.orangeAccent.shade200,
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(160),
-                        bottomLeft: Radius.circular(290),
-                        bottomRight: Radius.circular(160),
-                        topRight: Radius.circular(10))),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))
+                ),
+              ),
+              Container(
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))
+                  ),
+                  child: Column(
+                    children: <Widget>[
+
+                    ],
+                  )
               ),
               CustomScrollView(
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Opacity(opacity: 1,child: CustomAppBar()),
+                            ],
+                          ),
                           Row(
                             children: <Widget>[
                               Spacer(),
@@ -187,7 +205,12 @@ class _RecipesPageState extends State<RecipesPage>{
                                       color: Colors.white)),
                               Spacer(),
                             ],
-                          )
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(height: 20,)
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -199,18 +222,18 @@ class _RecipesPageState extends State<RecipesPage>{
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("assets/images/icon_calendar.jpg", 'January', '30', 1),
-                        cards("assets/images/icon_calendar.jpg", 'February', '37', 2),
-                        cards("assets/images/icon_calendar.jpg", 'March', '22', 3),
-                        cards("assets/images/icon_calendar.jpg", 'April', '90', 4),
-                        cards("assets/images/icon_calendar.jpg", 'May', '22', 5),
-                        cards("assets/images/icon_calendar.jpg", 'June', '90', 6),
-                        cards("assets/images/icon_calendar.jpg", 'July', '30', 7),
-                        cards("assets/images/icon_calendar.jpg", 'August', '37', 8),
-                        cards("assets/images/icon_calendar.jpg", 'September', '22', 9),
-                        cards("assets/images/icon_calendar.jpg", 'October', '90', 10),
-                        cards("assets/images/icon_calendar.jpg", 'November', '22', 11),
-                        cards("assets/images/icon_calendar.jpg", 'December', '90', 12),
+                        cards("assets/images/recipe_0.png", 'January', '30', 1),
+                        cards("assets/images/recipe_1.png", 'February', '37', 2),
+                        cards("assets/images/recipe_2.png", 'March', '22', 3),
+                        cards("assets/images/recipe_3.png", 'April', '90', 4),
+                        cards("assets/images/recipe_4.png", 'May', '22', 5),
+                        cards("assets/images/recipe_5.png", 'June', '90', 6),
+                        cards("assets/images/recipe_6.png", 'July', '30', 7),
+                        cards("assets/images/recipe_7.png", 'August', '37', 8),
+                        cards("assets/images/recipe_8.png", 'September', '22', 9),
+                        cards("assets/images/recipe_9.png", 'October', '90', 10),
+                        cards("assets/images/recipe_10.png", 'November', '22', 11),
+                        cards("assets/images/recipe_12.png", 'December', '90', 12),
                       ],
                     ),
                   ),

@@ -56,19 +56,19 @@ class _PlanPageState extends State<PlanPage>{
             children: <Widget>[
               Image.asset(
                 image,
-                height: 150,
+                height: _width / 3,
               ),
               SizedBox(
                 height: 10,
               ),
               Text(title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Color.fromRGBO(45, 35, 25, 1))),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: _width / 20, color: Color.fromRGBO(45, 35, 25, 1))),
               SizedBox(
                 height: 10,
               ),
               Text(subtitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: Colors.black38, fontStyle: FontStyle.italic)),
+                  style: TextStyle(fontSize: _width / 30, color: Colors.black38, fontStyle: FontStyle.italic)),
             ],
           ),
         ),
@@ -80,7 +80,7 @@ class _PlanPageState extends State<PlanPage>{
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
-    _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       // backgroundColor: Colors.deepOrange,
       //   appBar: AppBar(
@@ -183,7 +183,7 @@ class _PlanPageState extends State<PlanPage>{
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 0.6,
+                      childAspectRatio: _width * 1.15 / _height,
                       children: <Widget>[
                         cards("assets/images/icon_recipe.png",
                             'RECIPES',

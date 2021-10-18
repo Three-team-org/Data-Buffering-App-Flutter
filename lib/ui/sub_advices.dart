@@ -87,7 +87,7 @@ class _AdvicesPageState extends State<AdvicesPage>{
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: _width / 19, color: Colors.black)),
                       SizedBox(height: _width / 40),
                       Text(subtitle,
-                          style: TextStyle(fontSize: _width / 30, fontWeight: FontWeight.w500, color: Colors.black)),
+                          style: TextStyle(fontSize: _width / 35, fontWeight: FontWeight.w500, color: Colors.black)),
                       ],
                   ),
                   // Row(

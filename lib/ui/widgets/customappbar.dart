@@ -7,7 +7,7 @@ class CustomAppBar extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Material(
       child: Container(
-        height: height/15,
+        height: height / 14,
         width: width / 2,
         padding: EdgeInsets.only(left: 15, top: 15),
         decoration: BoxDecoration(
