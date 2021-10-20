@@ -5,6 +5,7 @@ import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/dashboard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-
   final double infoHeight = 400.0;
   double _height;
   double _width;
@@ -33,17 +33,17 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-     _height = MediaQuery.of(context).size.height;
-     _width = MediaQuery.of(context).size.width;
-     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-     _large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-     _medium =  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
-     final double tempHeight = MediaQuery.of(context).size.height -
-         (MediaQuery.of(context).size.width) +
-         70.0;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width) +
+        70.0;
     return Material(
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Container(
@@ -51,7 +51,10 @@ class _SignInScreenState extends State<SignInScreen> {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
-                  colors: [ Color(0xFFD85858), Color(0xFFFD7900),])),
+                  colors: [
+                Color(0xFFD85858),
+                Color(0xFFFD7900),
+              ])),
           height: _height,
           width: _width,
           padding: EdgeInsets.only(bottom: 0),
@@ -78,8 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     child: SingleChildScrollView(
-                      child:
-                      Container(
+                      child: Container(
                         constraints: BoxConstraints(
                             minHeight: 400,
                             maxHeight: tempHeight > infoHeight
@@ -96,10 +98,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             signUpTextRow(),
                             Row(
                               children: <Widget>[
-                              googleLoginRow(),
-                              facebookLoginRow(),
-                            ],),
-                            SizedBox(height: _height/15,),
+                                googleLoginRow(),
+                                facebookLoginRow(),
+                              ],
+                            ),
+                            SizedBox(
+                              height: _height / 15,
+                            ),
                           ],
                         ),
                       ),
@@ -120,14 +125,16 @@ class _SignInScreenState extends State<SignInScreen> {
       children: <Widget>[
         Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.only(top: _large? _height/15 : (_medium? _height/12.5 : _height/10)),
-          child:
-            Image.asset(
-              'assets/images/baby_tooth.gif',
-              height: _height*0.25,
-              width: _width*0.8,
-              fit: BoxFit.fill,
-            ),
+          margin: EdgeInsets.only(
+              top: _large
+                  ? _height / 15
+                  : (_medium ? _height / 12.5 : _height / 10)),
+          child: Image.asset(
+            'assets/images/baby_tooth.gif',
+            height: _height * 0.25,
+            width: _width * 0.8,
+            fit: BoxFit.fill,
+          ),
         ),
       ],
     );
@@ -141,12 +148,10 @@ class _SignInScreenState extends State<SignInScreen> {
           Text(
             "Welcome",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              fontSize: _large? 40 : (_medium? 30 : 20),
-              color: Colors.white
-            ),
-
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                fontSize: _large ? 40 : (_medium ? 30 : 20),
+                color: Colors.white),
           ),
         ],
       ),
@@ -163,7 +168,7 @@ class _SignInScreenState extends State<SignInScreen> {
             style: TextStyle(
               color: Colors.white.withOpacity(0.61),
               fontWeight: FontWeight.normal,
-              fontSize: _large? 17 : (_medium? 15 : 14),
+              fontSize: _large ? 17 : (_medium ? 15 : 14),
             ),
           ),
         ],
@@ -174,9 +179,9 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget form() {
     return Container(
       margin: EdgeInsets.only(
-          left: _width / 12.0,
-          right: _width / 12.0,
-          ),
+        left: _width / 12.0,
+        right: _width / 12.0,
+      ),
       child: Form(
         key: _key,
         child: Column(
@@ -197,7 +202,6 @@ class _SignInScreenState extends State<SignInScreen> {
       icon: Icons.email,
       hint: "Email",
     );
-
   }
 
   Widget passwordTextFormField() {
@@ -212,11 +216,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget forgetPassTextRow() {
     return Container(
-      margin: EdgeInsets.only(top: _height / 100.0, left: _width/2.5),
+      margin: EdgeInsets.only(top: _height / 100.0, left: _width / 2.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-
           GestureDetector(
             onTap: () {
               print("Routing");
@@ -236,14 +239,13 @@ class _SignInScreenState extends State<SignInScreen> {
     return Container(
       width: _width,
       child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget>[
+          children: <Widget>[
             RaisedButton(
-
               elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DashboardScreen("admin", "")));
@@ -251,32 +253,33 @@ class _SignInScreenState extends State<SignInScreen> {
               textColor: Colors.white,
               padding: EdgeInsets.all(0.0),
               child: Container(
-                alignment: Alignment.center,
-                width: _large? _width*.8 : (_medium? _width*.8: _width*.8),
-                height: _large? _height/15 : (_medium? _height/15: _height/15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Color(0xFFF46C20),
-                ),
-                padding: const EdgeInsets.all(12.0),
-                child:Row(
-                  children: <Widget>[
-                    Spacer(),
-                    Text('sign in'.toUpperCase(),style: TextStyle(fontSize: _large? 22: (_medium? 20: 18))),
-                    Spacer(),
-                    Icon(
-                      FontAwesomeIcons.arrowCircleRight,
-
-                    ),
-                  ],
-                )
-
-              ),
+                  alignment: Alignment.center,
+                  width: _large
+                      ? _width * .8
+                      : (_medium ? _width * .8 : _width * .8),
+                  height: _large
+                      ? _height / 15
+                      : (_medium ? _height / 15 : _height / 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Color(0xFFF46C20),
+                  ),
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: <Widget>[
+                      Spacer(),
+                      Text('sign in'.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: _large ? 22 : (_medium ? 20 : 18))),
+                      Spacer(),
+                      Icon(
+                        FontAwesomeIcons.arrowCircleRight,
+                      ),
+                    ],
+                  )),
             ),
-          ]
-      ),
+          ]),
     );
-
   }
 
   Widget signUpTextRow() {
@@ -289,7 +292,7 @@ class _SignInScreenState extends State<SignInScreen> {
             "New Here?",
             style: TextStyle(
                 fontWeight: FontWeight.normal,
-                fontSize: _large? 20: (_medium? 18: 16),
+                fontSize: _large ? 20 : (_medium ? 18 : 16),
                 color: Color(0xFF313131)),
           ),
           SizedBox(
@@ -303,89 +306,92 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Text(
               "Create Account",
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Color(0xFFFF7A00), fontSize: _large? 20: (_medium? 18: 16), ),
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFF7A00),
+                fontSize: _large ? 20 : (_medium ? 18 : 16),
+              ),
             ),
           )
         ],
       ),
     );
   }
-  Widget googleLoginRow(){
-    return InkWell(
-            child: Container(
 
-                height: _large? _height/18 : (_medium? _height/18: _height/18),
-                margin: EdgeInsets.only(top: 25, left: _width/7),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          height: 30.0,
-                          width: 30.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-
-                          ),
-                        ),
-                        RaisedButton.icon(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0)),
-                          color: Color(0xFFFFDBDB),
-                          icon: Icon(
-                            FontAwesomeIcons.google,
-                            color: Color(0xFFDA483F),
-                          ),
-                          label: Text(
-                            "Google  ",
-                            style: TextStyle(color: Color(0xFFDA483F)),
-                          ),
-                          onPressed: () {},
-                        ),
-
-                      ],
-                    )
-                )
-            ),
-            onTap: ()
-            {
-            },
-    );
-  }
-  Widget facebookLoginRow(){
+  Widget googleLoginRow() {
     return InkWell(
       child: Container(
+          height:
+              _large ? _height / 18 : (_medium ? _height / 18 : _height / 18),
+          margin: EdgeInsets.only(top: 25, left: _width / 22),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                height: 30.0,
+                width: 30.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+              ),
+              RaisedButton.icon(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                ),
+                color: Color(0xFFFFDBDB),
+                icon: Icon(
+                  FontAwesomeIcons.google,
+                  color: Color(0xFFDA483F),
+                ),
+                label: Text(
+                  "Google  ",
+                  style: TextStyle(color: Color(0xFFDA483F)),
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ))),
+      onTap: () {},
+    );
+  }
 
-          height: _large? _height/18 : (_medium? _height/18: _height/18),
+  Widget facebookLoginRow() {
+    return InkWell(
+      child: Container(
+          height:
+              _large ? _height / 18 : (_medium ? _height / 18 : _height / 18),
           margin: EdgeInsets.only(top: 25),
           child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton.icon(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0)),
-                    color: Color(0xFFE0E3FF),
-                    icon: Icon(
-                      FontAwesomeIcons.facebook,
-                      color: Color(0xFF3D5A96),
-                    ),
-                    label: Text(
-                      "Facebook",
-                      style: TextStyle(color: Color(0xFF3D5A96)),
-                    ),
-                    onPressed: () {},
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RaisedButton.icon(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
                   ),
-                ],
-              )
-          )
-      ),
-      onTap: ()
-      {
-      },
+                ),
+                color: Color(0xFFE0E3FF),
+                icon: Icon(
+                  FontAwesomeIcons.facebook,
+                  color: Color(0xFF3D5A96),
+                ),
+                label: Text(
+                  "Facebook",
+                  style: TextStyle(color: Color(0xFF3D5A96)),
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ))),
+      onTap: () {},
     );
   }
 }
