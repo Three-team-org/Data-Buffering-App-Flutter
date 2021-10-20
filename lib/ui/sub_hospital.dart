@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,22 +14,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/database/model/hospital_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
-class HospitalPage extends StatefulWidget{
+
+class HospitalPage extends StatefulWidget {
   String user_role = "", user_name = "";
   HospitalPage(@required this.user_role, @required this.user_name);
   @override
   _HospitalPageState createState() => _HospitalPageState();
-
 }
 
 class Item {
-  const Item(this.name,this.icon);
+  const Item(this.name, this.icon);
   final String name;
   final Icon icon;
 }
 
-class _HospitalPageState extends State<HospitalPage>{
-
+class _HospitalPageState extends State<HospitalPage> {
   Hospital_data hospital_data;
 
   Color dialogPickerColor;
@@ -49,11 +47,12 @@ class _HospitalPageState extends State<HospitalPage>{
   TextEditingController _advice_controller = TextEditingController();
   TextEditingController _remarks_controller = TextEditingController();
 
-  double _width;
+  double _width, _height;
   double _pixelRatio;
   bool large;
   bool medium;
-  List<String> color_list =  List.filled(20, "${Colors.white.value.toRadixString(16)}");
+  List<String> color_list =
+      List.filled(20, "${Colors.white.value.toRadixString(16)}");
   Widget bigCircle = new Container(
     width: 300.0,
     height: 300.0,
@@ -68,45 +67,41 @@ class _HospitalPageState extends State<HospitalPage>{
   Future addRecord() async {
     var db = new DatabaseHelper();
 
-
-    var Form = new Hospital_data(_doctor_controller.text, _dentist_controller.text,_weight_controller.text,
-      _length_controller.text, _advice_controller.text, _remarks_controller.text,_selected_day_str, widget.user_role, widget.user_name
-    );
+    var Form = new Hospital_data(
+        _doctor_controller.text,
+        _dentist_controller.text,
+        _weight_controller.text,
+        _length_controller.text,
+        _advice_controller.text,
+        _remarks_controller.text,
+        _selected_day_str,
+        widget.user_role,
+        widget.user_name);
     await db.saveHospitalData(Form);
-
-
   }
 
   getRecord(String date) async {
     var db = new DatabaseHelper();
     var maps;
-    if(widget.user_role == "admin"){
+    if (widget.user_role == "admin") {
       maps = await db.getHospitalData_admin(date, widget.user_role);
-    }
-    else{
+    } else {
       maps = await db.getHospitalData(date, widget.user_role, widget.user_name);
     }
 
-
-    if(maps.length !=0) {
-
-      String weight_str = maps[maps.length-1]['weight'];
-      String length_str = maps[maps.length-1]['length'];
-      String advice_str = maps[maps.length-1]['advice'];
-      String remarks_str = maps[maps.length-1]['remarks'];
-
+    if (maps.length != 0) {
+      String weight_str = maps[maps.length - 1]['weight'];
+      String length_str = maps[maps.length - 1]['length'];
+      String advice_str = maps[maps.length - 1]['advice'];
+      String remarks_str = maps[maps.length - 1]['remarks'];
 
       setState(() {
         _weight_controller = TextEditingController(text: weight_str);
         _length_controller = TextEditingController(text: length_str);
         _advice_controller = TextEditingController(text: advice_str);
         _remarks_controller = TextEditingController(text: remarks_str);
-
-
       });
-    }
-    else{
-
+    } else {
       _weight_controller = TextEditingController(text: "");
       _length_controller = TextEditingController(text: "");
       _advice_controller = TextEditingController(text: "");
@@ -126,18 +121,21 @@ class _HospitalPageState extends State<HospitalPage>{
   @override
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
     _pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    large =  ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
-    medium=  ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
+    large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
+    medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     Color _colors = new Color(20);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
         elevation: 0,
-        title: Text("Hospital Page", style: TextStyle(color: Colors.white, fontSize: 25),),
+        title: Text(
+          "Hospital Page",
+          style: TextStyle(color: Colors.white, fontSize: 25),
+        ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
-
           IconButton(
             icon: Icon(
               Icons.more_vert,
@@ -147,153 +145,189 @@ class _HospitalPageState extends State<HospitalPage>{
           )
         ],
       ),
-      body:
-        GestureDetector(
-          onTap: (){
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 350.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: TableCalendar(
-                      firstDay: DateTime.utc(2010, 10, 16),
-                      lastDay: DateTime.utc(2030, 3, 14),
-                      focusedDay: _focusedDay,
-                      selectedDayPredicate: (day) {
-
-                        return isSameDay(_selectedDay, day);
-                      },
-                      onDaySelected: (selectedDay, focusedDay) {
-                        setState(() {
-                          _selectedDay = selectedDay;
-                          _selected_day_str = DateFormat("yyyy-MM-dd").format(_selectedDay);
-                          _focusedDay = focusedDay;
-                          getRecord(_selected_day_str);
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      children: <Widget>[
-
-                        Container(
-                            color: Colors.grey.shade200,
-                            padding: EdgeInsets.all(8.0),
-                            width: double.infinity,
-                            child: Text("Weight ".toUpperCase())
-                        ),
-                        CustomTextField(
-                          keyboardType: TextInputType.text,
-                          icon: Icons.receipt,
-                          hint: "Your Weight",
-                          textEditingController: _weight_controller,
-                        ),
-                        Container(
-                            color: Colors.grey.shade200,
-                            padding: EdgeInsets.all(8.0),
-                            width: double.infinity,
-                            child: Text("Length".toUpperCase())
-                        ),
-                        CustomTextField(
-                          keyboardType: TextInputType.text,
-                          icon: Icons.receipt,
-                          hint: "Your Length",
-                          textEditingController: _length_controller,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => AdvicesPage(widget.user_role, widget.user_name)));
-                          },
-                          child: Container(
-                              color: Colors.grey.shade200,
-                              padding: EdgeInsets.all(8.0),
-                              width: double.infinity,
-                              child: Text("Advice".toUpperCase())
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Image.asset(
+                              'assets/images/calendar.png',
+                              fit: BoxFit.fill,
+                              height: _height / 2,
+                              width: _width * 0.9,
+                            ),
                           ),
-                        ),
+                          Center(
+                            child: Container(
+                              padding: EdgeInsets.only(top: _height * 0.01),
+                              width: _width * 0.89,
+                              height: _height * 0.45,
+                              child: TableCalendar(
+                                rowHeight: _height * 0.05,
+                                firstDay: DateTime.utc(2010, 10, 16),
+                                lastDay: DateTime.utc(2030, 3, 14),
+                                focusedDay: _focusedDay,
+                                selectedDayPredicate: (day) {
+                                  return isSameDay(_selectedDay, day);
+                                },
+                                onDaySelected: (selectedDay, focusedDay) {
+                                  setState(() {
+                                    _selectedDay = selectedDay;
 
-                        Container(
-                          child:
-                          Material(
-                            borderRadius: BorderRadius.circular(30.0),
-                            elevation: large? 12 : (medium? 10 : 8),
-                            child: TextFormField(
-                              controller: _advice_controller,
-                              keyboardType: TextInputType.multiline,
-                              cursorColor: Colors.orange[200],
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
-                                hintText: "Advice...",
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    borderSide: BorderSide.none),
+                                    _selected_day_str = DateFormat("yyyy-MM-dd")
+                                        .format(_selectedDay);
+                                    getRecord(_selected_day_str);
+
+                                    _focusedDay = focusedDay;
+                                  });
+                                },
                               ),
                             ),
                           ),
-                        ),
-                        Container(
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Weight ".toUpperCase())),
+                      CustomTextField(
+                        keyboardType: TextInputType.text,
+                        icon: Icons.receipt,
+                        hint: "Your Weight",
+                        textEditingController: _weight_controller,
+                      ),
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Length".toUpperCase())),
+                      CustomTextField(
+                        keyboardType: TextInputType.text,
+                        icon: Icons.receipt,
+                        hint: "Your Length",
+                        textEditingController: _length_controller,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => AdvicesPage(
+                                  widget.user_role, widget.user_name)));
+                        },
+                        child: Container(
                             color: Colors.grey.shade200,
                             padding: EdgeInsets.all(8.0),
                             width: double.infinity,
-                            child: Text("Remarks".toUpperCase())
-                        ),
-                        Container(
-                          child:
-                          Material(
-                            borderRadius: BorderRadius.circular(30.0),
-                            elevation: large? 12 : (medium? 10 : 8),
-                            child: TextFormField(
-                              controller: _remarks_controller,
-                              keyboardType: TextInputType.multiline,
-                              cursorColor: Colors.orange[200],
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.input, color: Colors.orange[200], size: 20),
-                                hintText: "Remarks...",
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    borderSide: BorderSide.none),
-                              ),
+                            child: Text("Advice".toUpperCase())),
+                      ),
+                      Container(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(30.0),
+                          elevation: large ? 12 : (medium ? 10 : 8),
+                          child: TextFormField(
+                            controller: _advice_controller,
+                            keyboardType: TextInputType.multiline,
+                            cursorColor: Colors.orange[200],
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.input,
+                                  color: Colors.orange[200], size: 20),
+                              hintText: "Advice...",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  borderSide: BorderSide.none),
                             ),
                           ),
                         ),
-                      ],
+                      ),
+                      Container(
+                          color: Colors.grey.shade200,
+                          padding: EdgeInsets.all(8.0),
+                          width: double.infinity,
+                          child: Text("Remarks".toUpperCase())),
+                      Container(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(30.0),
+                          elevation: large ? 12 : (medium ? 10 : 8),
+                          child: TextFormField(
+                            controller: _remarks_controller,
+                            keyboardType: TextInputType.multiline,
+                            cursorColor: Colors.orange[200],
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.input,
+                                  color: Colors.orange[200], size: 20),
+                              hintText: "Remarks...",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  borderSide: BorderSide.none),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: _width,
+                  padding:
+                      EdgeInsets.fromLTRB(_width / 18, 10, _width / 18, 10),
+                  child: RaisedButton(
+                    color: Color(0xFFF46C20),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    onPressed: () {
+                      addRecord();
+                      getRecord(_selected_day_str);
+                      Toast.show("Saved Successfully!", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    },
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20,),
-
-                  SizedBox(height: 10,),
-                  Container(
-                    width: double.infinity,
-                    child: RaisedButton(
-                      color: Colors.red,
-                      onPressed: (){
-                        addRecord();
-                        Toast.show("Saved Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-                      },
-                      child: Text("Confirm", style: TextStyle(
-                          color: Colors.white
-                      ),),
-                    ),
-                  ),
-                ]
-            ),
-          ),
+                ),
+              ]),
         ),
-
+      ),
     );
   }
+
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
       color: dialogPickerColor,
@@ -336,18 +370,19 @@ class _HospitalPageState extends State<HospitalPage>{
         ColorPickerType.custom: true,
         ColorPickerType.wheel: true,
       },
-
     ).showPickerDialog(
       context,
       constraints:
-      const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
+          const BoxConstraints(minHeight: 480, minWidth: 300, maxWidth: 320),
     );
   }
 }
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
+
 class CircleButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final IconData iconData;

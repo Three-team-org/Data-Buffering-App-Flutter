@@ -1,6 +1,6 @@
-
 import 'dart:ui';
 
+import 'package:data_buffer/ui/sub_dentist_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -9,50 +9,50 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:data_buffer/ui/sub_advice_description_page.dart';
 import 'package:data_buffer/ui/sub_hospital.dart';
-class AdvicesPage extends StatefulWidget{
+
+class AdvicesPage extends StatefulWidget {
   String user_role = "", user_name = "";
   AdvicesPage(@required this.user_role, @required this.user_name);
 
   @override
   _AdvicesPageState createState() => _AdvicesPageState();
-
 }
 
 class Item {
-  const Item(this.name,this.icon);
+  const Item(this.name, this.icon);
   final String name;
   final Icon icon;
 }
 
-class _AdvicesPageState extends State<AdvicesPage>{
+class _AdvicesPageState extends State<AdvicesPage> {
   final TextStyle whiteText = TextStyle(color: Colors.white);
   double _height;
   double _width;
 
   Widget cards(image, bgcolor, title, subtitle, price, page_num) {
     return GestureDetector(
-      onTap: (){
-        switch(page_num){
+      onTap: () {
+        switch (page_num) {
           case 1:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (ctx) => AdviceDescriptionPage()));
             break;
           case 2:
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => HospitalPage(widget.user_role, widget.user_name)));
+                builder: (ctx) =>
+                    HospitalPage(widget.user_role, widget.user_name)));
             break;
           case 3:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (ctx) => DentistPage()));
             break;
           case 4:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => AdviceDescriptionPage()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (ctx) => AdviceDescriptionPage()));
             break;
-
         }
       },
-      child:Container(
+      child: Container(
         height: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -84,11 +84,17 @@ class _AdvicesPageState extends State<AdvicesPage>{
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(title,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: _width / 19, color: Colors.black)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: _width / 19,
+                              color: Colors.black)),
                       SizedBox(height: _width / 40),
                       Text(subtitle,
-                          style: TextStyle(fontSize: _width / 35, fontWeight: FontWeight.w500, color: Colors.black)),
-                      ],
+                          style: TextStyle(
+                              fontSize: _width / 35,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black)),
+                    ],
                   ),
                   // Row(
                   //   mainAxisSize: MainAxisSize.min,
@@ -101,11 +107,10 @@ class _AdvicesPageState extends State<AdvicesPage>{
                   // ),
                 ],
               ),
-
             ],
           ),
         ),
-      ) ,
+      ),
     );
   }
 
@@ -114,82 +119,77 @@ class _AdvicesPageState extends State<AdvicesPage>{
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: 1,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.calendar_today),
-      //       title: Text("Today's Special"),
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.fastfood,
-      //           color: Colors.deepOrange,
-      //         ),
-      //         title: Text(
-      //           "Foods",
-      //           style: TextStyle(color: Colors.deepOrange),
-      //         )),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.settings), title: Text("Settings")),
-      //   ],
-      // ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   currentIndex: 1,
+        //   items: [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.calendar_today),
+        //       title: Text("Today's Special"),
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(
+        //           Icons.fastfood,
+        //           color: Colors.deepOrange,
+        //         ),
+        //         title: Text(
+        //           "Foods",
+        //           style: TextStyle(color: Colors.deepOrange),
+        //         )),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.settings), title: Text("Settings")),
+        //   ],
+        // ),
         backgroundColor: Colors.white70.withOpacity(1),
         body: SafeArea(
           child: Stack(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                  height: _height * 3 / 7,
+              Row(children: <Widget>[
+                Container(
+                    height: _height * 2 / 5,
                     margin: EdgeInsets.zero,
                     width: _width,
                     child: Container(
-                        child: Image.asset("assets/images/advice_bg.png",
-                          fit: BoxFit.fill,)
-                    )
+                        child: Image.asset(
+                      "assets/images/advice_bg.png",
+                      fit: BoxFit.fill,
+                    ))),
+              ]),
+              Row(children: <Widget>[
+                SizedBox(height: _height),
+                Container(
+                    height: _height / 1.5,
+                    margin: EdgeInsets.zero,
+                    width: _width,
+                    child: Container(
+                      child: Text("ADVICE DASHBOARD",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white)),
+                    )),
+              ]),
+              Row(children: <Widget>[
+                SizedBox(
+                  height: _height,
                 ),
-                ]
-              ),
-              Row(
-                  children: <Widget>[
-                    SizedBox(height: _height),
-                    Container(
-                        height: _height / 1.5,
-                        margin: EdgeInsets.zero,
-                        width: _width,
-                        child: Container(
-                            child: Text("ADVICE DASHBOARD",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w800,
-                                    color: Colors.white)),
-                        )
-                    ),
-                  ]
-              ),
-              Row(
-                  children: <Widget>[
-                    SizedBox(height: _height,),
-                    Container(
-                      padding: EdgeInsets.only(left: 30, right: 30),
-                        height: _height / 1.9,
-                        margin: EdgeInsets.zero,
-                        width: _width,
-                        child: Container(
-                          child: Text("If you get into difficulties, don't hesitate to ask for advice.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 19,
-                                  letterSpacing: 1,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white)),
-                        )
-                    ),
-                  ]
-              ),
+                Container(
+                    padding: EdgeInsets.only(left: 30, right: 30),
+                    height: _height / 1.9,
+                    margin: EdgeInsets.zero,
+                    width: _width,
+                    child: Container(
+                      child: Text(
+                          "If you get into difficulties, don't hesitate to ask for advice.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 1,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white)),
+                    )),
+              ]),
               // Container(
               //   margin: EdgeInsets.only(left: 90, bottom: 20),
               //   width: 200,
@@ -212,32 +212,38 @@ class _AdvicesPageState extends State<AdvicesPage>{
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(height: _height / 3.5,),
+                          SizedBox(
+                            height: _height / 3.5,
+                          ),
                         ],
                       ),
                     ),
                   ),
                   SliverPadding(
-                    padding: EdgeInsets.fromLTRB(_width / 12, 0, _width / 12, 0),
+                    padding:
+                        EdgeInsets.fromLTRB(_width / 12, 0, _width / 12, 0),
                     sliver: SliverGrid.count(
                       crossAxisCount: 1,
                       mainAxisSpacing: 20,
                       childAspectRatio: 2.5,
                       children: <Widget>[
-                        cards("assets/images/advice_oral_hygiene.png",
+                        cards(
+                            "assets/images/advice_oral_hygiene.png",
                             Color.fromRGBO(255, 240, 240, 1),
                             'ORAL HYGIENE',
                             // 'Lorem ipsum dolor sit amt,\nconsectetur adipiscing elit.\nFusce porta enim id nisi int',
                             'Keeping one\'s mouth clean\nand free of disease and\nother problems',
                             '30',
                             1),
-                        cards("assets/images/advice_doctor.png",
+                        cards(
+                            "assets/images/advice_doctor.png",
                             Color.fromRGBO(255, 255, 240, 1),
                             'DOCTOR',
                             'Don\'t be afraid of seeing the\ndoctor. Doctors give you big\nchance.',
                             '37',
                             2),
-                        cards("assets/images/advice_dentist.png",
+                        cards(
+                            "assets/images/advice_dentist.png",
                             Color.fromRGBO(255, 240, 255, 1),
                             'DENTIST',
                             'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
@@ -266,12 +272,12 @@ class _AdvicesPageState extends State<AdvicesPage>{
                   // ),
                 ],
               ),
-
             ],
           ),
         ));
   }
 }
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;

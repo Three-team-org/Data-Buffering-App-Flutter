@@ -1,25 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:data_buffer/ui/sub_new_page_1.dart';
-import 'package:data_buffer/ui/sub_new_page_2.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 
-class NewPage extends StatefulWidget {
+class DentistPage extends StatefulWidget {
+  static const String routeName = '/subDentist';
+
   @override
-  _NewPageState createState() => _NewPageState();
+  _SubDentistPageState createState() => _SubDentistPageState();
 }
 
-class Item {
-  const Item(this.name, this.icon);
-  final String name;
-  final Icon icon;
-}
-
-class _NewPageState extends State<NewPage> {
+class _SubDentistPageState extends State<DentistPage> {
   double _width, _height;
 
   @override
@@ -56,7 +45,7 @@ class _NewPageState extends State<NewPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "New page".toUpperCase(),
+                            "Dentist page".toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,
@@ -100,9 +89,4 @@ class _NewPageState extends State<NewPage> {
           )),
     );
   }
-}
-
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

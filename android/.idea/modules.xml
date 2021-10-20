@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-715717019/android.flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/-715717019/android.flutter_plugin_android_lifecycle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1601985933/android.image_picker.iml" filepath="$PROJECT_DIR$/.idea/modules/-1601985933/android.image_picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1706005530/android.path_provider.iml" filepath="$PROJECT_DIR$/.idea/modules/-1706005530/android.path_provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-475963914/android.sqflite.iml" filepath="$PROJECT_DIR$/.idea/modules/-475963914/android.sqflite.iml" />
+    </modules>
+  </component>
+</project>
