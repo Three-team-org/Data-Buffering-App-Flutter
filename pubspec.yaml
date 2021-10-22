@@ -45,6 +45,7 @@ dependencies:
   flutter_colorpicker: ^0.5.0
   syncfusion_flutter_datagrid: ^19.2.49-beta
   flutter_gifimage: ^1.0.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -81,10 +82,14 @@ flutter:
     - assets/images/icon_hospital.png
     - assets/images/icon_new.png
     - assets/images/icon_recipe.png
-    - assets/images/15_border.png
+    - assets/images/15.png
+    - assets/images/advice.png
+    - assets/images/calendar_button.png
+    - assets/images/advice_dentist.png
+    - assets/images/advice_doctor.png
     - assets/images/20.png
-    - assets/images/check.png
-    - assets/images/cross.png
+    - assets/images/yes.png
+    - assets/images/no.png
     - assets/images/icon_dentist.png
     - assets/images/icon_tooth.png
     - assets/images/icon_doctor.png
@@ -98,6 +103,7 @@ flutter:
     - assets/images/advice_dentist.png
     - assets/images/footer.png
     - assets/images/calendar.png
+    - assets/images/doctor_calendar.png
     - assets/images/recipe_0.png
     - assets/images/recipe_1.png
     - assets/images/recipe_2.png

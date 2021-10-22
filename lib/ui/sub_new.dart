@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +21,7 @@ class Item {
 }
 
 class _NewPageState extends State<NewPage> {
+  ThemeService themeService = ThemeService();
   double _width, _height;
 
   @override
@@ -37,8 +39,8 @@ class _NewPageState extends State<NewPage> {
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
                     colors: [
-                  Color(0xFFE14C37),
-                  Color(0xFFF5A327),
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
                 ])),
             child: ListView(
               children: <Widget>[

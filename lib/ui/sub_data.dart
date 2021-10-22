@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:toast/toast.dart';
 import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DataPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -32,6 +34,7 @@ class Item {
 }
 
 class _DataPageState extends State<DataPage> {
+  ThemeService themeService = ThemeService();
   double _height;
   double _width;
   double _pixelRatio;
@@ -93,6 +96,19 @@ class _DataPageState extends State<DataPage> {
   Future addRecord(BuildContext context) async {
     var db = new DatabaseHelper();
     print(_doctor_controller.text);
+    if (selectedGender.name == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
     if (widget.user_role == "admin") {
       Toast.show("Successfully Saved!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -224,8 +240,8 @@ class _DataPageState extends State<DataPage> {
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
                   colors: [
-                Color(0xFFE14C37),
-                Color(0xFFF5A327),
+                Color(themeService.myColor1),
+                Color(themeService.myColor2),
               ])),
           height: _height,
           width: _width,
@@ -317,7 +333,7 @@ class _DataPageState extends State<DataPage> {
                                   )
                                 : CircleAvatar(
                                     minRadius: 30,
-                                    backgroundColor: Colors.deepOrange.shade300,
+                                    backgroundColor: Colors.grey,
                                     child: CircleAvatar(
                                       backgroundImage: NetworkImage(
                                           "https://getstisla.com/dist/img/avatar/avatar-5.png"),
@@ -347,8 +363,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "FULL NAME",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _full_name_controller,
@@ -361,8 +378,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "DATE OF BIRTH",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: Container(
                         child: TextFormField(
@@ -389,8 +407,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "GENDER",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: Row(
                         children: <Widget>[
@@ -430,8 +449,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "WEIGHT",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _weight_controller,
@@ -447,8 +467,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "LENGTH",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _length_controller,
@@ -463,8 +484,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "TIME",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _time_controller,
@@ -479,8 +501,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "DOCTOR NAME",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _doctor_controller,
@@ -496,8 +519,9 @@ class _DataPageState extends State<DataPage> {
                     ListTile(
                       title: Text(
                         "DENTIST NAME",
-                        style:
-                            TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
                       ),
                       subtitle: CustomTextField(
                         textEditingController: _dentist_controller,
@@ -519,7 +543,7 @@ class _DataPageState extends State<DataPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
-                        color: Color(0xFFF46C20),
+                        color: Color(themeService.myColor3),
                         child: Text(
                           "Confirm",
                           style: TextStyle(

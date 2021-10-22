@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ class Item {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
+  ThemeService themeService = ThemeService();
   double _height;
   double _width;
   Widget cards(image, title, price, page_num) {
@@ -172,8 +174,8 @@ class _RecipesPageState extends State<RecipesPage> {
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
                     colors: [
-                  Color(0xFFE14C37),
-                  Color(0xFFF5A327),
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
                 ])),
             width: double.infinity,
           ),
@@ -187,14 +189,15 @@ class _RecipesPageState extends State<RecipesPage> {
                     topRight: Radius.circular(20))),
           ),
           Container(
-              decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              child: Column(
-                children: <Widget>[],
-              )),
+            decoration: BoxDecoration(
+                color: const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Column(
+              children: <Widget>[],
+            ),
+          ),
           CustomScrollView(
             slivers: <Widget>[
               SliverToBoxAdapter(

@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/ui/sub_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class NewPageDashboardScreen extends StatefulWidget {
 }
 
 class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
+  ThemeService themeService = ThemeService();
   final TextStyle whiteText = TextStyle(color: Colors.white);
   double _height;
   double _width;
@@ -70,7 +72,7 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.orangeAccent.shade200,
+                    color: Color(themeService.myColor2),
                   )),
             ],
           ),
@@ -115,8 +117,8 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.topRight,
                         colors: [
-                      Color(0xFFE14C37),
-                      Color(0xFFF5A327),
+                      Color(themeService.myColor1),
+                      Color(themeService.myColor2),
                     ])),
                 width: double.infinity,
               ),
@@ -201,10 +203,10 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       children: <Widget>[
-                        cards("assets/images/15_border.png", 'DAYS', '30', 1),
+                        cards("assets/images/15.png", 'DAYS', '30', 1),
                         cards("assets/images/20.png", 'DAYS', '37', 2),
-                        cards("assets/images/check.png", 'YES', '22', 3),
-                        cards("assets/images/cross.png", 'NO', '90', 4),
+                        cards("assets/images/yes.png", 'YES', '22', 3),
+                        cards("assets/images/no.png", 'NO', '90', 4),
                       ],
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,33 +22,7 @@ class Item {
 }
 
 class _RecipeMonthPageState extends State<RecipeMonthPage> {
-  // @override
-  // Widget build(BuildContext context) {
-  //   print(widget.str_show);
-  //   return Scaffold(
-  //     // backgroundColor: Colors.deepOrange,
-  //     appBar: AppBar(
-  //       title: Text(widget.str_month,style: TextStyle(color: Colors.white, fontSize: 25),),
-  //       backgroundColor: Colors.red,
-  //       elevation: 0,
-  //     ),
-  //     body: Center(
-  //       child:
-  //       Container(
-  //         margin: const EdgeInsets.all(16.0),
-  //         padding: const EdgeInsets.all(16.0),
-  //         decoration: BoxDecoration(color: Colors.grey.shade200),
-  //         child: Container(
-  //           child: Text(
-  //             widget.str_show,
-  //             style: TextStyle(color: Colors.blueAccent, fontSize: 20),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
+  ThemeService themeService = ThemeService();
   double _width, _height;
 
   @override
@@ -65,8 +40,8 @@ class _RecipeMonthPageState extends State<RecipeMonthPage> {
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
                     colors: [
-                  Color(0xFFE14C37),
-                  Color(0xFFF5A327),
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
                 ])),
             child: ListView(
               children: <Widget>[

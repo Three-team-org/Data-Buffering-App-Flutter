@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/ui/sub_dentist_page.dart';
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,7 @@ class Item {
 }
 
 class _AdvicesPageState extends State<AdvicesPage> {
+  ThemeService themeService = ThemeService();
   final TextStyle whiteText = TextStyle(color: Colors.white);
   double _height;
   double _width;
@@ -145,14 +148,24 @@ class _AdvicesPageState extends State<AdvicesPage> {
             children: <Widget>[
               Row(children: <Widget>[
                 Container(
-                    height: _height * 2 / 5,
-                    margin: EdgeInsets.zero,
-                    width: _width,
-                    child: Container(
-                        child: Image.asset(
-                      "assets/images/advice_bg.png",
+                  height: _height * 2 / 5,
+                  width: _width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                        Color(themeService.myColor1),
+                        Color(themeService.myColor2),
+                      ])),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 40),
+                    child: Image.asset(
+                      "assets/images/advice.png",
                       fit: BoxFit.fill,
-                    ))),
+                    ),
+                  ),
+                ),
               ]),
               Row(children: <Widget>[
                 SizedBox(height: _height),
@@ -164,7 +177,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
                       child: Text("ADVICE DASHBOARD",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 32,
+                              fontSize: _height / 21,
                               fontWeight: FontWeight.w800,
                               color: Colors.white)),
                     )),
@@ -249,27 +262,15 @@ class _AdvicesPageState extends State<AdvicesPage> {
                             'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
                             '22',
                             3),
+                        SizedBox(height: 5),
                       ],
                     ),
                   ),
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(10.0),
-                  //     child: Column(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: <Widget>[
-                  //         Row(
-                  //           children: <Widget>[
-                  //             Spacer(),
-                  //             cards("assets/images/icon_dentist.png", 'DENTIST', '22', 3),
-                  //             Spacer(),
-                  //           ],
-                  //         )
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Opacity(opacity: 1, child: CustomAppBar()),
                 ],
               ),
             ],

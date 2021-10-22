@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/material.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 
@@ -9,6 +10,7 @@ class DentistPage extends StatefulWidget {
 }
 
 class _SubDentistPageState extends State<DentistPage> {
+  ThemeService themeService = ThemeService();
   double _width, _height;
 
   @override
@@ -26,8 +28,8 @@ class _SubDentistPageState extends State<DentistPage> {
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
                     colors: [
-                  Color(0xFFE14C37),
-                  Color(0xFFF5A327),
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
                 ])),
             child: ListView(
               children: <Widget>[

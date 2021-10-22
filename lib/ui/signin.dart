@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/material.dart';
 import 'package:data_buffer/constants/constants.dart';
 import 'package:data_buffer/ui/widgets/custom_shape.dart';
@@ -21,6 +22,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  ThemeService themeService = ThemeService();
   final double infoHeight = 400.0;
   double _height;
   double _width;
@@ -52,8 +54,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
                   colors: [
-                Color(0xFFD85858),
-                Color(0xFFFD7900),
+                Color(themeService.myColor1),
+                Color(themeService.myColor2),
               ])),
           height: _height,
           width: _width,
@@ -262,7 +264,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       : (_medium ? _height / 15 : _height / 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    color: Color(0xFFF46C20),
+                    color: Color(themeService.myColor3),
                   ),
                   padding: const EdgeInsets.all(12.0),
                   child: Row(
@@ -307,7 +309,7 @@ class _SignInScreenState extends State<SignInScreen> {
               "Create Account",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFFF7A00),
+                color: Color(themeService.myColor2),
                 fontSize: _large ? 20 : (_medium ? 18 : 16),
               ),
             ),

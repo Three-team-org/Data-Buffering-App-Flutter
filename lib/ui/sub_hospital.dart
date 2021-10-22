@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ class Item {
 }
 
 class _HospitalPageState extends State<HospitalPage> {
+  ThemeService themeService = ThemeService();
   Hospital_data hospital_data;
 
   Color dialogPickerColor;
@@ -128,8 +130,17 @@ class _HospitalPageState extends State<HospitalPage> {
     Color _colors = new Color(20);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Color(themeService.myColor3),
         elevation: 0,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
         title: Text(
           "Hospital Page",
           style: TextStyle(color: Colors.white, fontSize: 25),
@@ -166,7 +177,7 @@ class _HospitalPageState extends State<HospitalPage> {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Image.asset(
-                              'assets/images/calendar.png',
+                              'assets/images/doctor_calendar.png',
                               fit: BoxFit.fill,
                               height: _height / 2,
                               width: _width * 0.9,
@@ -233,6 +244,9 @@ class _HospitalPageState extends State<HospitalPage> {
                         hint: "Your Length",
                         textEditingController: _length_controller,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -252,7 +266,7 @@ class _HospitalPageState extends State<HospitalPage> {
                           child: TextFormField(
                             controller: _advice_controller,
                             keyboardType: TextInputType.multiline,
-                            cursorColor: Colors.orange[200],
+                            cursorColor: Color(themeService.myColor2),
                             maxLines: 3,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.input,
@@ -264,6 +278,9 @@ class _HospitalPageState extends State<HospitalPage> {
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Container(
                           color: Colors.grey.shade200,
@@ -296,15 +313,12 @@ class _HospitalPageState extends State<HospitalPage> {
                 SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 Container(
                   width: _width,
                   padding:
                       EdgeInsets.fromLTRB(_width / 18, 10, _width / 18, 10),
                   child: RaisedButton(
-                    color: Color(0xFFF46C20),
+                    color: Color(themeService.myColor2),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                     onPressed: () {
@@ -321,6 +335,10 @@ class _HospitalPageState extends State<HospitalPage> {
                       ),
                     ),
                   ),
+                ),
+                Image.asset(
+                  'assets/images/footer.png',
+                  width: _width,
                 ),
               ]),
         ),

@@ -1,3 +1,4 @@
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  ThemeService themeService = ThemeService();
   Form_draft form;
 
   String _picked_water = "WATER ONE";
@@ -155,15 +157,15 @@ class _CalendarPageState extends State<CalendarPage> {
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Color(themeService.myColor3),
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
           child: Icon(
-            FlutterIcons.keyboard_backspace_mdi,
-            color: Color.fromRGBO(33, 45, 82, 1),
+            Icons.arrow_back_ios,
+            color: Colors.white,
           ),
         ),
         title: Text(
@@ -179,64 +181,68 @@ class _CalendarPageState extends State<CalendarPage> {
         },
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
             child: Column(
-              children: [
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
-                    height: _height / 2,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Stack(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/images/calendar.png',
-                              fit: BoxFit.fill,
-                              height: _height / 2,
-                              width: _width * 0.99,
-                            ),
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 20,
+                  height: _height / 2,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/images/calendar.png',
+                            fit: BoxFit.fill,
+                            height: _height / 2,
+                            width: _width * 0.99,
+                          ),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  width: _width * 0.9,
+                                  height: _height * 0.45,
+                                  child: TableCalendar(
+                                    rowHeight: _height * 0.05,
+                                    firstDay: DateTime.utc(2010, 10, 16),
+                                    lastDay: DateTime.utc(2030, 3, 14),
+                                    focusedDay: _focusedDay,
+                                    selectedDayPredicate: (day) {
+                                      return isSameDay(_selectedDay, day);
+                                    },
+                                    onDaySelected: (selectedDay, focusedDay) {
+                                      setState(() {
+                                        _selectedDay = selectedDay;
+
+                                        _selected_day_str =
+                                            DateFormat("yyyy-MM-dd")
+                                                .format(_selectedDay);
+                                        getRecord(_selected_day_str);
+
+                                        _focusedDay = focusedDay;
+                                      });
+                                    },
                                   ),
-                                  Container(
-                                    width: _width * 0.9,
-                                    height: _height * 0.45,
-                                    child: TableCalendar(
-                                      rowHeight: _height * 0.05,
-                                      firstDay: DateTime.utc(2010, 10, 16),
-                                      lastDay: DateTime.utc(2030, 3, 14),
-                                      focusedDay: _focusedDay,
-                                      selectedDayPredicate: (day) {
-                                        return isSameDay(_selectedDay, day);
-                                      },
-                                      onDaySelected: (selectedDay, focusedDay) {
-                                        setState(() {
-                                          _selectedDay = selectedDay;
-
-                                          _selected_day_str =
-                                              DateFormat("yyyy-MM-dd")
-                                                  .format(_selectedDay);
-                                          getRecord(_selected_day_str);
-
-                                          _focusedDay = focusedDay;
-                                        });
-                                      },
-                                    ),
-                                  )
-                                ]),
-                          ],
-                        )
-                      ],
-                    )),
+                                )
+                              ]),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -553,7 +559,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   child: RaisedButton(
                     padding:
                         EdgeInsets.fromLTRB(_width / 3, 10, _width / 3, 10),
-                    color: Color(0xFFF46C20),
+                    color: Color(themeService.myColor2),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                     onPressed: () {
@@ -573,6 +579,10 @@ class _CalendarPageState extends State<CalendarPage> {
                 ),
                 SizedBox(
                   height: 10.0,
+                ),
+                Image.asset(
+                  'assets/images/footer.png',
+                  width: _width,
                 ),
               ],
             ),
