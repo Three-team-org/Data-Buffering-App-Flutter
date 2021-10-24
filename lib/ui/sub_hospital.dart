@@ -15,6 +15,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:data_buffer/database/model/hospital_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
 import 'package:data_buffer/ui/sub_advices.dart';
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 
 class HospitalPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -129,85 +130,39 @@ class _HospitalPageState extends State<HospitalPage> {
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     Color _colors = new Color(20);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(themeService.myColor3),
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-        ),
-        title: Text(
-          "Hospital Page",
-          style: TextStyle(color: Colors.white, fontSize: 25),
-        ),
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.black54,
-            ),
-            onPressed: () {},
-          )
-        ],
-      ),
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
+                ])),
+            child: ListView(
               children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
                 Container(
+                  height: _height / 7,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Image.asset(
-                              'assets/images/doctor_calendar.png',
-                              fit: BoxFit.fill,
-                              height: _height / 2,
-                              width: _width * 0.9,
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              padding: EdgeInsets.only(top: _height * 0.01),
-                              width: _width * 0.89,
-                              height: _height * 0.45,
-                              child: TableCalendar(
-                                rowHeight: _height * 0.05,
-                                firstDay: DateTime.utc(2010, 10, 16),
-                                lastDay: DateTime.utc(2030, 3, 14),
-                                focusedDay: _focusedDay,
-                                selectedDayPredicate: (day) {
-                                  return isSameDay(_selectedDay, day);
-                                },
-                                onDaySelected: (selectedDay, focusedDay) {
-                                  setState(() {
-                                    _selectedDay = selectedDay;
-
-                                    _selected_day_str = DateFormat("yyyy-MM-dd")
-                                        .format(_selectedDay);
-                                    getRecord(_selected_day_str);
-
-                                    _focusedDay = focusedDay;
-                                  });
-                                },
-                              ),
+                          Opacity(opacity: 1, child: CustomAppBar()),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Hospital page".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _width / 15,
                             ),
                           ),
                         ],
@@ -215,134 +170,217 @@ class _HospitalPageState extends State<HospitalPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text("Weight ".toUpperCase())),
-                      CustomTextField(
-                        keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
-                        hint: "Your Weight",
-                        textEditingController: _weight_controller,
-                      ),
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text("Length".toUpperCase())),
-                      CustomTextField(
-                        keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
-                        hint: "Your Length",
-                        textEditingController: _length_controller,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => AdvicesPage(
-                                  widget.user_role, widget.user_name)));
-                        },
-                        child: Container(
-                            color: Colors.grey.shade200,
-                            padding: EdgeInsets.all(8.0),
-                            width: double.infinity,
-                            child: Text("Advice".toUpperCase())),
-                      ),
-                      Container(
-                        child: Material(
-                          borderRadius: BorderRadius.circular(30.0),
-                          elevation: large ? 12 : (medium ? 10 : 8),
-                          child: TextFormField(
-                            controller: _advice_controller,
-                            keyboardType: TextInputType.multiline,
-                            cursorColor: Color(themeService.myColor2),
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.input,
-                                  color: Colors.orange[200], size: 20),
-                              hintText: "Advice...",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  borderSide: BorderSide.none),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text("Remarks".toUpperCase())),
-                      Container(
-                        child: Material(
-                          borderRadius: BorderRadius.circular(30.0),
-                          elevation: large ? 12 : (medium ? 10 : 8),
-                          child: TextFormField(
-                            controller: _remarks_controller,
-                            keyboardType: TextInputType.multiline,
-                            cursorColor: Colors.orange[200],
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.input,
-                                  color: Colors.orange[200], size: 20),
-                              hintText: "Remarks...",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  borderSide: BorderSide.none),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: _width,
-                  padding:
-                      EdgeInsets.fromLTRB(_width / 18, 10, _width / 18, 10),
-                  child: RaisedButton(
-                    color: Color(themeService.myColor2),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    onPressed: () {
-                      addRecord();
-                      getRecord(_selected_day_str);
-                      Toast.show("Saved Successfully!", context,
-                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                    },
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
+                  height: _height * 0.85,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
                   ),
+                  padding: EdgeInsets.only(
+                    top: _height / 30,
+                    right: _width / 40,
+                    bottom: _height / 30,
+                    left: _width / 40,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Image.asset(
+                                        'assets/images/doctor_calendar.png',
+                                        fit: BoxFit.fill,
+                                        height: _height / 2,
+                                        width: _width * 0.9,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            top: _height * 0.01),
+                                        width: _width * 0.89,
+                                        height: _height * 0.45,
+                                        child: TableCalendar(
+                                          rowHeight: _height * 0.05,
+                                          firstDay: DateTime.utc(2010, 10, 16),
+                                          lastDay: DateTime.utc(2030, 3, 14),
+                                          focusedDay: _focusedDay,
+                                          selectedDayPredicate: (day) {
+                                            return isSameDay(_selectedDay, day);
+                                          },
+                                          onDaySelected:
+                                              (selectedDay, focusedDay) {
+                                            setState(() {
+                                              _selectedDay = selectedDay;
+
+                                              _selected_day_str =
+                                                  DateFormat("yyyy-MM-dd")
+                                                      .format(_selectedDay);
+                                              getRecord(_selected_day_str);
+
+                                              _focusedDay = focusedDay;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text("Weight ".toUpperCase())),
+                                CustomTextField(
+                                  keyboardType: TextInputType.text,
+                                  icon: Icons.receipt,
+                                  hint: "Your Weight",
+                                  textEditingController: _weight_controller,
+                                ),
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text("Length".toUpperCase())),
+                                CustomTextField(
+                                  keyboardType: TextInputType.text,
+                                  icon: Icons.receipt,
+                                  hint: "Your Length",
+                                  textEditingController: _length_controller,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (ctx) => AdvicesPage(
+                                                widget.user_role,
+                                                widget.user_name)));
+                                  },
+                                  child: Container(
+                                      color: Colors.grey.shade200,
+                                      padding: EdgeInsets.all(8.0),
+                                      width: double.infinity,
+                                      child: Text("Advice".toUpperCase())),
+                                ),
+                                Container(
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    elevation: large ? 12 : (medium ? 10 : 8),
+                                    child: TextFormField(
+                                      controller: _advice_controller,
+                                      keyboardType: TextInputType.multiline,
+                                      cursorColor: Color(themeService.myColor2),
+                                      maxLines: 3,
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(Icons.input,
+                                            color: Colors.orange[200],
+                                            size: 20),
+                                        hintText: "Advice...",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            borderSide: BorderSide.none),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text("Remarks".toUpperCase())),
+                                Container(
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    elevation: large ? 12 : (medium ? 10 : 8),
+                                    child: TextFormField(
+                                      controller: _remarks_controller,
+                                      keyboardType: TextInputType.multiline,
+                                      cursorColor: Colors.orange[200],
+                                      maxLines: 3,
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(Icons.input,
+                                            color: Colors.orange[200],
+                                            size: 20),
+                                        hintText: "Remarks...",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            borderSide: BorderSide.none),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: _width,
+                            padding: EdgeInsets.fromLTRB(
+                                _width / 18, 10, _width / 18, 10),
+                            child: RaisedButton(
+                              color: Color(themeService.myColor2),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              onPressed: () {
+                                addRecord();
+                                getRecord(_selected_day_str);
+                                Toast.show("Saved Successfully!", context,
+                                    duration: Toast.LENGTH_LONG,
+                                    gravity: Toast.BOTTOM);
+                              },
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/images/footer.png',
+                            width: _width,
+                          ),
+                        ]),
+                  ),
                 ),
-                Image.asset(
-                  'assets/images/footer.png',
-                  width: _width,
-                ),
-              ]),
-        ),
-      ),
+              ],
+            ),
+          )),
     );
   }
 

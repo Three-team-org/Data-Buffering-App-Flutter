@@ -242,7 +242,7 @@ class _RecipesPageState extends State<RecipesPage> {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   children: <Widget>[
-                    cards("assets/images/recipe_0.png", 'January', '30', 1),
+                    // cards("assets/images/recipe_0.png", 'January', '30', 1),
                     cards("assets/images/recipe_1.png", 'February', '37', 2),
                     cards("assets/images/recipe_2.png", 'March', '22', 3),
                     cards("assets/images/recipe_3.png", 'April', '90', 4),

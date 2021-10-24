@@ -103,6 +103,7 @@ flutter:
     - assets/images/advice_dentist.png
     - assets/images/footer.png
     - assets/images/calendar.png
+    - assets/images/spoon.png
     - assets/images/doctor_calendar.png
     - assets/images/recipe_0.png
     - assets/images/recipe_1.png
@@ -116,6 +117,26 @@ flutter:
     - assets/images/recipe_9.png
     - assets/images/recipe_10.png
     - assets/images/recipe_12.png
+    - assets/images/t1.png
+    - assets/images/t2.png
+    - assets/images/t3.png
+    - assets/images/t4.png
+    - assets/images/t5.png
+    - assets/images/t6.png
+    - assets/images/t7.png
+    - assets/images/t8.png
+    - assets/images/t9.png
+    - assets/images/t10.png
+    - assets/images/t11.png
+    - assets/images/t12.png
+    - assets/images/t13.png
+    - assets/images/t14.png
+    - assets/images/t15.png
+    - assets/images/t16.png
+    - assets/images/t17.png
+    - assets/images/t18.png
+    - assets/images/t19.png
+    - assets/images/t20.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

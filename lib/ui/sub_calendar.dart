@@ -18,6 +18,7 @@ import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:data_buffer/ui/widgets/customappbar.dart';
 
 class CalendarPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -156,439 +157,509 @@ class _CalendarPageState extends State<CalendarPage> {
     large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(themeService.myColor3),
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-        ),
-        title: Text(
-          "CALENDAR PAGE",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: SingleChildScrollView(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Column(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
+                ])),
+            child: ListView(
               children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
                 Container(
-                  height: _height / 2,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
+                  height: _height / 7,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
-                          Image.asset(
-                            'assets/images/calendar.png',
-                            fit: BoxFit.fill,
-                            height: _height / 2,
-                            width: _width * 0.99,
+                          Opacity(opacity: 1, child: CustomAppBar()),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Calendar page".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _width / 15,
+                            ),
                           ),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                  width: _width * 0.9,
-                                  height: _height * 0.45,
-                                  child: TableCalendar(
-                                    rowHeight: _height * 0.05,
-                                    firstDay: DateTime.utc(2010, 10, 16),
-                                    lastDay: DateTime.utc(2030, 3, 14),
-                                    focusedDay: _focusedDay,
-                                    selectedDayPredicate: (day) {
-                                      return isSameDay(_selectedDay, day);
-                                    },
-                                    onDaySelected: (selectedDay, focusedDay) {
-                                      setState(() {
-                                        _selectedDay = selectedDay;
-
-                                        _selected_day_str =
-                                            DateFormat("yyyy-MM-dd")
-                                                .format(_selectedDay);
-                                        getRecord(_selected_day_str);
-
-                                        _focusedDay = focusedDay;
-                                      });
-                                    },
-                                  ),
-                                )
-                              ]),
                         ],
                       )
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Total", style: Theme.of(context).textTheme.subtitle1),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (ctx) => RecipesPage()));
-                  },
-                  child: Container(
-                      color: Colors.grey.shade200,
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      child: Text("New Groceries".toUpperCase())),
-                ),
-                CustomTextField(
-                  keyboardType: TextInputType.text,
-                  icon: Icons.receipt,
-                  hint: "Groceries name",
-                  textEditingController: _groceries_controller,
-                ),
                 Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text(
-                            "Table Spoon".toUpperCase(),
-                            textAlign: TextAlign.left,
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 100,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            CheckboxGroup(
-                              activeColor: Colors.blue,
-                              orientation: GroupedButtonsOrientation.HORIZONTAL,
-                              margin: const EdgeInsets.only(left: 8.0),
-                              padding: const EdgeInsets.all(2),
-                              onSelected: (List selected) => setState(() {
-                                _checked_spoon = selected;
-                              }),
-                              labels: <String>[
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                              ],
-                              checked: _checked_spoon,
-                              itemBuilder: (Checkbox cb, Text txt, int i) {
-                                return Column(
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.utensilSpoon),
-                                    cb,
-                                    txt,
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  height: _height * 0.85,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                   ),
-                ),
-                Container(
-                    color: Colors.grey.shade200,
-                    padding: EdgeInsets.all(8.0),
-                    width: double.infinity,
-                    child: Text("WATER".toUpperCase())),
-                Column(
-                  children: <Widget>[
-                    CheckboxGroup(
-                      orientation: GroupedButtonsOrientation.VERTICAL,
-                      activeColor: Colors.blue,
-                      margin: const EdgeInsets.only(left: 12.0),
-                      onSelected: (List selected) => setState(() {
-                        _checked_water = selected;
-                        print(_checked_water);
-                      }),
-                      labels: <String>[
-                        "WATER ONE",
-                        "WATER TWO",
-                      ],
-                      checked: _checked_water,
-                    ),
-                    Container(
-                        color: Colors.grey.shade200,
-                        padding: EdgeInsets.all(8.0),
-                        width: double.infinity,
-                        child: Text("VIT. D".toUpperCase())),
-                    CheckboxGroup(
-                      orientation: GroupedButtonsOrientation.VERTICAL,
-                      activeColor: Colors.blue,
-                      margin: const EdgeInsets.only(left: 12.0),
-                      onSelected: (List selected) => setState(() {
-                        _checked_vit = selected;
-                      }),
-                      labels: <String>[
-                        "Vit. ONE",
-                        "Vit. TWO",
-                      ],
-                      checked: _checked_vit,
-                    ),
-                    Container(
-                        color: Colors.grey.shade200,
-                        padding: EdgeInsets.all(8.0),
-                        width: double.infinity,
-                        child: Text("Color".toUpperCase())),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Card(
-                          elevation: 2,
-                          child: ColorPicker(
-                            // Use the screenPickerColor as start color.
-                            pickersEnabled: const <ColorPickerType, bool>{
-                              ColorPickerType.accent: false,
-                            },
-                            color: _color,
-                            // Update the screenPickerColor using the callback.
-                            onColorChanged: (Color color) => setState(() {
-                              _color = color;
-                              _hex_color =
-                                  '0x${_color.value.toRadixString(16)}';
-                            }),
-                            width: 44,
-                            height: 44,
-                            borderRadius: 22,
-                            heading: Text(
-                              'Select color',
-                              style: Theme.of(context).textTheme.headline5,
+                  padding: EdgeInsets.only(
+                    top: _height / 30,
+                    right: 5,
+                    bottom: _height / 30,
+                    left: 5,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: _height / 2,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
-                            subheading: Text(
-                              'Select color shade',
-                              style: Theme.of(context).textTheme.subtitle1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      'assets/images/calendar.png',
+                                      fit: BoxFit.fill,
+                                      height: _height / 2,
+                                      width: _width * 0.99,
+                                    ),
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Container(
+                                            width: _width * 0.9,
+                                            height: _height * 0.45,
+                                            child: TableCalendar(
+                                              rowHeight: _height * 0.05,
+                                              firstDay:
+                                                  DateTime.utc(2010, 10, 16),
+                                              lastDay:
+                                                  DateTime.utc(2030, 3, 14),
+                                              focusedDay: _focusedDay,
+                                              selectedDayPredicate: (day) {
+                                                return isSameDay(
+                                                    _selectedDay, day);
+                                              },
+                                              onDaySelected:
+                                                  (selectedDay, focusedDay) {
+                                                setState(() {
+                                                  _selectedDay = selectedDay;
+
+                                                  _selected_day_str =
+                                                      DateFormat("yyyy-MM-dd")
+                                                          .format(_selectedDay);
+                                                  getRecord(_selected_day_str);
+
+                                                  _focusedDay = focusedDay;
+                                                });
+                                              },
+                                            ),
+                                          )
+                                        ]),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Container(
-                    color: Colors.grey.shade200,
-                    padding: EdgeInsets.all(8.0),
-                    width: double.infinity,
-                    child: Text("Reaction".toUpperCase())),
-                Container(
-                  width: _width,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(30.0),
-                    elevation: large ? 12 : (medium ? 10 : 8),
-                    child: TextFormField(
-                      controller: _reaction_controller,
-                      keyboardType: TextInputType.multiline,
-                      cursorColor: Colors.orange[200],
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        prefixIcon:
-                            Icon(icon, color: Colors.orange[200], size: 20),
-                        hintText: hint,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: BorderSide.none),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                    color: Colors.grey.shade200,
-                    padding: EdgeInsets.all(8.0),
-                    width: double.infinity,
-                    child: Text("Hygiene".toUpperCase())),
-                CheckboxGroup(
-                  orientation: GroupedButtonsOrientation.VERTICAL,
-                  activeColor: Colors.blue,
-                  margin: const EdgeInsets.only(left: 12.0),
-                  onSelected: (List selected) => setState(() {
-                    _checked_hygin = selected;
-                  }),
-                  labels: <String>[
-                    "Morning",
-                    "Evening",
-                  ],
-                  checked: _checked_hygin,
-                ),
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text(
-                            "Upper jaw".toUpperCase(),
-                            textAlign: TextAlign.center,
-                          )),
-                      Container(
-                        height: 100,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            CheckboxGroup(
-                              activeColor: Colors.blueAccent,
-                              orientation: GroupedButtonsOrientation.HORIZONTAL,
-                              margin: const EdgeInsets.only(left: 8.0),
-                              padding: const EdgeInsets.all(2),
-                              onSelected: (List selected) => setState(() {
-                                _checked_teeth_upper = selected;
-                              }),
-                              labels: <String>[
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Total",
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => RecipesPage()));
+                            },
+                            child: Container(
+                                color: Colors.grey.shade200,
+                                padding: EdgeInsets.all(8.0),
+                                width: double.infinity,
+                                child: Text("New Groceries".toUpperCase())),
+                          ),
+                          CustomTextField(
+                            keyboardType: TextInputType.text,
+                            icon: Icons.receipt,
+                            hint: "Groceries name",
+                            textEditingController: _groceries_controller,
+                          ),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text(
+                                      "Table Spoon".toUpperCase(),
+                                      textAlign: TextAlign.left,
+                                    )),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  height: 100,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: <Widget>[
+                                      CheckboxGroup(
+                                        activeColor: Colors.blue,
+                                        orientation: GroupedButtonsOrientation
+                                            .HORIZONTAL,
+                                        margin:
+                                            const EdgeInsets.only(left: 8.0),
+                                        padding: const EdgeInsets.all(2),
+                                        onSelected: (List selected) =>
+                                            setState(() {
+                                          _checked_spoon = selected;
+                                        }),
+                                        labels: <String>[
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                        ],
+                                        checked: _checked_spoon,
+                                        itemBuilder:
+                                            (Checkbox cb, Text txt, int i) {
+                                          return Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                'assets/images/spoon.png',
+                                                width: _width / 15,
+                                              ),
+                                              cb,
+                                              txt,
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
-                              checked: _checked_teeth_upper,
-                              itemBuilder: (Checkbox cb, Text txt, int i) {
-                                return Column(
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.tooth),
-                                    cb,
-                                    txt,
-                                  ],
-                                );
-                              },
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 100,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            CheckboxGroup(
-                              activeColor: Colors.blueAccent,
-                              orientation: GroupedButtonsOrientation.HORIZONTAL,
-                              margin: const EdgeInsets.only(left: 8.0),
-                              padding: const EdgeInsets.all(2),
-                              onSelected: (List selected) => setState(() {
-                                _checked_teeth_lower = selected;
-                              }),
-                              labels: <String>[
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
+                          ),
+                          Container(
+                              color: Colors.grey.shade200,
+                              padding: EdgeInsets.all(8.0),
+                              width: double.infinity,
+                              child: Text("WATER".toUpperCase())),
+                          Column(
+                            children: <Widget>[
+                              CheckboxGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                activeColor: Colors.blue,
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (List selected) => setState(() {
+                                  _checked_water = selected;
+                                  print(_checked_water);
+                                }),
+                                labels: <String>[
+                                  "WATER ONE",
+                                  "WATER TWO",
+                                ],
+                                checked: _checked_water,
+                              ),
+                              Container(
+                                  color: Colors.grey.shade200,
+                                  padding: EdgeInsets.all(8.0),
+                                  width: double.infinity,
+                                  child: Text("VIT. D".toUpperCase())),
+                              CheckboxGroup(
+                                orientation: GroupedButtonsOrientation.VERTICAL,
+                                activeColor: Colors.blue,
+                                margin: const EdgeInsets.only(left: 12.0),
+                                onSelected: (List selected) => setState(() {
+                                  _checked_vit = selected;
+                                }),
+                                labels: <String>[
+                                  "Vit. ONE",
+                                  "Vit. TWO",
+                                ],
+                                checked: _checked_vit,
+                              ),
+                              Container(
+                                  color: Colors.grey.shade200,
+                                  padding: EdgeInsets.all(8.0),
+                                  width: double.infinity,
+                                  child: Text("Color".toUpperCase())),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6),
+                                  child: Card(
+                                    elevation: 2,
+                                    child: ColorPicker(
+                                      // Use the screenPickerColor as start color.
+                                      pickersEnabled: const <ColorPickerType,
+                                          bool>{
+                                        ColorPickerType.accent: false,
+                                      },
+                                      color: _color,
+                                      // Update the screenPickerColor using the callback.
+                                      onColorChanged: (Color color) =>
+                                          setState(() {
+                                        _color = color;
+                                        _hex_color =
+                                            '0x${_color.value.toRadixString(16)}';
+                                      }),
+                                      width: 44,
+                                      height: 44,
+                                      borderRadius: 22,
+                                      heading: Text(
+                                        'Select color',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5,
+                                      ),
+                                      subheading: Text(
+                                        'Select color shade',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                              color: Colors.grey.shade200,
+                              padding: EdgeInsets.all(8.0),
+                              width: double.infinity,
+                              child: Text("Reaction".toUpperCase())),
+                          Container(
+                            width: _width,
+                            child: Material(
+                              borderRadius: BorderRadius.circular(30.0),
+                              elevation: large ? 12 : (medium ? 10 : 8),
+                              child: TextFormField(
+                                controller: _reaction_controller,
+                                keyboardType: TextInputType.multiline,
+                                cursorColor: Colors.orange[200],
+                                maxLines: 3,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(icon,
+                                      color: Colors.orange[200], size: 20),
+                                  hintText: hint,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      borderSide: BorderSide.none),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                              color: Colors.grey.shade200,
+                              padding: EdgeInsets.all(8.0),
+                              width: double.infinity,
+                              child: Text("Hygiene".toUpperCase())),
+                          CheckboxGroup(
+                            orientation: GroupedButtonsOrientation.VERTICAL,
+                            activeColor: Colors.blue,
+                            margin: const EdgeInsets.only(left: 12.0),
+                            onSelected: (List selected) => setState(() {
+                              _checked_hygin = selected;
+                            }),
+                            labels: <String>[
+                              "Morning",
+                              "Evening",
+                            ],
+                            checked: _checked_hygin,
+                          ),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text(
+                                      "Upper jaw".toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                    )),
+                                Container(
+                                  height: 100,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: <Widget>[
+                                      CheckboxGroup(
+                                        activeColor: Colors.blueAccent,
+                                        orientation: GroupedButtonsOrientation
+                                            .HORIZONTAL,
+                                        margin:
+                                            const EdgeInsets.only(left: 8.0),
+                                        padding: const EdgeInsets.all(2),
+                                        onSelected: (List selected) =>
+                                            setState(() {
+                                          _checked_teeth_upper = selected;
+                                        }),
+                                        labels: <String>[
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                        ],
+                                        checked: _checked_teeth_upper,
+                                        itemBuilder:
+                                            (Checkbox cb, Text txt, int i) {
+                                          return Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                'assets/images/t${i + 1}.png',
+                                                width: _width / 15,
+                                              ),
+                                              cb,
+                                              txt,
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
-                              checked: _checked_teeth_lower,
-                              itemBuilder: (Checkbox cb, Text txt, int i) {
-                                return Column(
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.tooth),
-                                    cb,
-                                    txt,
-                                  ],
-                                );
-                              },
                             ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          color: Colors.grey.shade200,
-                          padding: EdgeInsets.all(8.0),
-                          width: double.infinity,
-                          child: Text(
-                            "Lower jaw".toUpperCase(),
-                            textAlign: TextAlign.center,
-                          )),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    padding:
-                        EdgeInsets.fromLTRB(_width / 3, 10, _width / 3, 10),
-                    color: Color(themeService.myColor2),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    onPressed: () {
-                      addRecord();
-                      getRecord(_selected_day_str);
-                      Toast.show("Saved Successfully!", context,
-                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                    },
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
+                          ),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: <Widget>[
+                                      CheckboxGroup(
+                                        activeColor: Colors.blueAccent,
+                                        orientation: GroupedButtonsOrientation
+                                            .HORIZONTAL,
+                                        margin:
+                                            const EdgeInsets.only(left: 8.0),
+                                        padding: const EdgeInsets.all(2),
+                                        onSelected: (List selected) =>
+                                            setState(() {
+                                          _checked_teeth_lower = selected;
+                                        }),
+                                        labels: <String>[
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                        ],
+                                        checked: _checked_teeth_lower,
+                                        itemBuilder:
+                                            (Checkbox cb, Text txt, int i) {
+                                          return Column(
+                                            children: <Widget>[
+                                              Image.asset(
+                                                'assets/images/t${i + 11}.png',
+                                                width: _width / 15,
+                                              ),
+                                              cb,
+                                              txt,
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    padding: EdgeInsets.all(8.0),
+                                    width: double.infinity,
+                                    child: Text(
+                                      "Lower jaw".toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                    )),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              padding: EdgeInsets.fromLTRB(
+                                  _width / 3, 10, _width / 3, 10),
+                              color: Color(themeService.myColor2),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              onPressed: () {
+                                addRecord();
+                                getRecord(_selected_day_str);
+                                Toast.show("Saved Successfully!", context,
+                                    duration: Toast.LENGTH_LONG,
+                                    gravity: Toast.BOTTOM);
+                              },
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Image.asset(
+                            'assets/images/footer.png',
+                            width: _width,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Image.asset(
-                  'assets/images/footer.png',
-                  width: _width,
                 ),
               ],
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

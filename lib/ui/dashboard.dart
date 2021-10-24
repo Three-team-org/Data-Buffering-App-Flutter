@@ -194,7 +194,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      height: _height / 2 - 30,
+                                      // height: _height * 0.4,
                                       color: Colors.transparent,
                                       child: Column(
                                         crossAxisAlignment:
@@ -208,7 +208,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   'DATA',
                                                   '30',
                                                   1,
-                                                  _height / 2 - 30,
+                                                  _height * 0.4,
                                                   _width / 2 - 30),
                                               Spacer(),
                                             ],
@@ -218,7 +218,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                     const SizedBox(height: 20.0),
                                     Container(
-                                      height: _height / 4,
+                                      // height: _height / 4,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -231,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   'NEW',
                                                   '90',
                                                   4,
-                                                  _height / 4,
+                                                  _height * 0.2,
                                                   _width / 2 - 30),
                                               Spacer(),
                                             ],
@@ -247,7 +247,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                      height: _height / 4,
+                                      // height: _height / 4,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -270,7 +270,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                     const SizedBox(height: 20.0),
                                     Container(
-                                      height: _height / 2 - 30,
+                                      // height: _height * 0.4,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -283,7 +283,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   'ADVICE',
                                                   '22',
                                                   3,
-                                                  _height / 2 - 30,
+                                                  _height * 0.4,
                                                   _width / 2 - 30),
                                               Spacer(),
                                             ],
@@ -291,11 +291,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 20.0),
                                   ],
                                 ),
                               ),
                             ],
+                          ),
+                          Image.asset(
+                            'assets/images/footer.png',
                           ),
                         ],
                       ),
