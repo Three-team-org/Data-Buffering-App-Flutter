@@ -30,85 +30,85 @@ class _RecipesPageState extends State<RecipesPage> {
       onTap: () {
         switch (page_num) {
           case 1:
-            str_recipes_months = "This recipe is for January";
-            str_month_name = "January";
+            str_recipes_months = "This recipe is for 1 month";
+            str_month_name = "1 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 2:
-            str_recipes_months = "This recipe is for February";
-            str_month_name = "February";
+            str_recipes_months = "This recipe is for 2 month";
+            str_month_name = "2 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 3:
-            str_recipes_months = "This recipe is for March";
-            str_month_name = "March";
+            str_recipes_months = "This recipe is for 3 month";
+            str_month_name = "3 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 4:
-            str_recipes_months = "This recipe is for April";
-            str_month_name = "April";
+            str_recipes_months = "This recipe is for 4 month";
+            str_month_name = "4 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 5:
-            str_recipes_months = "This recipe is for May";
-            str_month_name = "May";
+            str_recipes_months = "This recipe is for 5 month";
+            str_month_name = "5 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 6:
-            str_recipes_months = "This recipe is for June";
-            str_month_name = "June";
+            str_recipes_months = "This recipe is for 6 month";
+            str_month_name = "6 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 7:
-            str_recipes_months = "This recipe is for July";
-            str_month_name = "July";
+            str_recipes_months = "This recipe is for 7 month";
+            str_month_name = "7 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 8:
-            str_recipes_months = "This recipe is for August";
-            str_month_name = "August";
+            str_recipes_months = "This recipe is for 8 month";
+            str_month_name = "8 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 9:
-            str_recipes_months = "This recipe is for September";
-            str_month_name = "September";
+            str_recipes_months = "This recipe is for 9 month";
+            str_month_name = "9 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 10:
-            str_recipes_months = "This recipe is for October";
-            str_month_name = "October";
+            str_recipes_months = "This recipe is for 10 month";
+            str_month_name = "10 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 11:
-            str_recipes_months = "This recipe is for November";
-            str_month_name = "November";
+            str_recipes_months = "This recipe is for 11 month";
+            str_month_name = "11 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
             break;
           case 12:
-            str_recipes_months = "This recipe is for December";
-            str_month_name = "December";
+            str_recipes_months = "This recipe is for 12 month";
+            str_month_name = "12 month";
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) =>
                     RecipeMonthPage(str_recipes_months, str_month_name)));
@@ -209,7 +209,19 @@ class _RecipesPageState extends State<RecipesPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Opacity(opacity: 1, child: CustomAppBar()),
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                              ),
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       Row(
@@ -242,18 +254,18 @@ class _RecipesPageState extends State<RecipesPage> {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   children: <Widget>[
-                    // cards("assets/images/recipe_0.png", 'January', '30', 1),
-                    cards("assets/images/recipe_1.png", 'February', '37', 2),
-                    cards("assets/images/recipe_2.png", 'March', '22', 3),
-                    cards("assets/images/recipe_3.png", 'April', '90', 4),
-                    cards("assets/images/recipe_4.png", 'May', '22', 5),
-                    cards("assets/images/recipe_5.png", 'June', '90', 6),
-                    cards("assets/images/recipe_6.png", 'July', '30', 7),
-                    cards("assets/images/recipe_7.png", 'August', '37', 8),
-                    cards("assets/images/recipe_8.png", 'September', '22', 9),
-                    cards("assets/images/recipe_9.png", 'October', '90', 10),
-                    cards("assets/images/recipe_10.png", 'November', '22', 11),
-                    cards("assets/images/recipe_12.png", 'December', '90', 12),
+                    cards("assets/images/recipe_1.png", '1 Month', '37', 1),
+                    cards("assets/images/recipe_2.png", '2 Month', '22', 2),
+                    cards("assets/images/recipe_3.png", '3 Month', '90', 3),
+                    cards("assets/images/recipe_4.png", '4 Month', '22', 4),
+                    cards("assets/images/recipe_5.png", '5 Month', '90', 5),
+                    cards("assets/images/recipe_6.png", '6 Month', '30', 6),
+                    cards("assets/images/recipe_7.png", '7 Month', '37', 7),
+                    cards("assets/images/recipe_8.png", '8 Month', '22', 8),
+                    cards("assets/images/recipe_9.png", '9 Month', '90', 9),
+                    cards("assets/images/recipe_10.png", '10 Month', '22', 10),
+                    cards("assets/images/recipe_11.png", '11 Month', '22', 11),
+                    cards("assets/images/recipe_12.png", '12 Month', '90', 12),
                   ],
                 ),
               ),

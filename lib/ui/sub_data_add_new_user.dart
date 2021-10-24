@@ -15,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:toast/toast.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
+import 'package:data_buffer/ui/dashboard.dart';
 
 class NewUserDataPage extends StatefulWidget {
   @override
@@ -201,7 +202,20 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Opacity(opacity: 1, child: CustomAppBar()),
+                        Opacity(
+                          opacity: 1,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                            ),
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      DashboardScreen("admin", "")));
+                            },
+                          ),
+                        ),
                         SizedBox(
                           height: _height / 10,
                         )

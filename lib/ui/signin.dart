@@ -98,11 +98,53 @@ class _SignInScreenState extends State<SignInScreen> {
                             button(),
                             forgetPassTextRow(),
                             signUpTextRow(),
-                            Row(
-                              children: <Widget>[
-                                googleLoginRow(),
-                                facebookLoginRow(),
-                              ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  RaisedButton.icon(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8),
+                                        bottomLeft: Radius.circular(8),
+                                      ),
+                                    ),
+                                    color: Color(0xFFFFDBDB),
+                                    icon: Icon(
+                                      FontAwesomeIcons.google,
+                                      color: Color(0xFFDA483F),
+                                    ),
+                                    label: Text(
+                                      "Google  ",
+                                      style:
+                                          TextStyle(color: Color(0xFFDA483F)),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                  RaisedButton.icon(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(8),
+                                        bottomRight: Radius.circular(8),
+                                      ),
+                                    ),
+                                    color: Color(0xFFE0E3FF),
+                                    icon: Icon(
+                                      FontAwesomeIcons.facebook,
+                                      color: Color(0xFF3D5A96),
+                                    ),
+                                    label: Text(
+                                      "Facebook",
+                                      style:
+                                          TextStyle(color: Color(0xFF3D5A96)),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: _height / 15,
@@ -316,84 +358,6 @@ class _SignInScreenState extends State<SignInScreen> {
           )
         ],
       ),
-    );
-  }
-
-  Widget googleLoginRow() {
-    return InkWell(
-      child: Container(
-          height:
-              _large ? _height / 18 : (_medium ? _height / 18 : _height / 18),
-          margin: EdgeInsets.only(top: 25, left: _width / 22),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                height: 30.0,
-                width: 30.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-              ),
-              RaisedButton.icon(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8),
-                  ),
-                ),
-                color: Color(0xFFFFDBDB),
-                icon: Icon(
-                  FontAwesomeIcons.google,
-                  color: Color(0xFFDA483F),
-                ),
-                label: Text(
-                  "Google  ",
-                  style: TextStyle(color: Color(0xFFDA483F)),
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ))),
-      onTap: () {},
-    );
-  }
-
-  Widget facebookLoginRow() {
-    return InkWell(
-      child: Container(
-          height:
-              _large ? _height / 18 : (_medium ? _height / 18 : _height / 18),
-          margin: EdgeInsets.only(top: 25),
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton.icon(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  ),
-                ),
-                color: Color(0xFFE0E3FF),
-                icon: Icon(
-                  FontAwesomeIcons.facebook,
-                  color: Color(0xFF3D5A96),
-                ),
-                label: Text(
-                  "Facebook",
-                  style: TextStyle(color: Color(0xFF3D5A96)),
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ))),
-      onTap: () {},
     );
   }
 }

@@ -19,6 +19,7 @@ import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:data_buffer/ui/dashboard.dart';
 
 class DataPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -35,6 +36,7 @@ class Item {
 
 class _DataPageState extends State<DataPage> {
   ThemeService themeService = ThemeService();
+  TimeOfDay selectedTime = TimeOfDay.now();
   double _height;
   double _width;
   double _pixelRatio;
@@ -261,9 +263,23 @@ class _DataPageState extends State<DataPage> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Opacity(opacity: 1, child: CustomAppBar()),
+                        Container(
+                          height: _height / 15,
+                          padding: EdgeInsets.only(top: 10),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                            ),
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      DashboardScreen("admin", "")));
+                            },
+                          ),
+                        ),
                         SizedBox(
-                          width: _width / 2 - 50,
+                          width: _width * 0.72,
                         ),
                         PopupMenuButton(
                           onSelected: (Item item) {
@@ -370,7 +386,7 @@ class _DataPageState extends State<DataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _full_name_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Your Full Name",
                       ),
                     ),
@@ -456,7 +472,7 @@ class _DataPageState extends State<DataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _weight_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.monitor_weight,
                         hint: "Your Weight",
                       ),
                     ),
@@ -474,7 +490,7 @@ class _DataPageState extends State<DataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _length_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.straighten,
                         hint: "Your Length",
                       ),
                     ),
@@ -488,11 +504,28 @@ class _DataPageState extends State<DataPage> {
                             color: Color(themeService.myColor2),
                             fontSize: 12.0),
                       ),
-                      subtitle: CustomTextField(
-                        textEditingController: _time_controller,
-                        keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
-                        hint: "Time",
+                      subtitle: Container(
+                        child: TextFormField(
+                          controller: _time_controller,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.schedule,
+                              color: Colors.orange[200],
+                            ),
+                            hintText: "Time",
+                          ),
+                          onTap: () {
+                            showTimePicker(
+                              context: context,
+                              initialTime: selectedTime,
+                              initialEntryMode: TimePickerEntryMode.input,
+                              confirmText: "CONFIRM",
+                              cancelText: "NOT NOW",
+                              helpText: "BOOKING TIME",
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -508,7 +541,7 @@ class _DataPageState extends State<DataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _doctor_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Doctor Name",
                       ),
                     ),
@@ -526,7 +559,7 @@ class _DataPageState extends State<DataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _dentist_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Dentist Name",
                       ),
                     ),

@@ -22,14 +22,15 @@ class CustomAppBar extends StatelessWidget {
         child: Row(
           children: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                ),
-                color: Colors.white,
-                onPressed: () {
-                  print("pop");
-                  Navigator.of(context).pop();
-                })
+              icon: Icon(
+                Icons.arrow_back_ios,
+              ),
+              color: Colors.white,
+              onPressed: () {
+                print("pop");
+                Navigator.of(context).pop();
+              },
+            )
           ],
         ),
       ),

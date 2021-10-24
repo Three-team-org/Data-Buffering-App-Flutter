@@ -101,6 +101,7 @@ flutter:
     - assets/images/advice_oral_hygiene.png
     - assets/images/advice_doctor.png
     - assets/images/advice_dentist.png
+    - assets/images/dashboard_footer.png
     - assets/images/footer.png
     - assets/images/calendar.png
     - assets/images/spoon.png
@@ -116,6 +117,7 @@ flutter:
     - assets/images/recipe_8.png
     - assets/images/recipe_9.png
     - assets/images/recipe_10.png
+    - assets/images/recipe_11.png
     - assets/images/recipe_12.png
     - assets/images/t1.png
     - assets/images/t2.png

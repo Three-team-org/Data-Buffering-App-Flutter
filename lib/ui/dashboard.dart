@@ -91,6 +91,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Container(
         height: height,
         width: width,
+        // color: Colors.white,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         child: Image.asset(
           image,
           height: _height / 5,
@@ -139,7 +141,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Container(
                 margin: EdgeInsets.only(top: 80),
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
+                  // color: Color(0xFFFFFFFF),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(18.0),
                       topRight: Radius.circular(18.0)),
@@ -171,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,
-                                      color: Colors.black)),
+                                      color: Colors.white)),
                               Spacer(),
                             ],
                           ),
@@ -181,7 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Text("Please visit everywhere",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 12, color: Colors.black)),
+                                      fontSize: 12, color: Colors.white)),
                               Spacer(),
                             ],
                           ),
@@ -195,7 +197,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   children: <Widget>[
                                     Container(
                                       // height: _height * 0.4,
-                                      color: Colors.transparent,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -216,7 +217,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 20.0),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Container(
                                       // height: _height / 4,
                                       child: Column(
@@ -231,7 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   'NEW',
                                                   '90',
                                                   4,
-                                                  _height * 0.2,
+                                                  _height * 0.25,
                                                   _width / 2 - 30),
                                               Spacer(),
                                             ],
@@ -268,7 +271,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 20.0),
+                                    const SizedBox(height: 5.0),
                                     Container(
                                       // height: _height * 0.4,
                                       child: Column(
@@ -296,9 +299,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ],
                           ),
-                          Image.asset(
-                            'assets/images/footer.png',
-                          ),
+                          // Container(
+                          //   width: _width,
+                          //   height: _height / 4,
+                          //   decoration: BoxDecoration(
+                          //     image: DecorationImage(
+                          //       image: AssetImage(
+                          //         'assets/images/dashboard_footer.png',
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
+                          // Image.asset(
+                          //   'assets/images/dashboard_footer.png',
+                          //   height: _height / 4,
+                          //   width: _width,
+                          // ),
                         ],
                       ),
                     ),

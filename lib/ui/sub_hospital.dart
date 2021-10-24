@@ -151,7 +151,19 @@ class _HospitalPageState extends State<HospitalPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Opacity(opacity: 1, child: CustomAppBar()),
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                              ),
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       Row(
@@ -250,53 +262,54 @@ class _HospitalPageState extends State<HospitalPage> {
                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                    color: Colors.grey.shade200,
-                                    padding: EdgeInsets.all(8.0),
-                                    width: double.infinity,
-                                    child: Text("Weight ".toUpperCase())),
-                                CustomTextField(
-                                  keyboardType: TextInputType.text,
-                                  icon: Icons.receipt,
-                                  hint: "Your Weight",
-                                  textEditingController: _weight_controller,
+                                ListTile(
+                                  title: Text(
+                                    "Weight".toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color(themeService.myColor2),
+                                        fontSize: 12.0),
+                                  ),
+                                  subtitle: CustomTextField(
+                                    textEditingController: _weight_controller,
+                                    keyboardType: TextInputType.text,
+                                    icon: Icons.monitor_weight,
+                                    hint: "Your Weight",
+                                  ),
+                                ),
+                                Divider(),
+                                ListTile(
+                                  title: Text(
+                                    "Length".toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color(themeService.myColor2),
+                                        fontSize: 12.0),
+                                  ),
+                                  subtitle: CustomTextField(
+                                    textEditingController: _length_controller,
+                                    keyboardType: TextInputType.text,
+                                    icon: Icons.straighten,
+                                    hint: "Your Length",
+                                  ),
                                 ),
                                 Container(
-                                    color: Colors.grey.shade200,
-                                    padding: EdgeInsets.all(8.0),
-                                    width: double.infinity,
-                                    child: Text("Length".toUpperCase())),
-                                CustomTextField(
-                                  keyboardType: TextInputType.text,
-                                  icon: Icons.receipt,
-                                  hint: "Your Length",
-                                  textEditingController: _length_controller,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (ctx) => AdvicesPage(
-                                                widget.user_role,
-                                                widget.user_name)));
-                                  },
-                                  child: Container(
-                                      color: Colors.grey.shade200,
-                                      padding: EdgeInsets.all(8.0),
-                                      width: double.infinity,
-                                      child: Text("Advice".toUpperCase())),
+                                  padding: EdgeInsets.all(15.0),
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Advice".toUpperCase(),
+                                    style: TextStyle(
+                                      color: Color(themeService.myColor2),
+                                    ),
+                                  ),
                                 ),
                                 Container(
+                                  padding: EdgeInsets.only(left: 15.0),
                                   child: Material(
                                     borderRadius: BorderRadius.circular(30.0),
                                     elevation: large ? 12 : (medium ? 10 : 8),
                                     child: TextFormField(
                                       controller: _advice_controller,
                                       keyboardType: TextInputType.multiline,
-                                      cursorColor: Color(themeService.myColor2),
+                                      cursorColor: Colors.orange[200],
                                       maxLines: 3,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(Icons.input,
@@ -311,15 +324,18 @@ class _HospitalPageState extends State<HospitalPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
+                                Container(
+                                  padding: EdgeInsets.all(15.0),
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Remarks".toUpperCase(),
+                                    style: TextStyle(
+                                      color: Color(themeService.myColor2),
+                                    ),
+                                  ),
                                 ),
                                 Container(
-                                    color: Colors.grey.shade200,
-                                    padding: EdgeInsets.all(8.0),
-                                    width: double.infinity,
-                                    child: Text("Remarks".toUpperCase())),
-                                Container(
+                                  padding: EdgeInsets.only(left: 15.0),
                                   child: Material(
                                     borderRadius: BorderRadius.circular(30.0),
                                     elevation: large ? 12 : (medium ? 10 : 8),

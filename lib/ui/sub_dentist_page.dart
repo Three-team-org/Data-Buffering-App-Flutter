@@ -39,7 +39,19 @@ class _SubDentistPageState extends State<DentistPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Opacity(opacity: 1, child: CustomAppBar()),
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                              ),
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       Row(

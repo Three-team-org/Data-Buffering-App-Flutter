@@ -178,7 +178,19 @@ class _CalendarPageState extends State<CalendarPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Opacity(opacity: 1, child: CustomAppBar()),
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                              ),
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       Row(
@@ -548,6 +560,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                               Image.asset(
                                                 'assets/images/t${i + 1}.png',
                                                 width: _width / 15,
+                                                height: _height / 25,
                                               ),
                                               cb,
                                               txt,
@@ -600,6 +613,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                               Image.asset(
                                                 'assets/images/t${i + 11}.png',
                                                 width: _width / 15,
+                                                height: _height / 25,
                                               ),
                                               cb,
                                               txt,
