@@ -515,15 +515,29 @@ class _DataPageState extends State<DataPage> {
                             ),
                             hintText: "Time",
                           ),
-                          onTap: () {
-                            showTimePicker(
+                          focusNode: AlwaysDisabledFocusNode(),
+                          onTap: () async {
+                            TimeOfDay pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
                               context: context,
-                              initialTime: selectedTime,
-                              initialEntryMode: TimePickerEntryMode.input,
-                              confirmText: "CONFIRM",
-                              cancelText: "NOT NOW",
-                              helpText: "BOOKING TIME",
                             );
+
+                            if (pickedTime != null) {
+                              DateTime parsedTime = DateFormat.jm()
+                                  .parse(pickedTime.format(context).toString());
+                              //converting to DateTime so that we can further format on different pattern.
+
+                              String formattedTime =
+                                  DateFormat('HH:mm').format(parsedTime);
+                              //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                              setState(() {
+                                _time_controller.text =
+                                    formattedTime; //set the value of text field.
+                              });
+                            } else {
+                              print("Time is not selected");
+                            }
                           },
                         ),
                       ),
