@@ -51,6 +51,7 @@ class _CalendarPageState extends State<CalendarPage> {
   double _pixelRatio;
   bool large;
   bool medium;
+  List<bool> _spoonSelected = [false];
   List<String> _checked_water = [];
   List<String> _checked_vit = [];
   List<String> _checked_hygin = [];
@@ -294,13 +295,6 @@ class _CalendarPageState extends State<CalendarPage> {
                               ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text("Total",
-                                  style: Theme.of(context).textTheme.subtitle1),
-                            ],
-                          ),
                           SizedBox(
                             height: 20.0,
                           ),
@@ -340,41 +334,48 @@ class _CalendarPageState extends State<CalendarPage> {
                                   child: ListView(
                                     scrollDirection: Axis.horizontal,
                                     children: <Widget>[
-                                      CheckboxGroup(
-                                        activeColor: Colors.blue,
-                                        orientation: GroupedButtonsOrientation
-                                            .HORIZONTAL,
-                                        margin:
-                                            const EdgeInsets.only(left: 8.0),
-                                        padding: const EdgeInsets.all(2),
-                                        onSelected: (List selected) =>
-                                            setState(() {
-                                          _checked_spoon = selected;
-                                        }),
-                                        labels: <String>[
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                        ],
-                                        checked: _checked_spoon,
-                                        itemBuilder:
-                                            (Checkbox cb, Text txt, int i) {
-                                          return Column(
-                                            children: <Widget>[
-                                              Image.asset(
-                                                'assets/images/spoon.png',
-                                                width: _width / 15,
-                                              ),
-                                              cb,
-                                              txt,
-                                            ],
-                                          );
-                                        },
-                                      ),
+                                      for (var i = 1; i <= 7; i++)
+                                        Image.asset(
+                                          'assets/images/spoon.png',
+                                          width: _width / 15,
+                                        ),
+                                      // CheckboxGroup(
+                                      //   tristate: false,
+                                      //   activeColor: Colors.blue,
+                                      //   orientation: GroupedButtonsOrientation
+                                      //       .HORIZONTAL,
+                                      //   margin:
+                                      //       const EdgeInsets.only(left: 8.0),
+                                      //   padding: const EdgeInsets.all(2),
+                                      //   onSelected: (List selected) =>
+                                      //       setState(() {
+                                      //     _checked_spoon = selected;
+                                      //     print(_checked_spoon);
+                                      //   }),
+                                      //   labels: <String>[
+                                      //     "1",
+                                      //     "2",
+                                      //     "3",
+                                      //     "4",
+                                      //     "5",
+                                      //     "6",
+                                      //     "7",
+                                      //   ],
+                                      //   checked: _checked_spoon,
+                                      //   itemBuilder:
+                                      //       (Checkbox cb, Text txt, int i) {
+                                      //     return Column(
+                                      //       children: <Widget>[
+                                      //         Image.asset(
+                                      //           'assets/images/spoon.png',
+                                      //           width: _width / 15,
+                                      //         ),
+                                      //         cb,
+                                      //         txt,
+                                      //       ],
+                                      //     );
+                                      //   },
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -416,7 +417,6 @@ class _CalendarPageState extends State<CalendarPage> {
                                 }),
                                 labels: <String>[
                                   "Vit. ONE",
-                                  "Vit. TWO",
                                 ],
                                 checked: _checked_vit,
                               ),

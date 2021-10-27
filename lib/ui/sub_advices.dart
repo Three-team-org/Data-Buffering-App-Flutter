@@ -86,11 +86,14 @@ class _AdvicesPageState extends State<AdvicesPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: _width / 19,
-                              color: Colors.black)),
+                      Text(
+                        title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: _width / 21,
+                            color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
                       SizedBox(height: _width / 40),
                       Text(subtitle,
                           style: TextStyle(
@@ -251,17 +254,24 @@ class _AdvicesPageState extends State<AdvicesPage> {
                         cards(
                             "assets/images/advice_doctor.png",
                             Color.fromRGBO(255, 255, 240, 1),
-                            'DOCTOR',
+                            'PEDIATRICIAN',
                             'Don\'t be afraid of seeing the\ndoctor. Doctors give you big\nchance.',
                             '37',
                             2),
                         cards(
                             "assets/images/advice_dentist.png",
                             Color.fromRGBO(255, 240, 255, 1),
-                            'DENTIST',
+                            'FIRST VISIT TO\nTHE DENTIST',
                             'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
                             '22',
                             3),
+                        cards(
+                            "assets/images/advice_dentist.png",
+                            Color.fromRGBO(255, 255, 240, 1),
+                            'ORAL HYGIENE\nOF MILK TEETH',
+                            'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
+                            '22',
+                            4),
                         SizedBox(height: 5),
                       ],
                     ),
