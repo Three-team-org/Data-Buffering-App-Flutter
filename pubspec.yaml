@@ -140,6 +140,7 @@ flutter:
     - assets/images/t20.png
     - assets/images/glass.png
     - assets/images/toothbrush.png
+    - assets/images/vit_d.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

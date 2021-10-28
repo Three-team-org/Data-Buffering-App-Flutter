@@ -125,6 +125,9 @@ class _CalendarPageState extends State<CalendarPage> {
     "7",
     "6"
   ];
+  List<Color> _vit_dColors = [Colors.white];
+  List<String> _vit_dLabels = ["Vit.ONE"];
+
   List<String> _checked_water = [];
   List<String> _checked_vit = [];
   List<String> _checked_hygin = [];
@@ -195,16 +198,16 @@ class _CalendarPageState extends State<CalendarPage> {
       String lower_selected_str = maps[maps.length - 1]['lower_selected'];
       setState(() {
         _groceries_controller = TextEditingController(text: grocery_name_str);
-        _checked_water = water_type_str.split(',');
-        _checked_vit = vit_type_str.split(',');
+        // _checked_water = water_type_str.split(',');
+        // _checked_vit = vit_type_str.split(',');
 
         Color otherColor = new Color(value);
         _color = otherColor;
         _reaction_controller = TextEditingController(text: reaction_str);
-        _checked_hygin = hygiene_str.split(',');
-        _checked_spoon = spoon_select_str.split(',');
-        _checked_teeth_upper = upper_selected_str.split(',');
-        _checked_teeth_lower = lower_selected_str.split(',');
+        // _checked_hygin = hygiene_str.split(',');
+        // _checked_spoon = spoon_select_str.split(',');
+        // _checked_teeth_upper = upper_selected_str.split(',');
+        // _checked_teeth_lower = lower_selected_str.split(',');
       });
     } else {
       _groceries_controller = TextEditingController(text: '');
@@ -508,18 +511,57 @@ class _CalendarPageState extends State<CalendarPage> {
                                       fontSize: 15.0),
                                 ),
                               ),
-                              CheckboxGroup(
-                                orientation: GroupedButtonsOrientation.VERTICAL,
-                                activeColor: Colors.blue,
-                                margin: const EdgeInsets.only(left: 12.0),
-                                onSelected: (List selected) => setState(() {
-                                  _checked_vit = selected;
-                                }),
-                                labels: <String>[
-                                  "Vit. ONE",
-                                ],
-                                checked: _checked_vit,
-                              ),
+                              Column(children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 24),
+                                  child: Column(
+                                    children: <Widget>[
+                                      for (var i = 1; i < 2; i++)
+                                        GestureDetector(
+                                          onTap: () => setState(() {
+                                            if (_vit_dColors[i - 1] ==
+                                                Colors.green) {
+                                              _vit_dColors[i - 1] =
+                                                  Colors.white;
+                                              _checked_vit
+                                                  .remove(_vit_dLabels[i - 1]);
+                                            } else {
+                                              _vit_dColors[i - 1] =
+                                                  Colors.green;
+                                              _checked_vit
+                                                  .add(_vit_dLabels[i - 1]);
+                                            }
+                                            print(_checked_vit);
+                                          }),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: _width / 9,
+                                                margin: EdgeInsets.only(
+                                                    right: 3, top: 3),
+                                                child: CircleAvatar(
+                                                  radius: 20.0,
+                                                  backgroundColor:
+                                                      _vit_dColors[i - 1],
+                                                  backgroundImage: ExactAssetImage(
+                                                      'assets/images/vit_d.png'),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 12),
+                                                child:
+                                                    Text(_waterLabels[i - 1]),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                )
+                              ]),
                               Divider(),
                               ListTile(
                                 title: Text(
@@ -640,7 +682,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                             margin: EdgeInsets.only(
                                                 right: 3, top: 3),
                                             child: CircleAvatar(
-                                              radius: 15.0,
+                                              radius: 20.0,
                                               backgroundColor:
                                                   _hyginColors[i - 1],
                                               backgroundImage: ExactAssetImage(
