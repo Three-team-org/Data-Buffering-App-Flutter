@@ -169,7 +169,7 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("BREAST-FEEDING PAGE",
+                              Text("BREAST-FEEDING",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: _width / 13,
