@@ -166,10 +166,10 @@ class _PlanPageState extends State<PlanPage> {
                       Row(
                         children: <Widget>[
                           Spacer(),
-                          Text("PLANS",
+                          Text("NUTRITION PLAN",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 36,
+                                  fontSize: _width / 10,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white)),
                           Spacer(),
@@ -182,7 +182,7 @@ class _PlanPageState extends State<PlanPage> {
                             "Failing to plan is planning to fail. ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: _width / 18,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                                 fontStyle: FontStyle.italic),

@@ -314,7 +314,7 @@ class _DataPageState extends State<DataPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "DATA PAGE",
+                          "BABY DATA PAGE",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 12,

@@ -59,11 +59,11 @@ class _SubDentistPageState extends State<DentistPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Dentist page".toUpperCase(),
+                            "FIRST VISIT TO THE DENTIST".toUpperCase(),
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: _width / 15,
-                            ),
+                                color: Colors.white,
+                                fontSize: _width / 16,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       )

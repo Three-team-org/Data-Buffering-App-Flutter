@@ -171,7 +171,7 @@ class _HospitalPageState extends State<HospitalPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Hospital page".toUpperCase(),
+                            "PEDIATRICIAN".toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,

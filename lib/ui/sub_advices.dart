@@ -177,7 +177,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
                     margin: EdgeInsets.zero,
                     width: _width,
                     child: Container(
-                      child: Text("ADVICE DASHBOARD",
+                      child: Text("ORAL HYGIENE FROM\n THE FIRST DAYS",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: _height / 21,
@@ -190,7 +190,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
                   height: _height,
                 ),
                 Container(
-                    padding: EdgeInsets.only(left: 30, right: 30),
+                    padding: EdgeInsets.only(left: 30, right: 30, top: 40),
                     height: _height / 1.9,
                     margin: EdgeInsets.zero,
                     width: _width,
@@ -272,7 +272,6 @@ class _AdvicesPageState extends State<AdvicesPage> {
                             'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
                             '22',
                             4),
-                        SizedBox(height: 5),
                       ],
                     ),
                   ),

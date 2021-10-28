@@ -51,7 +51,80 @@ class _CalendarPageState extends State<CalendarPage> {
   double _pixelRatio;
   bool large;
   bool medium;
-  List<bool> _spoonSelected = [false];
+  List<Color> _spoonColors = [
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white
+  ];
+  List<Color> _waterColors = [
+    Colors.white,
+    Colors.white,
+  ];
+  List<String> _waterLabels = [
+    "Water one".toUpperCase(),
+    "Water two".toUpperCase(),
+  ];
+
+  List<Color> _hyginColors = [
+    Colors.white,
+    Colors.white,
+  ];
+  List<String> _hyginLabels = [
+    "Morning",
+    "Evening",
+  ];
+  List<Color> _teethUperColors = [
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white
+  ];
+  List<String> _teethUperLabels = [
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ];
+  List<Color> _teethLowerColors = [
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white
+  ];
+  List<String> _teethLowerLabels = [
+    "15",
+    "14",
+    "13",
+    "12",
+    "11",
+    "10",
+    "9",
+    "8",
+    "7",
+    "6"
+  ];
   List<String> _checked_water = [];
   List<String> _checked_vit = [];
   List<String> _checked_hygin = [];
@@ -174,7 +247,7 @@ class _CalendarPageState extends State<CalendarPage> {
             child: ListView(
               children: <Widget>[
                 Container(
-                  height: _height / 7,
+                  height: _height / 5,
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -199,11 +272,13 @@ class _CalendarPageState extends State<CalendarPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Calendar page".toUpperCase(),
+                            "GRADUAL INTRODUCTION\n OF FOODSTUFFS"
+                                .toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       )
@@ -298,116 +373,141 @@ class _CalendarPageState extends State<CalendarPage> {
                           SizedBox(
                             height: 20.0,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => RecipesPage()));
-                            },
-                            child: Container(
-                                color: Colors.grey.shade200,
-                                padding: EdgeInsets.all(8.0),
-                                width: double.infinity,
-                                child: Text("New Groceries".toUpperCase())),
+                          ListTile(
+                            title: Text(
+                              "New Groceries".toUpperCase(),
+                              style: TextStyle(
+                                  color: Color(themeService.myColor2),
+                                  fontSize: 15.0),
+                            ),
+                            subtitle: CustomTextField(
+                              textEditingController: _groceries_controller,
+                              keyboardType: TextInputType.text,
+                              icon: Icons.receipt,
+                              hint: "Groceries name",
+                            ),
                           ),
-                          CustomTextField(
-                            keyboardType: TextInputType.text,
-                            icon: Icons.receipt,
-                            hint: "Groceries name",
-                            textEditingController: _groceries_controller,
-                          ),
+                          Divider(),
                           Container(
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                    color: Colors.grey.shade200,
-                                    padding: EdgeInsets.all(8.0),
-                                    width: double.infinity,
-                                    child: Text(
-                                      "Table Spoon".toUpperCase(),
-                                      textAlign: TextAlign.left,
-                                    )),
-                                SizedBox(
-                                  height: 5,
+                                ListTile(
+                                  title: Text(
+                                    "Table spoon".toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color(themeService.myColor2),
+                                        fontSize: 15.0),
+                                  ),
                                 ),
                                 Container(
-                                  height: 100,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.only(
+                                      top: 10, bottom: 10, left: 10),
+                                  child: Row(
                                     children: <Widget>[
                                       for (var i = 1; i <= 7; i++)
-                                        Image.asset(
-                                          'assets/images/spoon.png',
-                                          width: _width / 15,
+                                        GestureDetector(
+                                          onTap: () => setState(() {
+                                            if (_spoonColors[i - 1] ==
+                                                Color(themeService.myColor2)) {
+                                              _spoonColors[i - 1] =
+                                                  Colors.white;
+                                              _checked_spoon
+                                                  .remove(i.toString());
+                                            } else {
+                                              _spoonColors[i - 1] =
+                                                  Color(themeService.myColor2);
+                                              _checked_spoon.add(i.toString());
+                                            }
+                                            print(_checked_spoon);
+                                          }),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: _width / 9,
+                                            margin: EdgeInsets.only(right: 3),
+                                            child: CircleAvatar(
+                                              radius: 15.0,
+                                              backgroundColor:
+                                                  _spoonColors[i - 1],
+                                              backgroundImage: ExactAssetImage(
+                                                  'assets/images/spoon.png'),
+                                            ),
+                                          ),
                                         ),
-                                      // CheckboxGroup(
-                                      //   tristate: false,
-                                      //   activeColor: Colors.blue,
-                                      //   orientation: GroupedButtonsOrientation
-                                      //       .HORIZONTAL,
-                                      //   margin:
-                                      //       const EdgeInsets.only(left: 8.0),
-                                      //   padding: const EdgeInsets.all(2),
-                                      //   onSelected: (List selected) =>
-                                      //       setState(() {
-                                      //     _checked_spoon = selected;
-                                      //     print(_checked_spoon);
-                                      //   }),
-                                      //   labels: <String>[
-                                      //     "1",
-                                      //     "2",
-                                      //     "3",
-                                      //     "4",
-                                      //     "5",
-                                      //     "6",
-                                      //     "7",
-                                      //   ],
-                                      //   checked: _checked_spoon,
-                                      //   itemBuilder:
-                                      //       (Checkbox cb, Text txt, int i) {
-                                      //     return Column(
-                                      //       children: <Widget>[
-                                      //         Image.asset(
-                                      //           'assets/images/spoon.png',
-                                      //           width: _width / 15,
-                                      //         ),
-                                      //         cb,
-                                      //         txt,
-                                      //       ],
-                                      //     );
-                                      //   },
-                                      // ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                              color: Colors.grey.shade200,
-                              padding: EdgeInsets.all(8.0),
-                              width: double.infinity,
-                              child: Text("WATER".toUpperCase())),
+                          Divider(),
+                          ListTile(
+                            title: Text(
+                              "Water".toUpperCase(),
+                              style: TextStyle(
+                                  color: Color(themeService.myColor2),
+                                  fontSize: 15.0),
+                            ),
+                          ),
                           Column(
                             children: <Widget>[
-                              CheckboxGroup(
-                                orientation: GroupedButtonsOrientation.VERTICAL,
-                                activeColor: Colors.blue,
-                                margin: const EdgeInsets.only(left: 12.0),
-                                onSelected: (List selected) => setState(() {
-                                  _checked_water = selected;
-                                  print(_checked_water);
-                                }),
-                                labels: <String>[
-                                  "WATER ONE",
-                                  "WATER TWO",
-                                ],
-                                checked: _checked_water,
-                              ),
                               Container(
-                                  color: Colors.grey.shade200,
-                                  padding: EdgeInsets.all(8.0),
-                                  width: double.infinity,
-                                  child: Text("VIT. D".toUpperCase())),
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 10, left: 24),
+                                child: Column(
+                                  children: <Widget>[
+                                    for (var i = 1; i <= 2; i++)
+                                      GestureDetector(
+                                          onTap: () => setState(() {
+                                                if (_waterColors[i - 1] ==
+                                                    Color(themeService
+                                                        .myColor2)) {
+                                                  _waterColors[i - 1] =
+                                                      Colors.white;
+                                                  _checked_water.remove(
+                                                      _waterLabels[i - 1]);
+                                                } else {
+                                                  _waterColors[i - 1] = Color(
+                                                      themeService.myColor2);
+                                                  _checked_water
+                                                      .add(_waterLabels[i - 1]);
+                                                }
+                                                print(_checked_water);
+                                              }),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: _width / 9,
+                                                margin: EdgeInsets.only(
+                                                    right: 3, top: 3),
+                                                child: CircleAvatar(
+                                                  radius: 15.0,
+                                                  backgroundColor:
+                                                      _waterColors[i - 1],
+                                                  backgroundImage: ExactAssetImage(
+                                                      'assets/images/glass.png'),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 12),
+                                                child:
+                                                    Text(_waterLabels[i - 1]),
+                                              )
+                                            ],
+                                          )),
+                                  ],
+                                ),
+                              ),
+                              Divider(),
+                              ListTile(
+                                title: Text(
+                                  "Vit. d".toUpperCase(),
+                                  style: TextStyle(
+                                      color: Color(themeService.myColor2),
+                                      fontSize: 15.0),
+                                ),
+                              ),
                               CheckboxGroup(
                                 orientation: GroupedButtonsOrientation.VERTICAL,
                                 activeColor: Colors.blue,
@@ -420,11 +520,15 @@ class _CalendarPageState extends State<CalendarPage> {
                                 ],
                                 checked: _checked_vit,
                               ),
-                              Container(
-                                  color: Colors.grey.shade200,
-                                  padding: EdgeInsets.all(8.0),
-                                  width: double.infinity,
-                                  child: Text("Color".toUpperCase())),
+                              Divider(),
+                              ListTile(
+                                title: Text(
+                                  "Color".toUpperCase(),
+                                  style: TextStyle(
+                                      color: Color(themeService.myColor2),
+                                      fontSize: 15.0),
+                                ),
+                              ),
                               SizedBox(
                                 width: double.infinity,
                                 child: Padding(
@@ -466,27 +570,30 @@ class _CalendarPageState extends State<CalendarPage> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 20.0,
+                          Divider(),
+                          ListTile(
+                            title: Text(
+                              "Reaction".toUpperCase(),
+                              style: TextStyle(
+                                  color: Color(themeService.myColor2),
+                                  fontSize: 15.0),
+                            ),
                           ),
                           Container(
-                              color: Colors.grey.shade200,
-                              padding: EdgeInsets.all(8.0),
-                              width: double.infinity,
-                              child: Text("Reaction".toUpperCase())),
-                          Container(
                             width: _width,
+                            padding: EdgeInsets.only(left: _width / 28),
                             child: Material(
                               borderRadius: BorderRadius.circular(30.0),
                               elevation: large ? 12 : (medium ? 10 : 8),
                               child: TextFormField(
                                 controller: _reaction_controller,
                                 keyboardType: TextInputType.multiline,
-                                cursorColor: Colors.orange[200],
+                                cursorColor: Color(themeService.myColor2),
                                 maxLines: 3,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(icon,
-                                      color: Colors.orange[200], size: 20),
+                                  prefixIcon: Icon(Icons.receipt,
+                                      color: Color(themeService.myColor2),
+                                      size: 20),
                                   hintText: hint,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30.0),
@@ -495,79 +602,147 @@ class _CalendarPageState extends State<CalendarPage> {
                               ),
                             ),
                           ),
-                          Container(
-                              color: Colors.grey.shade200,
-                              padding: EdgeInsets.all(8.0),
-                              width: double.infinity,
-                              child: Text("Hygiene".toUpperCase())),
-                          CheckboxGroup(
-                            orientation: GroupedButtonsOrientation.VERTICAL,
-                            activeColor: Colors.blue,
-                            margin: const EdgeInsets.only(left: 12.0),
-                            onSelected: (List selected) => setState(() {
-                              _checked_hygin = selected;
-                            }),
-                            labels: <String>[
-                              "Morning",
-                              "Evening",
-                            ],
-                            checked: _checked_hygin,
+                          Divider(),
+                          ListTile(
+                            title: Text(
+                              "Hygiene".toUpperCase(),
+                              style: TextStyle(
+                                  color: Color(themeService.myColor2),
+                                  fontSize: 15.0),
+                            ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 10, left: 24),
+                            child: Column(
+                              children: <Widget>[
+                                for (var i = 1; i <= 2; i++)
+                                  GestureDetector(
+                                      onTap: () => setState(() {
+                                            if (_hyginColors[i - 1] ==
+                                                Color(themeService.myColor2)) {
+                                              _hyginColors[i - 1] =
+                                                  Colors.white;
+                                              _checked_hygin
+                                                  .remove(_hyginLabels[i - 1]);
+                                            } else {
+                                              _hyginColors[i - 1] =
+                                                  Color(themeService.myColor2);
+                                              _checked_hygin
+                                                  .add(_hyginLabels[i - 1]);
+                                            }
+                                            print(_checked_hygin);
+                                          }),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.center,
+                                            width: _width / 9,
+                                            margin: EdgeInsets.only(
+                                                right: 3, top: 3),
+                                            child: CircleAvatar(
+                                              radius: 15.0,
+                                              backgroundColor:
+                                                  _hyginColors[i - 1],
+                                              backgroundImage: ExactAssetImage(
+                                                  'assets/images/toothbrush.png'),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 12),
+                                            child: Text(_hyginLabels[i - 1]),
+                                          )
+                                        ],
+                                      )),
+                              ],
+                            ),
+                          ),
+                          Divider(),
                           Container(
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                    color: Colors.grey.shade200,
-                                    padding: EdgeInsets.all(8.0),
-                                    width: double.infinity,
-                                    child: Text(
-                                      "Upper jaw".toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                    )),
+                                  color: Colors.grey.shade200,
+                                  padding: EdgeInsets.all(8.0),
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Upper jaw".toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(themeService.myColor2),
+                                    ),
+                                  ),
+                                ),
                                 Container(
-                                  height: 100,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                                  child: Row(
                                     children: <Widget>[
-                                      CheckboxGroup(
-                                        activeColor: Colors.blueAccent,
-                                        orientation: GroupedButtonsOrientation
-                                            .HORIZONTAL,
-                                        margin:
-                                            const EdgeInsets.only(left: 8.0),
-                                        padding: const EdgeInsets.all(2),
-                                        onSelected: (List selected) =>
-                                            setState(() {
-                                          _checked_teeth_upper = selected;
-                                        }),
-                                        labels: <String>[
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                          "8",
-                                          "9",
-                                          "10",
-                                        ],
-                                        checked: _checked_teeth_upper,
-                                        itemBuilder:
-                                            (Checkbox cb, Text txt, int i) {
-                                          return Column(
-                                            children: <Widget>[
-                                              Image.asset(
-                                                'assets/images/t${i + 1}.png',
-                                                width: _width / 15,
-                                                height: _height / 25,
-                                              ),
-                                              cb,
-                                              txt,
-                                            ],
-                                          );
-                                        },
-                                      ),
+                                      for (var i = 1; i <= 10; i++)
+                                        GestureDetector(
+                                          onTap: () => setState(() {
+                                            if (_teethUperColors[i - 1] ==
+                                                Color(themeService.myColor2)) {
+                                              _teethUperColors[i - 1] =
+                                                  Colors.white;
+                                              _checked_teeth_upper.remove(
+                                                  _teethUperLabels[i - 1]);
+                                            } else {
+                                              _teethUperColors[i - 1] =
+                                                  Color(themeService.myColor2);
+                                              _checked_teeth_upper
+                                                  .add(_teethUperLabels[i - 1]);
+                                            }
+                                            print(_checked_teeth_upper);
+                                          }),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: _width / 13,
+                                            margin: EdgeInsets.only(right: 3),
+                                            child: CircleAvatar(
+                                              radius: 15.0,
+                                              backgroundColor:
+                                                  _teethUperColors[i - 1],
+                                              backgroundImage: ExactAssetImage(
+                                                  'assets/images/t${i}.png'),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      for (var i = 1; i <= 10; i++)
+                                        GestureDetector(
+                                          onTap: () => setState(() {
+                                            if (_teethLowerColors[i - 1] ==
+                                                Color(themeService.myColor2)) {
+                                              _teethLowerColors[i - 1] =
+                                                  Colors.white;
+                                              _checked_teeth_lower.remove(
+                                                  _teethLowerLabels[i - 1]);
+                                            } else {
+                                              _teethLowerColors[i - 1] =
+                                                  Color(themeService.myColor2);
+                                              _checked_teeth_lower.add(
+                                                  _teethLowerLabels[i - 1]);
+                                            }
+                                            print(_checked_teeth_lower);
+                                          }),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: _width / 13,
+                                            margin: EdgeInsets.only(right: 3),
+                                            child: CircleAvatar(
+                                              radius: 15.0,
+                                              backgroundColor:
+                                                  _teethLowerColors[i - 1],
+                                              backgroundImage: ExactAssetImage(
+                                                  'assets/images/t${i + 10}.png'),
+                                            ),
+                                          ),
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -577,53 +752,6 @@ class _CalendarPageState extends State<CalendarPage> {
                           Container(
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  height: 100,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: <Widget>[
-                                      CheckboxGroup(
-                                        activeColor: Colors.blueAccent,
-                                        orientation: GroupedButtonsOrientation
-                                            .HORIZONTAL,
-                                        margin:
-                                            const EdgeInsets.only(left: 8.0),
-                                        padding: const EdgeInsets.all(2),
-                                        onSelected: (List selected) =>
-                                            setState(() {
-                                          _checked_teeth_lower = selected;
-                                        }),
-                                        labels: <String>[
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                          "8",
-                                          "9",
-                                          "10",
-                                        ],
-                                        checked: _checked_teeth_lower,
-                                        itemBuilder:
-                                            (Checkbox cb, Text txt, int i) {
-                                          return Column(
-                                            children: <Widget>[
-                                              Image.asset(
-                                                'assets/images/t${i + 11}.png',
-                                                width: _width / 15,
-                                                height: _height / 25,
-                                              ),
-                                              cb,
-                                              txt,
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 Container(
                                     color: Colors.grey.shade200,
                                     padding: EdgeInsets.all(8.0),
@@ -631,9 +759,15 @@ class _CalendarPageState extends State<CalendarPage> {
                                     child: Text(
                                       "Lower jaw".toUpperCase(),
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(themeService.myColor2),
+                                      ),
                                     )),
                               ],
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           Container(
                             width: double.infinity,
