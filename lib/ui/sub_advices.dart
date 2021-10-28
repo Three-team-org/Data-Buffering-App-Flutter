@@ -57,7 +57,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
         }
       },
       child: Container(
-        height: 200,
+        margin: EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
@@ -74,7 +74,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
             children: <Widget>[
               Image.asset(
                 image,
-                height: 200,
+                width: _width / 3,
               ),
               SizedBox(
                 width: _width / 40,
@@ -103,15 +103,6 @@ class _AdvicesPageState extends State<AdvicesPage> {
                               color: Colors.black)),
                     ],
                   ),
-                  // Row(
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: [
-                  //     Text(subtitle,
-                  //         softWrap: false,
-                  //         overflow: TextOverflow.visible,
-                  //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black,)),
-                  //   ],
-                  // ),
                 ],
               ),
             ],
@@ -126,178 +117,168 @@ class _AdvicesPageState extends State<AdvicesPage> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-        // bottomNavigationBar: BottomNavigationBar(
-        //   currentIndex: 1,
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.calendar_today),
-        //       title: Text("Today's Special"),
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(
-        //           Icons.fastfood,
-        //           color: Colors.deepOrange,
-        //         ),
-        //         title: Text(
-        //           "Foods",
-        //           style: TextStyle(color: Colors.deepOrange),
-        //         )),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.settings), title: Text("Settings")),
-        //   ],
-        // ),
-        backgroundColor: Colors.white70.withOpacity(1),
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Row(children: <Widget>[
+      body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
+                ])),
+            child: ListView(
+              children: <Widget>[
                 Container(
-                  height: _height * 2 / 5,
-                  width: _width,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                          colors: [
-                        Color(themeService.myColor1),
-                        Color(themeService.myColor2),
-                      ])),
-                  child: Container(
-                    margin: EdgeInsets.only(top: 40),
-                    child: Image.asset(
-                      "assets/images/advice.png",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                SizedBox(height: _height),
-                Container(
-                    height: _height / 1.5,
-                    margin: EdgeInsets.zero,
-                    width: _width,
-                    child: Container(
-                      child: Text("ORAL HYGIENE FROM\n THE FIRST DAYS",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: _height / 21,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white)),
-                    )),
-              ]),
-              Row(children: <Widget>[
-                SizedBox(
-                  height: _height,
-                ),
-                Container(
-                    padding: EdgeInsets.only(left: 30, right: 30, top: 40),
-                    height: _height / 1.9,
-                    margin: EdgeInsets.zero,
-                    width: _width,
-                    child: Container(
-                      child: Text(
-                          "If you get into difficulties, don't hesitate to ask for advice.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16,
-                              letterSpacing: 1,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white)),
-                    )),
-              ]),
-              // Container(
-              //   margin: EdgeInsets.only(left: 90, bottom: 20),
-              //   width: 200,
-              //   height: 180,
-              //
-              //   decoration: BoxDecoration(
-              //       color: Colors.orangeAccent.shade200,
-              //       borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(160),
-              //           bottomLeft: Radius.circular(290),
-              //           bottomRight: Radius.circular(160),
-              //           topRight: Radius.circular(10))),
-              // ),
-              CustomScrollView(
-                slivers: <Widget>[
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                  height: _height / 3,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                              ),
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          Stack(children: <Widget>[
+                            Row(children: <Widget>[
+                              Container(
+                                height: _height / 3 - 50,
+                                width: _width,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                      Color(themeService.myColor1),
+                                      Color(themeService.myColor2),
+                                    ])),
+                                child: Container(
+                                  child: Image.asset(
+                                    "assets/images/advice.png",
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ]),
+                            Row(children: <Widget>[
+                              Container(
+                                  height: _height / 3 - 50,
+                                  margin: EdgeInsets.zero,
+                                  width: _width,
+                                  child: Container(
+                                    child: Text(
+                                        "ORAL HYGIENE FROM\n THE FIRST DAYS",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: _height / 21,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white)),
+                                  )),
+                            ]),
+                            Row(children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.only(
+                                      left: 30, right: 30, top: _height / 7),
+                                  height: _height / 3 - 50,
+                                  margin: EdgeInsets.zero,
+                                  width: _width,
+                                  child: Container(
+                                    child: Text(
+                                        "If you get into difficulties, don't hesitate to ask for advice.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            letterSpacing: 1,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white)),
+                                  )),
+                            ]),
+                          ])
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: _height * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  padding: EdgeInsets.only(
+                    top: _height / 30,
+                    right: _width / 20,
+                    bottom: _height / 30,
+                    left: _width / 20,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          cards(
+                              "assets/images/advice_oral_hygiene.png",
+                              Color.fromRGBO(255, 240, 240, 1),
+                              'ORAL HYGIENE',
+                              // 'Lorem ipsum dolor sit amt,\nconsectetur adipiscing elit.\nFusce porta enim id nisi int',
+                              'Keeping one\'s mouth clean\nand free of disease and\nother problems',
+                              '30',
+                              1),
+                          cards(
+                              "assets/images/advice_doctor.png",
+                              Color.fromRGBO(255, 255, 240, 1),
+                              'PEDIATRICIAN',
+                              'Don\'t be afraid of seeing the\ndoctor. Doctors give you big\nchance.',
+                              '37',
+                              2),
+                          cards(
+                              "assets/images/advice_dentist.png",
+                              Color.fromRGBO(255, 240, 255, 1),
+                              'FIRST VISIT TO\nTHE DENTIST',
+                              'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
+                              '22',
+                              3),
+                          cards(
+                              "assets/images/advice_dentist.png",
+                              Color.fromRGBO(255, 255, 240, 1),
+                              'ORAL HYGIENE\nOF MILK TEETH',
+                              'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
+                              '22',
+                              4),
                           SizedBox(
-                            height: _height / 3.5,
-                          ),
+                            height: 100,
+                          )
                         ],
                       ),
                     ),
                   ),
-                  SliverPadding(
-                    padding:
-                        EdgeInsets.fromLTRB(_width / 12, 0, _width / 12, 0),
-                    sliver: SliverGrid.count(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 2.5,
-                      children: <Widget>[
-                        cards(
-                            "assets/images/advice_oral_hygiene.png",
-                            Color.fromRGBO(255, 240, 240, 1),
-                            'ORAL HYGIENE',
-                            // 'Lorem ipsum dolor sit amt,\nconsectetur adipiscing elit.\nFusce porta enim id nisi int',
-                            'Keeping one\'s mouth clean\nand free of disease and\nother problems',
-                            '30',
-                            1),
-                        cards(
-                            "assets/images/advice_doctor.png",
-                            Color.fromRGBO(255, 255, 240, 1),
-                            'PEDIATRICIAN',
-                            'Don\'t be afraid of seeing the\ndoctor. Doctors give you big\nchance.',
-                            '37',
-                            2),
-                        cards(
-                            "assets/images/advice_dentist.png",
-                            Color.fromRGBO(255, 240, 255, 1),
-                            'FIRST VISIT TO\nTHE DENTIST',
-                            'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
-                            '22',
-                            3),
-                        cards(
-                            "assets/images/advice_dentist.png",
-                            Color.fromRGBO(255, 255, 240, 1),
-                            'ORAL HYGIENE\nOF MILK TEETH',
-                            'How often do you have to see\nthe dentist? You should go to\na dentist immediately. ',
-                            '22',
-                            4),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Opacity(
-                    opacity: 1,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                      ),
-                      color: Colors.white,
-                      onPressed: () {
-                        print("pop");
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }
 

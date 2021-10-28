@@ -64,11 +64,15 @@ class _PlanPageState extends State<PlanPage> {
               SizedBox(
                 height: 10,
               ),
-              Text(title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: _width / 20,
-                      color: Color.fromRGBO(45, 35, 25, 1))),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: _width / 30,
+                  color: Color.fromRGBO(45, 35, 25, 1),
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
@@ -212,7 +216,7 @@ class _PlanPageState extends State<PlanPage> {
                         1),
                     cards(
                         "assets/images/calendar_button.png",
-                        'CALENDAR',
+                        "GRADUAL \nINTRODUCTION\nOF FOODSTUFFS",
                         "All of this will be understood by examining our calendar.",
                         '22',
                         2),
