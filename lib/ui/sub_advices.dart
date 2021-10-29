@@ -188,7 +188,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
                                         "ORAL HYGIENE FROM\n THE FIRST DAYS",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: _height / 21,
+                                            fontSize: _width / 12,
                                             fontWeight: FontWeight.w800,
                                             color: Colors.white)),
                                   )),

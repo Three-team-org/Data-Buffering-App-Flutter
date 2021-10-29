@@ -210,7 +210,7 @@ class _PlanPageState extends State<PlanPage> {
                   children: <Widget>[
                     cards(
                         "assets/images/icon_recipe.png",
-                        'RECIPES',
+                        'RECIPES by month'.toUpperCase(),
                         "Our recipe is much of course, it is all important; but it is not all.",
                         '37',
                         1),

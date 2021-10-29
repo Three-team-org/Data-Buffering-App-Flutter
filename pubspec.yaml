@@ -37,7 +37,7 @@ dependencies:
   cached_network_image: ^2.5.1
   grouped_buttons: ^1.0.4
   sqflite: ^2.0.0+3
-  path_provider: ^2.0.2
+  path_provider: ^1.6.11
   table_calendar: ^3.0.1
   flutter_material_color_picker: ^1.0.5
   flex_color_picker: ^2.1.1
@@ -45,6 +45,7 @@ dependencies:
   flutter_colorpicker: ^0.5.0
   syncfusion_flutter_datagrid: ^19.2.49-beta
   flutter_gifimage: ^1.0.1
+  flutter_session: ^0.1.1
 
 dev_dependencies:
   flutter_test:

@@ -153,11 +153,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.only(left: 0, right: 0),
                   child: SingleChildScrollView(
                     child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                      ),
                       constraints: BoxConstraints(
-                          minHeight: _height - 120, maxHeight: _height),
+                          minHeight: _height - 120, maxHeight: _height * 1.2),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,27 +175,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("my dashboard".toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.white)),
-                              Spacer(),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
                               Text("Please visit everywhere",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 12, color: Colors.white)),
+                                      fontSize: 12, color: Colors.black)),
                               Spacer(),
                             ],
                           ),
                           SizedBox(
-                            height: _height / 50,
+                            height: 10,
                           ),
                           Row(
                             children: <Widget>[
@@ -299,20 +294,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ],
                           ),
-                          // Container(
-                          //   width: _width,
-                          //   height: _height / 4,
-                          //   decoration: BoxDecoration(
-                          //     image: DecorationImage(
-                          //       image: AssetImage(
-                          //         'assets/images/dashboard_footer.png',
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
+                          Container(
+                            width: _width,
+                            height: _height / 4,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/footer.png',
+                                ),
+                              ),
+                            ),
+                          )
                           // Image.asset(
-                          //   'assets/images/dashboard_footer.png',
-                          //   height: _height / 4,
+                          //   'assets/images/footer.png',
+                          //   height: _height / 5,
                           //   width: _width,
                           // ),
                         ],

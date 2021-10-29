@@ -33,7 +33,7 @@ class Item {
   final Icon icon;
 }
 
-class _DataPageState extends State<DataPage> {
+class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   ThemeService themeService = ThemeService();
   TimeOfDay selectedTime = TimeOfDay.now();
   double _height;
@@ -271,9 +271,7 @@ class _DataPageState extends State<DataPage> {
                             ),
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) =>
-                                      DashboardScreen("admin", "")));
+                              Navigator.of(context).pop();
                             },
                           ),
                         ),

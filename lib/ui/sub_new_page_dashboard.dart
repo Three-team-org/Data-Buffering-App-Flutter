@@ -224,15 +224,15 @@ class _NewPageDashboardScreenState extends State<NewPageDashboardScreen> {
                   ),
                 ],
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 750),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(color: Colors.grey.shade200),
-                child: Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
-                    "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
-                    " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(top: 750),
+              //   padding: const EdgeInsets.all(20),
+              //   decoration: BoxDecoration(color: Colors.grey.shade200),
+              //   child: Text(
+              //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus justo, "
+              //       "venenatis pretium urna posuere, malesuada tempus lectus. Curabitur molestie efficitur eros,"
+              //       " eu sodales elit malesuada eu. Nunc auctor consequat tincidunt. Sed id mi a dui scelerisque "),
+              // ),
             ],
           ),
         ));

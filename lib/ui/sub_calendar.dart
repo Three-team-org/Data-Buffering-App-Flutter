@@ -575,8 +575,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                 width: double.infinity,
                                 child: Padding(
                                   padding: const EdgeInsets.all(6),
-                                  child: Card(
-                                    elevation: 2,
+                                  child: Container(
+                                    // elevation: 2,
                                     child: ColorPicker(
                                       // Use the screenPickerColor as start color.
                                       pickersEnabled: const <ColorPickerType,

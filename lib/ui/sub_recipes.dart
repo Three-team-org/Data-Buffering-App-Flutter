@@ -227,7 +227,7 @@ class _RecipesPageState extends State<RecipesPage> {
                       Row(
                         children: <Widget>[
                           Spacer(),
-                          Text("RECIPE",
+                          Text("RECIPE by month".toUpperCase(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 32,
