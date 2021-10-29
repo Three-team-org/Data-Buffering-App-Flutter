@@ -131,15 +131,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   width: _width,
                   child: Container(
                     margin: EdgeInsets.only(top: 20, left: 20),
-                    child: Text("Welcome !",
+                    child: Text("Welcome to baby detal care!".toUpperCase(),
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                            fontSize: 32,
+                            fontSize: 28,
                             fontWeight: FontWeight.w800,
                             color: Colors.white)),
                   )),
               Container(
-                margin: EdgeInsets.only(top: 80),
+                margin: EdgeInsets.only(top: 120),
                 decoration: BoxDecoration(
                   // color: Color(0xFFFFFFFF),
                   borderRadius: const BorderRadius.only(
@@ -153,18 +153,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 0, right: 0),
+                  padding:
+                      const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                   child: SingleChildScrollView(
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       constraints: BoxConstraints(
-                          minHeight: _height - 120, maxHeight: _height * 1.2),
+                          minHeight: _height - 120, maxHeight: _height * 1.05),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Row(
                             children: <Widget>[
                               Spacer(),
-                              Text("Please visit everywhere",
+                              Text("Please visit everywhere".toUpperCase(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.black)),
@@ -296,8 +294,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           Container(
                             width: _width,
-                            height: _height / 4,
+                            height: _height / 4.8,
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
                               image: DecorationImage(
                                 image: AssetImage(
                                   'assets/images/footer.png',

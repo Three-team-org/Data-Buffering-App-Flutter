@@ -411,14 +411,14 @@ class _CalendarPageState extends State<CalendarPage> {
                                         GestureDetector(
                                           onTap: () => setState(() {
                                             if (_spoonColors[i - 1] ==
-                                                Color(themeService.myColor2)) {
+                                                Colors.green) {
                                               _spoonColors[i - 1] =
                                                   Colors.white;
                                               _checked_spoon
                                                   .remove(i.toString());
                                             } else {
                                               _spoonColors[i - 1] =
-                                                  Color(themeService.myColor2);
+                                                  Colors.green;
                                               _checked_spoon.add(i.toString());
                                             }
                                             print(_checked_spoon);
@@ -462,15 +462,14 @@ class _CalendarPageState extends State<CalendarPage> {
                                       GestureDetector(
                                           onTap: () => setState(() {
                                                 if (_waterColors[i - 1] ==
-                                                    Color(themeService
-                                                        .myColor2)) {
+                                                    Colors.green) {
                                                   _waterColors[i - 1] =
                                                       Colors.white;
                                                   _checked_water.remove(
                                                       _waterLabels[i - 1]);
                                                 } else {
-                                                  _waterColors[i - 1] = Color(
-                                                      themeService.myColor2);
+                                                  _waterColors[i - 1] =
+                                                      Colors.green;
                                                   _checked_water
                                                       .add(_waterLabels[i - 1]);
                                                 }
@@ -553,7 +552,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                                 margin:
                                                     EdgeInsets.only(left: 12),
                                                 child:
-                                                    Text(_waterLabels[i - 1]),
+                                                    Text(_vit_dLabels[i - 1]),
                                               )
                                             ],
                                           ),
@@ -661,14 +660,14 @@ class _CalendarPageState extends State<CalendarPage> {
                                   GestureDetector(
                                       onTap: () => setState(() {
                                             if (_hyginColors[i - 1] ==
-                                                Color(themeService.myColor2)) {
+                                                Colors.green) {
                                               _hyginColors[i - 1] =
                                                   Colors.white;
                                               _checked_hygin
                                                   .remove(_hyginLabels[i - 1]);
                                             } else {
                                               _hyginColors[i - 1] =
-                                                  Color(themeService.myColor2);
+                                                  Colors.green;
                                               _checked_hygin
                                                   .add(_hyginLabels[i - 1]);
                                             }
@@ -722,14 +721,14 @@ class _CalendarPageState extends State<CalendarPage> {
                                         GestureDetector(
                                           onTap: () => setState(() {
                                             if (_teethUperColors[i - 1] ==
-                                                Color(themeService.myColor2)) {
+                                                Colors.green) {
                                               _teethUperColors[i - 1] =
                                                   Colors.white;
                                               _checked_teeth_upper.remove(
                                                   _teethUperLabels[i - 1]);
                                             } else {
                                               _teethUperColors[i - 1] =
-                                                  Color(themeService.myColor2);
+                                                  Colors.green;
                                               _checked_teeth_upper
                                                   .add(_teethUperLabels[i - 1]);
                                             }
