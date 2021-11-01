@@ -46,13 +46,13 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
         'Male',
         Icon(
           FontAwesomeIcons.male,
-          color: const Color(0xFF167F67),
+          color: Colors.blueAccent,
         )),
     const Item(
         'Female',
         Icon(
           FontAwesomeIcons.female,
-          color: Colors.blue,
+          color: Colors.pinkAccent,
         )),
   ];
   List<Item> choices = <Item>[
@@ -87,7 +87,20 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
   String avatar_path;
   Future addRecord(BuildContext context) async {
     var db = new DatabaseHelper();
-    print(_doctor_controller.text);
+    print(_time_controller.text);
+    if (selectedGender.name == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
     var user_data = new User_data(
         _full_name_controller.text,
         _doctor_controller.text,
@@ -210,9 +223,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                             ),
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) =>
-                                      DashboardScreen("admin", "")));
+                              Navigator.of(context).pop();
                             },
                           ),
                         ),
@@ -279,7 +290,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _doctor_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Doctor Name",
                       ),
                     ),
@@ -294,7 +305,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _dentist_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Dentist Name",
                       ),
                     ),
@@ -309,7 +320,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _full_name_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.person,
                         hint: "Your Full Name",
                       ),
                     ),
@@ -356,44 +367,39 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                             color: Color(themeService.myColor2),
                             fontSize: 12.0),
                       ),
-                      subtitle: Material(
-                          borderRadius: BorderRadius.circular(30.0),
-                          //elevation: 12,
-                          child: Row(
-                            children: <Widget>[
-                              Spacer(),
-                              DropdownButton<Item>(
-                                hint: Text("Select Gender"),
-                                value: selectedGender,
-                                onChanged: (Item Value) {
-                                  setState(() {
-                                    // print(Value.name);
-                                    selectedGender = Value;
-                                  });
-                                },
-                                items: Gender.map((Item user) {
-                                  return DropdownMenuItem<Item>(
-                                    value: user,
-                                    child: Row(
-                                      children: <Widget>[
-                                        user.icon,
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          user.name,
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                      ],
+                      subtitle: Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 20,
+                          ),
+                          DropdownButton<Item>(
+                            hint: Text("Select Gender"),
+                            value: selectedGender,
+                            onChanged: (Item Value) {
+                              setState(() {
+                                selectedGender = Value;
+                              });
+                            },
+                            items: Gender.map((Item user) {
+                              return DropdownMenuItem<Item>(
+                                value: user,
+                                child: Row(
+                                  children: <Widget>[
+                                    user.icon,
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                  );
-                                }).toList(),
-                              ),
-                              Spacer(),
-                              Spacer(),
-                              Spacer(),
-                            ],
-                          )),
+                                    Text(
+                                      user.name,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
                     ),
                     Divider(),
                     ListTile(
@@ -406,7 +412,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _weight_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.monitor_weight,
                         hint: "Your Weight",
                       ),
                     ),
@@ -421,7 +427,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       subtitle: CustomTextField(
                         textEditingController: _length_controller,
                         keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
+                        icon: Icons.straighten,
                         hint: "Your Length",
                       ),
                     ),
@@ -432,11 +438,42 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                             color: Color(themeService.myColor2),
                             fontSize: 12.0),
                       ),
-                      subtitle: CustomTextField(
-                        textEditingController: _time_controller,
-                        keyboardType: TextInputType.text,
-                        icon: Icons.receipt,
-                        hint: "Time",
+                      subtitle: Container(
+                        child: TextFormField(
+                          controller: _time_controller,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.schedule,
+                              color: Colors.orange[200],
+                            ),
+                            hintText: "Time",
+                          ),
+                          focusNode: AlwaysDisabledFocusNode(),
+                          onTap: () async {
+                            TimeOfDay pickedTime = await showTimePicker(
+                              initialTime: TimeOfDay.now(),
+                              context: context,
+                            );
+
+                            if (pickedTime != null) {
+                              DateTime parsedTime = DateFormat.jm()
+                                  .parse(pickedTime.format(context).toString());
+                              //converting to DateTime so that we can further format on different pattern.
+
+                              String formattedTime =
+                                  DateFormat('HH:mm').format(parsedTime);
+                              //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                              setState(() {
+                                _time_controller.text =
+                                    formattedTime; //set the value of text field.
+                              });
+                            } else {
+                              print("Time is not selected");
+                            }
+                          },
+                        ),
                       ),
                     ),
                     Padding(

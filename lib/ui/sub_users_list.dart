@@ -1,4 +1,3 @@
-
 import 'package:data_buffer/database/model/form.dart';
 import 'package:data_buffer/ui/sub_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,20 +13,19 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:data_buffer/ui/dashboard.dart';
 import 'package:toast/toast.dart';
 import 'package:data_buffer/ui/sub_data_add_new_user.dart';
-class UsersListPage extends StatefulWidget{
+
+class UsersListPage extends StatefulWidget {
   @override
   _UsersListPageState createState() => _UsersListPageState();
-
 }
 
 class Item {
-  const Item(this.name,this.icon);
+  const Item(this.name, this.icon);
   final String name;
   final Icon icon;
 }
 
-class _UsersListPageState extends State<UsersListPage>{
-
+class _UsersListPageState extends State<UsersListPage> {
   List<Employee> employees = <Employee>[];
   EmployeeDataSource employeeDataSource;
   List<User_data> employee;
@@ -44,7 +42,10 @@ class _UsersListPageState extends State<UsersListPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('USER LISTS', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'USER LISTS',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
       ),
       body: FutureBuilder<List>(
@@ -53,50 +54,56 @@ class _UsersListPageState extends State<UsersListPage>{
         builder: (context, snapshot) {
           return snapshot.hasData
               ? ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (_, int position) {
-              final item = snapshot.data[position];
-              //get your item data here ...
-              return Card(
-                child: ListTile(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => DashboardScreen(snapshot.data[position].row[10], snapshot.data[position].row[1])));
-                  },
-                  title: new Container(
-                    child: Row(
-                      children: <Widget>[
-                        Image.network(
-                            "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
-                          width: 60,height: 60,),
-                        Spacer(),
-                        Text(snapshot.data[position].row[1]),
-                        Spacer(),
-                        Text(snapshot.data[position].row[4]),
-                        Spacer(),
-                        IconButton(
-                          icon: new Icon(FontAwesomeIcons.trashAlt),
-                          iconSize: 25,
-                          highlightColor: Colors.pink,
-                          onPressed: (){
-                            _showerrorDialog(snapshot.data[position].row[0],snapshot.data[position].row[1] );
-                          },
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, int position) {
+                    final item = snapshot.data[position];
+                    //get your item data here ...
+                    return Card(
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => DashboardScreen(
+                                  snapshot.data[position].row[10],
+                                  snapshot.data[position].row[1])));
+                        },
+                        title: new Container(
+                          child: Row(
+                            children: <Widget>[
+                              Image.network(
+                                "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
+                                width: 60,
+                                height: 60,
+                              ),
+                              Spacer(),
+                              Text(snapshot.data[position].row[1]),
+                              Spacer(),
+                              Text(snapshot.data[position].row[4]),
+                              Spacer(),
+                              IconButton(
+                                icon: new Icon(FontAwesomeIcons.trashAlt),
+                                iconSize: 25,
+                                highlightColor: Colors.pink,
+                                onPressed: () {
+                                  _showerrorDialog(
+                                      snapshot.data[position].row[0],
+                                      snapshot.data[position].row[1]);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-
-                ),
-              );
-            },
-          )
+                      ),
+                    );
+                  },
+                )
               : Center(
-            child: CircularProgressIndicator(),
-          );
+                  child: CircularProgressIndicator(),
+                );
         },
       ),
     );
   }
+
   void _showerrorDialog(int user_id, String user_name) {
     showDialog(
       context: context,
@@ -111,9 +118,9 @@ class _UsersListPageState extends State<UsersListPage>{
             child: Text('Okay'),
             onPressed: () {
               db.deleteUsers(user_id);
-              Toast.show("Removed Successfully!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => DataPage("admin", "")));
+              Toast.show("Removed Successfully!", context,
+                  duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+              Navigator.of(context).pop();
             },
           ),
           Spacer(),
@@ -127,7 +134,6 @@ class _UsersListPageState extends State<UsersListPage>{
       ),
     );
   }
-
 }
 
 /// Custom business object class which contains properties to hold the detailed
@@ -147,7 +153,6 @@ class Employee {
 
   /// Salary of an employee.
   final String role;
-
 }
 
 /// An object to set the employee collection data source to the datagrid. This
@@ -157,12 +162,11 @@ class EmployeeDataSource extends DataGridSource {
   EmployeeDataSource({List<Employee> employeeData}) {
     _employeeData = employeeData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-      DataGridCell<int>(columnName: 'id', value: e.no),
-      DataGridCell<String>(columnName: 'fullname', value: e.name),
-      DataGridCell<String>(
-          columnName: 'birthday', value: e.birthday),
-      DataGridCell<String>(columnName: 'role', value: e.role),
-    ]))
+              DataGridCell<int>(columnName: 'id', value: e.no),
+              DataGridCell<String>(columnName: 'fullname', value: e.name),
+              DataGridCell<String>(columnName: 'birthday', value: e.birthday),
+              DataGridCell<String>(columnName: 'role', value: e.role),
+            ]))
         .toList();
   }
 
@@ -175,15 +179,15 @@ class EmployeeDataSource extends DataGridSource {
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
-          return Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(8.0),
-            child: Text(e.value.toString()),
-          );
-        }).toList());
+      return Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8.0),
+        child: Text(e.value.toString()),
+      );
+    }).toList());
   }
-
 }
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;

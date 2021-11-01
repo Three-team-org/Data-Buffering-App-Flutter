@@ -161,6 +161,7 @@ class _CalendarPageState extends State<CalendarPage> {
         _checked_teeth_lower_str,
         widget.user_role,
         widget.user_name);
+    print(_checked_teeth_upper_str + "************");
     await db.saveUser(Form);
     setState(() {
       _groceries_controller = TextEditingController(text: '');
@@ -758,14 +759,14 @@ class _CalendarPageState extends State<CalendarPage> {
                                         GestureDetector(
                                           onTap: () => setState(() {
                                             if (_teethLowerColors[i - 1] ==
-                                                Color(themeService.myColor2)) {
+                                                Colors.green) {
                                               _teethLowerColors[i - 1] =
                                                   Colors.white;
                                               _checked_teeth_lower.remove(
                                                   _teethLowerLabels[i - 1]);
                                             } else {
                                               _teethLowerColors[i - 1] =
-                                                  Color(themeService.myColor2);
+                                                  Colors.green;
                                               _checked_teeth_lower.add(
                                                   _teethLowerLabels[i - 1]);
                                             }

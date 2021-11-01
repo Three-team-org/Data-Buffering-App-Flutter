@@ -219,7 +219,7 @@ class _AdvicesPageState extends State<AdvicesPage> {
                   ),
                 ),
                 Container(
-                  height: _height * 0.8,
+                  height: _height * 0.7,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
