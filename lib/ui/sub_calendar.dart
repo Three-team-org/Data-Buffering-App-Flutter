@@ -161,7 +161,6 @@ class _CalendarPageState extends State<CalendarPage> {
         _checked_teeth_lower_str,
         widget.user_role,
         widget.user_name);
-    print(_checked_teeth_upper_str + "************");
     await db.saveUser(Form);
     setState(() {
       _groceries_controller = TextEditingController(text: '');
@@ -172,11 +171,11 @@ class _CalendarPageState extends State<CalendarPage> {
       _reaction_controller = TextEditingController(text: '');
       _checked_hygin = [];
 
-      initCheckLabels();
+      initCheckLabels("new");
     });
   }
 
-  initCheckLabels() {
+  initCheckLabels(type) {
     setState(() {
       _spoonColors = [
         Colors.white,
@@ -198,33 +197,35 @@ class _CalendarPageState extends State<CalendarPage> {
         Colors.white,
       ];
 
-      _teethUperColors = [
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white
-      ];
-
-      _teethLowerColors = [
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white,
-        Colors.white
-      ];
-
       _vit_dColors = [Colors.white];
+
+      if (type == "update") {
+        _teethUperColors = [
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white
+        ];
+
+        _teethLowerColors = [
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white,
+          Colors.white
+        ];
+      }
     });
   }
 
@@ -265,11 +266,11 @@ class _CalendarPageState extends State<CalendarPage> {
         _checked_teeth_upper = upper_selected_str.split(',');
         _checked_teeth_lower = lower_selected_str.split(',');
 
-        print(_checked_water);
+        print(_checked_teeth_upper);
+        initCheckLabels("update");
         for (var i = 1; i <= 7; i++) {
           _checked_spoon.forEach((spoon) {
             if (i.toString() == spoon) {
-              print(i);
               _spoonColors[i - 1] = Colors.green;
             }
           });
@@ -315,7 +316,7 @@ class _CalendarPageState extends State<CalendarPage> {
         for (var i = 1; i <= 10; i++) {
           _checked_teeth_lower.forEach((lower_teeth) {
             if ((16 - i).toString() == lower_teeth) {
-              print(i);
+              // print(i);
               _teethLowerColors[i - 1] = Colors.green;
             }
           });
@@ -331,7 +332,8 @@ class _CalendarPageState extends State<CalendarPage> {
         _reaction_controller = TextEditingController(text: '');
         _checked_hygin = [];
         _checked_spoon = [];
-        initCheckLabels();
+        print(_checked_teeth_upper);
+        initCheckLabels("new");
       });
     }
   }
@@ -451,10 +453,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          SizedBox(
-                                            height: 20,
-                                          ),
                                           Container(
+                                            padding: EdgeInsets.only(top: 40),
                                             width: _width * 0.9,
                                             height: _height * 0.45,
                                             child: TableCalendar(

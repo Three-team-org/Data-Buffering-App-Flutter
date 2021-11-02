@@ -37,6 +37,7 @@ class Item {
 class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   UserService userService = UserService();
   ThemeService themeService = ThemeService();
+
   TimeOfDay selectedTime = TimeOfDay.now();
   double _height;
   double _width;
@@ -129,8 +130,6 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
       userService.avatar_path = avatar_path;
       userService.user_role = widget.user_role;
 
-      print(userService.gender);
-
       themeChange();
     } else {
       Toast.show("Admin already Exists!", context,
@@ -145,6 +144,7 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
       _image = File('${directory.path}/avatar.png');
       print(_image);
     }
+
     setState(() {
       avatar_exists = true;
       isUpdate = true;
