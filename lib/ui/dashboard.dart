@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   width: _width,
                   child: Container(
                     margin: EdgeInsets.only(top: 20),
-                    child: Text("Welcome to baby dental care!".toUpperCase(),
+                    child: Text("Welcome to baby \ndental care!".toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: _width / 14,
