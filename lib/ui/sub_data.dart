@@ -277,6 +277,24 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     });
   }
 
+  changeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    userService.gender = prefs.getString("gender");
+    if (userService.gender == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else if (userService.gender == "Female") {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -336,11 +354,15 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
                         PopupMenuButton(
                           onSelected: (Item item) {
                             if (item.name == "Add new User") {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => NewUserDataPage()));
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                      builder: (ctx) => NewUserDataPage()))
+                                  .then((value) => changeTheme());
                             } else {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => UsersListPage()));
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                      builder: (ctx) => UsersListPage()))
+                                  .then((value) => changeTheme());
                             }
                           },
                           padding: EdgeInsets.only(top: 20),

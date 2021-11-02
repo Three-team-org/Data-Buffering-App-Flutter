@@ -107,9 +107,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Opacity(opacity: 1, child: CustomAppBar()),
+                    Opacity(
+                      opacity: 1,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                        ),
+                        color: Colors.white,
+                        onPressed: () {
+                          print("pop");
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(

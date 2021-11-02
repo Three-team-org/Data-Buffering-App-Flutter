@@ -318,8 +318,10 @@ class _SignInScreenState extends State<SignInScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => DashboardScreen("admin", "")));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (ctx) => DashboardScreen("admin", "")))
+                    .then((value) => changeTheme());
               },
               textColor: Colors.white,
               padding: EdgeInsets.all(0.0),

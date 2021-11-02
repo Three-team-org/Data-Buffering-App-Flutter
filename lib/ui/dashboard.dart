@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:data_buffer/ui/sub_advices.dart';
 import 'package:data_buffer/ui/sub_new_page_dashboard.dart';
 import 'package:data_buffer/ui/sub_plan.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -18,6 +20,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   ThemeService themeService = ThemeService();
+  UserService userService = UserService();
   final TextStyle whiteText = TextStyle(color: Colors.white);
   final double infoHeight = 400.0;
   double _height;
@@ -63,28 +66,54 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  changeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    userService.gender = prefs.getString("gender");
+    if (userService.gender == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else if (userService.gender == "Female") {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
+  }
+
   Widget cards_one(image, title, price, page_num, height, width) {
     return GestureDetector(
       onTap: () {
         switch (page_num) {
           case 1:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) =>
-                    DataPage(widget.user_role, widget.user_name)));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (ctx) =>
+                        DataPage(widget.user_role, widget.user_name)))
+                .then((value) => changeTheme());
             break;
           case 2:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) =>
-                    PlanPage(widget.user_role, widget.user_name)));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (ctx) =>
+                        PlanPage(widget.user_role, widget.user_name)))
+                .then((value) => changeTheme());
             break;
           case 3:
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) =>
-                    AdvicesPage(widget.user_role, widget.user_name)));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (ctx) =>
+                        AdvicesPage(widget.user_role, widget.user_name)))
+                .then((value) => changeTheme());
             break;
           case 4:
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (ctx) => NewPageDashboardScreen()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (ctx) => NewPageDashboardScreen()))
+                .then((value) => changeTheme());
             break;
         }
       },

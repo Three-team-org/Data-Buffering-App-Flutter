@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:data_buffer/ui/sub_recipe_month_page.dart';
 import 'package:data_buffer/database/model/user_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:data_buffer/ui/dashboard.dart';
 import 'package:toast/toast.dart';
@@ -138,7 +139,7 @@ class _UsersListPageState extends State<UsersListPage> {
                                         MaterialPageRoute(
                                             builder: (ctx) =>
                                                 DataPage("admin", "")),
-                                      );
+                                      ).then((value) => changeTheme());
                                     },
                                     title: new Container(
                                       child: Row(
@@ -183,6 +184,24 @@ class _UsersListPageState extends State<UsersListPage> {
             ),
           )),
     );
+  }
+
+  changeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    userService.gender = prefs.getString("gender");
+    if (userService.gender == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else if (userService.gender == "Female") {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
   }
 
   void setUserData(user_data) {
