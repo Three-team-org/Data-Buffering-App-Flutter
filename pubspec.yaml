@@ -45,7 +45,7 @@ dependencies:
   flutter_colorpicker: ^0.5.0
   syncfusion_flutter_datagrid: ^19.2.49-beta
   flutter_gifimage: ^1.0.1
-  flutter_session: ^0.1.1
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

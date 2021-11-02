@@ -18,7 +18,6 @@ import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:data_buffer/ui/widgets/customappbar.dart';
 
 class CalendarPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -454,7 +453,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            padding: EdgeInsets.only(top: 40),
+                                            padding: EdgeInsets.only(
+                                                top: _height * 0.07),
                                             width: _width * 0.9,
                                             height: _height * 0.45,
                                             child: TableCalendar(

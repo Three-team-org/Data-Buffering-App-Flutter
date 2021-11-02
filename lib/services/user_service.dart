@@ -1,5 +1,4 @@
 import 'package:data_buffer/database/model/user_data.dart';
-import 'package:flutter_session/flutter_session.dart';
 
 class UserService {
   static final UserService _instance = UserService._internal();

@@ -1,4 +1,5 @@
 import 'package:data_buffer/database/model/form.dart';
+import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,9 +29,11 @@ class Item {
 
 class _UsersListPageState extends State<UsersListPage> {
   UserService userService = UserService();
+  ThemeService themeService = ThemeService();
   List<Employee> employees = <Employee>[];
   EmployeeDataSource employeeDataSource;
   List<User_data> employee;
+  double _width, _height;
 
   List<Map> list;
   var db = new DatabaseHelper();
@@ -42,71 +45,143 @@ class _UsersListPageState extends State<UsersListPage> {
 
   @override
   Widget build(BuildContext context) {
+    _width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'USER LISTS',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-      ),
-      body: FutureBuilder<List>(
-        future: db.getUserInfo_all(),
-        initialData: List(),
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (_, int position) {
-                    final item = snapshot.data[position];
-                    //get your item data here ...
-                    return Card(
-                      child: ListTile(
-                        onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (ctx) => DashboardScreen(
-                          //         snapshot.data[position].row[10],
-                          //         snapshot.data[position].row[1])));
-                          setUserData(snapshot.data[position].row);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => DataPage("admin", "")));
-                        },
-                        title: new Container(
-                          child: Row(
-                            children: <Widget>[
-                              Image.network(
-                                "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
-                                width: 60,
-                                height: 60,
+      body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                  Color(themeService.myColor1),
+                  Color(themeService.myColor2),
+                ])),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  height: _height / 5,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Opacity(
+                            opacity: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
                               ),
-                              Spacer(),
-                              Text(snapshot.data[position].row[1]),
-                              Spacer(),
-                              Text(snapshot.data[position].row[4]),
-                              Spacer(),
-                              IconButton(
-                                icon: new Icon(FontAwesomeIcons.trashAlt),
-                                iconSize: 25,
-                                highlightColor: Colors.pink,
-                                onPressed: () {
-                                  print(snapshot.data[position].row);
-                                  _showerrorDialog(
-                                      snapshot.data[position].row[0],
-                                      snapshot.data[position].row[1]);
-                                },
-                              ),
-                            ],
+                              color: Colors.white,
+                              onPressed: () {
+                                print("pop");
+                                Navigator.of(context).pop();
+                              },
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    );
-                  },
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                );
-        },
-      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "User List".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _width / 15,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: _height * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  padding: EdgeInsets.only(
+                    top: _height / 30,
+                    right: _width / 20,
+                    bottom: _height / 30,
+                    left: _width / 20,
+                  ),
+                  child: FutureBuilder<List>(
+                    future: db.getUserInfo_all(),
+                    initialData: List(),
+                    builder: (context, snapshot) {
+                      return snapshot.hasData
+                          ? ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (_, int position) {
+                                final item = snapshot.data[position];
+                                //get your item data here ...
+                                return Card(
+                                  child: ListTile(
+                                    onTap: () {
+                                      // Navigator.of(context).push(MaterialPageRoute(
+                                      //     builder: (ctx) => DashboardScreen(
+                                      //         snapshot.data[position].row[10],
+                                      //         snapshot.data[position].row[1])));
+                                      setUserData(snapshot.data[position].row);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                DataPage("admin", "")),
+                                      );
+                                    },
+                                    title: new Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Image.network(
+                                            "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
+                                            width: 60,
+                                            height: 60,
+                                          ),
+                                          Spacer(),
+                                          Text(snapshot.data[position].row[1]),
+                                          Spacer(),
+                                          Text(snapshot.data[position].row[4]),
+                                          Spacer(),
+                                          IconButton(
+                                            icon: new Icon(
+                                                FontAwesomeIcons.trashAlt),
+                                            iconSize: 25,
+                                            highlightColor: Colors.pink,
+                                            onPressed: () {
+                                              _showerrorDialog(
+                                                  snapshot
+                                                      .data[position].row[0],
+                                                  snapshot
+                                                      .data[position].row[1]);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 

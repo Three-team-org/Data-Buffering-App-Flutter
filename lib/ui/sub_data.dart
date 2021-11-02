@@ -20,6 +20,8 @@ import 'package:data_buffer/ui/sub_data_add_new_user.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
 import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataPage extends StatefulWidget {
   String user_role = "", user_name = "";
@@ -203,6 +205,10 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
 
   themeChange() async {
     print(userService.gender);
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("gender", userService.gender);
+
     if (userService.gender == "Male") {
       setState(() {
         themeService.myColor1 = 0xFF015098;
@@ -696,6 +702,7 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     super.initState();
     initAvatarPath();
     getRecord();
+    Scaffold();
   }
 
   void initAvatarPath() async {

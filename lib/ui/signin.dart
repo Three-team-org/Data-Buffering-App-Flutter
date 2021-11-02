@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:data_buffer/constants/constants.dart';
 import 'package:data_buffer/ui/widgets/custom_shape.dart';
@@ -6,6 +7,7 @@ import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/widgets/textformfield.dart';
 import 'package:data_buffer/ui/dashboard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -22,6 +24,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  UserService userService = UserService();
   ThemeService themeService = ThemeService();
   final double infoHeight = 400.0;
   double _height;
@@ -32,6 +35,30 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
+
+  @override
+  void initState() {
+    changeTheme();
+    super.initState();
+  }
+
+  changeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    userService.gender = prefs.getString("gender");
+    if (userService.gender == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else if (userService.gender == "Female") {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
