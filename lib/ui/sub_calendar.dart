@@ -171,6 +171,60 @@ class _CalendarPageState extends State<CalendarPage> {
       _color = otherColor;
       _reaction_controller = TextEditingController(text: '');
       _checked_hygin = [];
+
+      initCheckLabels();
+    });
+  }
+
+  initCheckLabels() {
+    setState(() {
+      _spoonColors = [
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white
+      ];
+
+      _waterColors = [
+        Colors.white,
+        Colors.white,
+      ];
+
+      _hyginColors = [
+        Colors.white,
+        Colors.white,
+      ];
+
+      _teethUperColors = [
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white
+      ];
+
+      _teethLowerColors = [
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white,
+        Colors.white
+      ];
+
+      _vit_dColors = [Colors.white];
     });
   }
 
@@ -182,6 +236,7 @@ class _CalendarPageState extends State<CalendarPage> {
     } else {
       maps = await db.getDraft(date, widget.user_role, widget.user_name);
     }
+    print(maps);
     if (maps.length != 0) {
       String grocery_name_str = maps[maps.length - 1]['grocery_name'];
       String water_type_str = maps[maps.length - 1]['water_type'];
@@ -199,25 +254,85 @@ class _CalendarPageState extends State<CalendarPage> {
       String lower_selected_str = maps[maps.length - 1]['lower_selected'];
       setState(() {
         _groceries_controller = TextEditingController(text: grocery_name_str);
-        // _checked_water = water_type_str.split(',');
-        // _checked_vit = vit_type_str.split(',');
+        _checked_water = water_type_str.split(',');
+        _checked_vit = vit_type_str.split(',');
 
         Color otherColor = new Color(value);
         _color = otherColor;
         _reaction_controller = TextEditingController(text: reaction_str);
-        // _checked_hygin = hygiene_str.split(',');
-        // _checked_spoon = spoon_select_str.split(',');
-        // _checked_teeth_upper = upper_selected_str.split(',');
-        // _checked_teeth_lower = lower_selected_str.split(',');
+        _checked_hygin = hygiene_str.split(',');
+        _checked_spoon = spoon_select_str.split(',');
+        _checked_teeth_upper = upper_selected_str.split(',');
+        _checked_teeth_lower = lower_selected_str.split(',');
+
+        print(_checked_water);
+        for (var i = 1; i <= 7; i++) {
+          _checked_spoon.forEach((spoon) {
+            if (i.toString() == spoon) {
+              print(i);
+              _spoonColors[i - 1] = Colors.green;
+            }
+          });
+        }
+        _checked_water.forEach((water) {
+          if (water == "Water one".toUpperCase()) {
+            _waterColors[0] = Colors.green;
+          } else if (water == "water two".toUpperCase()) {
+            _waterColors[1] = Colors.green;
+          } else if (water == "Water one".toUpperCase() &&
+              water == "Water two".toUpperCase()) {
+            _waterColors[0] = Colors.green;
+            _waterColors[1] = Colors.green;
+          }
+        });
+        _checked_vit.forEach((vit) {
+          if (vit == "Vit.ONE") {
+            _vit_dColors[0] = Colors.green;
+          }
+        });
+        _checked_hygin.forEach((hygin) {
+          if (hygin == "Morning") {
+            _hyginColors[0] = Colors.green;
+          } else if (hygin == "Evening") {
+            _hyginColors[1] = Colors.green;
+          } else if (hygin == "Morning" && hygin == "Evening") {
+            _hyginColors[0] = Colors.green;
+            _hyginColors[1] = Colors.green;
+          }
+        });
+        for (var i = 1; i <= 5; i++) {
+          _checked_teeth_upper.forEach((upper_teeth) {
+            if ((i + 15).toString() == upper_teeth) {
+              print(i);
+              _teethUperColors[i - 1] = Colors.green;
+            }
+            if (i.toString() == upper_teeth) {
+              print(i);
+              _teethUperColors[i + 4] = Colors.green;
+            }
+          });
+        }
+        for (var i = 1; i <= 10; i++) {
+          _checked_teeth_lower.forEach((lower_teeth) {
+            if ((16 - i).toString() == lower_teeth) {
+              print(i);
+              _teethLowerColors[i - 1] = Colors.green;
+            }
+          });
+        }
       });
     } else {
-      _groceries_controller = TextEditingController(text: '');
-      _checked_water = [];
-      _checked_vit = [];
-      Color otherColor = Colors.blue;
-      _color = otherColor;
-      _reaction_controller = TextEditingController(text: '');
-      _checked_hygin = [];
+      setState(() {
+        _groceries_controller = TextEditingController(text: '');
+        _checked_water = [];
+        _checked_vit = [];
+        Color otherColor = Colors.blue;
+        _color = otherColor;
+        _reaction_controller = TextEditingController(text: '');
+        _checked_hygin = [];
+        _checked_spoon = [];
+        initCheckLabels();
+      });
     }
   }
 

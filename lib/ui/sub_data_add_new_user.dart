@@ -15,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:toast/toast.dart';
 import 'package:data_buffer/ui/sub_users_list.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
+import 'package:data_buffer/ui/widgets/responsive_ui.dart';
 import 'package:data_buffer/ui/dashboard.dart';
 
 class NewUserDataPage extends StatefulWidget {
@@ -32,6 +33,9 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
   ThemeService themeService = ThemeService();
   double _height;
   double _width;
+  double _pixelRatio;
+  bool _large;
+  bool _medium;
 
   User_data user_data;
 
@@ -81,7 +85,6 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
   TextInputType keyboardType;
   bool obscureText;
   IconData icon;
-  double _pixelRatio;
   bool large;
   bool medium;
   String avatar_path;
@@ -188,25 +191,29 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
         },
         child: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.topRight,
-                  colors: [
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+              colors: [
                 Color(themeService.myColor1),
                 Color(themeService.myColor2),
-              ])),
+              ],
+            ),
+          ),
           child: ListView(
             children: <Widget>[
               Container(
-                height: _height / 3,
+                height: _height / 2.6,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
                       Color(themeService.myColor1),
                       Color(themeService.myColor2),
-                    ])),
+                    ],
+                  ),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,14 +240,32 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Add New User",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _width / 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                      width: 0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
                             _showPicker(context);
                           },
                           child: CircleAvatar(
-                            radius: 55,
+                            radius: 50,
                             backgroundColor: Colors.grey,
                             child: _image != null
                                 ? ClipRRect(
@@ -253,12 +278,12 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                                     ),
                                   )
                                 : CircleAvatar(
-                                    minRadius: 60,
-                                    backgroundColor: Colors.deepOrange.shade300,
+                                    minRadius: 30,
+                                    backgroundColor: Colors.grey,
                                     child: CircleAvatar(
                                       backgroundImage: NetworkImage(
-                                          "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png"),
-                                      minRadius: 50,
+                                          "https://getstisla.com/dist/img/avatar/avatar-5.png"),
+                                      minRadius: 25,
                                     ),
                                   ),
                           ),
@@ -269,47 +294,15 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                 ),
               ),
               Container(
-                width: _width,
-                padding: EdgeInsets.only(left: 20, right: 30, top: 20),
+                padding: EdgeInsets.only(left: 20, right: 30),
                 decoration: BoxDecoration(
                     color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20))),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    ListTile(
-                      title: Text(
-                        "DOCTOR NAME",
-                        style: TextStyle(
-                            color: Color(themeService.myColor2),
-                            fontSize: 12.0),
-                      ),
-                      subtitle: CustomTextField(
-                        textEditingController: _doctor_controller,
-                        keyboardType: TextInputType.text,
-                        icon: Icons.person,
-                        hint: "Doctor Name",
-                      ),
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text(
-                        "DENTIST NAME",
-                        style: TextStyle(
-                            color: Color(themeService.myColor2),
-                            fontSize: 12.0),
-                      ),
-                      subtitle: CustomTextField(
-                        textEditingController: _dentist_controller,
-                        keyboardType: TextInputType.text,
-                        icon: Icons.person,
-                        hint: "Dentist Name",
-                      ),
-                    ),
-                    Divider(),
+                    SizedBox(height: 20),
                     ListTile(
                       title: Text(
                         "FULL NAME",
@@ -333,28 +326,22 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                             fontSize: 12.0),
                       ),
                       subtitle: Container(
-                        width: 150,
-                        padding: EdgeInsets.all(8.0),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(30.0),
-                          //elevation: 12,
-                          child: TextFormField(
-                            controller: _dateController,
-                            keyboardType: TextInputType.multiline,
-                            cursorColor: Colors.orange[200],
-                            maxLines: 1,
-                            focusNode: AlwaysDisabledFocusNode(),
-                            onTap: () {
-                              _selectDate(context);
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.date_range,
-                                  color: Colors.orange[200], size: 20),
-                              hintText: "Date...",
-                              // border: new OutlineInputBorder(
-                              //     borderRadius: BorderRadius.circular(30.0),
-                              //     borderSide: BorderSide.none),
-                            ),
+                        child: TextFormField(
+                          controller: _dateController,
+                          keyboardType: TextInputType.multiline,
+                          cursorColor: Colors.orange[200],
+                          maxLines: 1,
+                          focusNode: AlwaysDisabledFocusNode(),
+                          onTap: () {
+                            _selectDate(context);
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.date_range,
+                                color: Colors.orange[200], size: 20),
+                            hintText: "Date",
+                            border: new OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none),
                           ),
                         ),
                       ),
@@ -416,6 +403,9 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                         hint: "Your Weight",
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Divider(),
                     ListTile(
                       title: Text(
@@ -430,6 +420,9 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                         icon: Icons.straighten,
                         hint: "Your Length",
                       ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     ListTile(
                       title: Text(
@@ -476,12 +469,51 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListTile(
+                      title: Text(
+                        "DOCTOR NAME",
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
+                      ),
+                      subtitle: CustomTextField(
+                        textEditingController: _doctor_controller,
+                        keyboardType: TextInputType.text,
+                        icon: Icons.person,
+                        hint: "Doctor Name",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(),
+                    ListTile(
+                      title: Text(
+                        "DENTIST NAME",
+                        style: TextStyle(
+                            color: Color(themeService.myColor2),
+                            fontSize: 12.0),
+                      ),
+                      subtitle: CustomTextField(
+                        textEditingController: _dentist_controller,
+                        keyboardType: TextInputType.text,
+                        icon: Icons.person,
+                        hint: "Dentist Name",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 0.0, vertical: 8.0),
+                          horizontal: 0, vertical: 8.0),
                       child: RaisedButton(
-                        padding: EdgeInsets.fromLTRB(
-                            _width / 3 - 10, 10, _width / 3 - 10, 10),
+                        padding:
+                            EdgeInsets.fromLTRB(_width / 3, 10, _width / 3, 10),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
@@ -490,15 +522,12 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                           "Confirm",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               color: Colors.white),
                         ),
                         onPressed: () {
                           addRecord(context);
                           saveImages();
-                          Toast.show("Saved Successfully!", context,
-                              duration: Toast.LENGTH_LONG,
-                              gravity: Toast.BOTTOM);
                         },
                       ),
                     ),
@@ -524,14 +553,10 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
         lastDate: DateTime(2040),
         builder: (BuildContext context, Widget child) {
           return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.light(
-                primary: Colors.orange,
-                onPrimary: Colors.white,
-                surface: Colors.red.shade300,
-                onSurface: Colors.black54,
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.highContrastLight(
+                primary: Color(themeService.myColor2),
               ),
-              dialogBackgroundColor: Colors.white,
             ),
             child: child,
           );

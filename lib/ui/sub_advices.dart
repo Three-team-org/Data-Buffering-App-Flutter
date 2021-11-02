@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/ui/sub_dentist_page.dart';
-import 'package:data_buffer/ui/sub_milk_teeth_page.dart_page.dart';
+import 'package:data_buffer/ui/sub_milk_teeth_page.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

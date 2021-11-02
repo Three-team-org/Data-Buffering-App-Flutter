@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/widgets/customappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class Item {
 }
 
 class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
+  UserService userService = UserService();
   ThemeService themeService = ThemeService();
   TimeOfDay selectedTime = TimeOfDay.now();
   double _height;
@@ -45,6 +47,7 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   User_data user_data;
 
   bool avatar_exists = false;
+  bool isUpdate = false;
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate;
   Item selectedGender;
@@ -94,22 +97,11 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   bool large;
   bool medium;
   String avatar_path;
+
   Future addRecord(BuildContext context) async {
     var db = new DatabaseHelper();
     print(_doctor_controller.text);
-    if (selectedGender.name == "Male") {
-      setState(() {
-        themeService.myColor1 = 0xFF015098;
-        themeService.myColor2 = 0xFF3196E0;
-        themeService.myColor3 = 0xFF1974BD;
-      });
-    } else {
-      setState(() {
-        themeService.myColor1 = 0xFF97036D;
-        themeService.myColor2 = 0xFFC654C1;
-        themeService.myColor3 = 0xFFAF2C98;
-      });
-    }
+
     if (widget.user_role == "admin") {
       Toast.show("Successfully Saved!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -124,7 +116,22 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
           _time_controller.text,
           avatar_path,
           widget.user_role);
-      await db.saveUserData(user_data);
+
+      userService.id = await db.saveUserData(user_data);
+      userService.full_name = _full_name_controller.text;
+      userService.doctor_name = _doctor_controller.text;
+      userService.dentist_name = _dentist_controller.text;
+      userService.birthday = _dateController.text;
+      userService.gender = selectedGender.name;
+      userService.weight = _weight_controller.text;
+      userService.length = _length_controller.text;
+      userService.time = _time_controller.text;
+      userService.avatar_path = avatar_path;
+      userService.user_role = widget.user_role;
+
+      print(userService.gender);
+
+      themeChange();
     } else {
       Toast.show("Admin already Exists!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -132,44 +139,86 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   }
 
   getRecord() async {
-    var db = new DatabaseHelper();
-    var maps = await db.getUserInfo("admin");
+    themeChange();
+    final Directory directory = await getApplicationDocumentsDirectory();
+    if (await File('${directory.path}/avatar.png').exists()) {
+      _image = File('${directory.path}/avatar.png');
+      print(_image);
+    }
+    setState(() {
+      avatar_exists = true;
+      isUpdate = true;
 
-    if (maps.length != 0) {
-      String full_name_str = maps[maps.length - 1]['full_name'];
-      String doctor_name_str = maps[maps.length - 1]['doctor_name'];
-      String dentist_name_str = maps[maps.length - 1]['dentist_name'];
-      String birthday_str = maps[maps.length - 1]['birthday'];
-      String weight_str = maps[maps.length - 1]['weight'];
-      String length_str = maps[maps.length - 1]['length'];
-      String time_str = maps[maps.length - 1]['time'];
-      String avatar_str = maps[maps.length - 1]['avatar_path'];
-      String gender_str = maps[maps.length - 1]['gender'];
-
-      final Directory directory = await getApplicationDocumentsDirectory();
-      if (await File('${directory.path}/avatar.png').exists()) {
-        _image = File('${directory.path}/avatar.png');
+      if (userService.gender == 'Male') {
+        selectedGender = Gender[0];
+      } else if (userService.gender == "Female") {
+        selectedGender = Gender[1];
       }
-      setState(() {
-        avatar_exists = true;
+      _full_name_controller =
+          TextEditingController(text: userService.full_name);
+      _doctor_controller = TextEditingController(text: userService.doctor_name);
+      _dentist_controller =
+          TextEditingController(text: userService.dentist_name);
+      _dateController = TextEditingController(text: userService.birthday);
+      _weight_controller = TextEditingController(text: userService.weight);
+      _length_controller = TextEditingController(text: userService.length);
+      _time_controller = TextEditingController(text: userService.time);
+    });
+    // var db = new DatabaseHelper();
+    // var maps = await db.getUserInfo("admin");
 
-        if (gender_str == 'Male') {
-          selectedGender = Gender[0];
-        } else {
-          selectedGender = Gender[1];
-        }
-        _full_name_controller = TextEditingController(text: full_name_str);
-        _doctor_controller = TextEditingController(text: doctor_name_str);
-        _dentist_controller = TextEditingController(text: dentist_name_str);
-        _dateController = TextEditingController(text: birthday_str);
-        _weight_controller = TextEditingController(text: weight_str);
-        _length_controller = TextEditingController(text: length_str);
-        _time_controller = TextEditingController(text: time_str);
+    // if (maps.length != 0) {
+    //   String full_name_str = maps[maps.length - 1]['full_name'];
+    //   String doctor_name_str = maps[maps.length - 1]['doctor_name'];
+    //   String dentist_name_str = maps[maps.length - 1]['dentist_name'];
+    //   String birthday_str = maps[maps.length - 1]['birthday'];
+    //   String weight_str = maps[maps.length - 1]['weight'];
+    //   String length_str = maps[maps.length - 1]['length'];
+    //   String time_str = maps[maps.length - 1]['time'];
+    //   String avatar_str = maps[maps.length - 1]['avatar_path'];
+    //   String gender_str = maps[maps.length - 1]['gender'];
+
+    //   final Directory directory = await getApplicationDocumentsDirectory();
+    //   if (await File('${directory.path}/avatar.png').exists()) {
+    //     _image = File('${directory.path}/avatar.png');
+    //   }
+    //   setState(() {
+    //     avatar_exists = true;
+
+    //     if (gender_str == 'Male') {
+    //       selectedGender = Gender[0];
+    //     } else {
+    //       selectedGender = Gender[1];
+    //     }
+    //     _full_name_controller = TextEditingController(text: full_name_str);
+    //     _doctor_controller = TextEditingController(text: doctor_name_str);
+    //     _dentist_controller = TextEditingController(text: dentist_name_str);
+    //     _dateController = TextEditingController(text: birthday_str);
+    //     _weight_controller = TextEditingController(text: weight_str);
+    //     _length_controller = TextEditingController(text: length_str);
+    //     _time_controller = TextEditingController(text: time_str);
+    //   });
+    // }
+  }
+
+  themeChange() async {
+    print(userService.gender);
+    if (userService.gender == "Male") {
+      setState(() {
+        themeService.myColor1 = 0xFF015098;
+        themeService.myColor2 = 0xFF3196E0;
+        themeService.myColor3 = 0xFF1974BD;
+      });
+    } else if (userService.gender == "Female") {
+      setState(() {
+        themeService.myColor1 = 0xFF97036D;
+        themeService.myColor2 = 0xFFC654C1;
+        themeService.myColor3 = 0xFFAF2C98;
       });
     }
   }
 
-  saveImages() async {
+  saveImages(full_name) async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final File Image_face = await _image.copy('${directory.path}/avatar.png');
   }
@@ -597,7 +646,7 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
                         ),
                         onPressed: () {
                           addRecord(context);
-                          saveImages();
+                          saveImages(_full_name_controller.text);
                         },
                       ),
                     ),
@@ -623,14 +672,10 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
         lastDate: DateTime(2040),
         builder: (BuildContext context, Widget child) {
           return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.light(
-                primary: Colors.orange,
-                onPrimary: Colors.white,
-                surface: Colors.red.shade300,
-                onSurface: Colors.black54,
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.highContrastLight(
+                primary: Color(themeService.myColor2),
               ),
-              dialogBackgroundColor: Colors.white,
             ),
             child: child,
           );

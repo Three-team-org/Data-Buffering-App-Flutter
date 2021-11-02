@@ -1,4 +1,5 @@
 import 'package:data_buffer/database/model/form.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class Item {
 }
 
 class _UsersListPageState extends State<UsersListPage> {
+  UserService userService = UserService();
   List<Employee> employees = <Employee>[];
   EmployeeDataSource employeeDataSource;
   List<User_data> employee;
@@ -61,10 +63,13 @@ class _UsersListPageState extends State<UsersListPage> {
                     return Card(
                       child: ListTile(
                         onTap: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (ctx) => DashboardScreen(
+                          //         snapshot.data[position].row[10],
+                          //         snapshot.data[position].row[1])));
+                          setUserData(snapshot.data[position].row);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => DashboardScreen(
-                                  snapshot.data[position].row[10],
-                                  snapshot.data[position].row[1])));
+                              builder: (ctx) => DataPage("admin", "")));
                         },
                         title: new Container(
                           child: Row(
@@ -84,6 +89,7 @@ class _UsersListPageState extends State<UsersListPage> {
                                 iconSize: 25,
                                 highlightColor: Colors.pink,
                                 onPressed: () {
+                                  print(snapshot.data[position].row);
                                   _showerrorDialog(
                                       snapshot.data[position].row[0],
                                       snapshot.data[position].row[1]);
@@ -104,13 +110,27 @@ class _UsersListPageState extends State<UsersListPage> {
     );
   }
 
+  void setUserData(user_data) {
+    userService.id = user_data[0];
+    userService.full_name = user_data[1];
+    userService.doctor_name = user_data[2];
+    userService.dentist_name = user_data[3];
+    userService.birthday = user_data[4];
+    userService.gender = user_data[5];
+    userService.weight = user_data[6];
+    userService.length = user_data[7];
+    userService.time = user_data[8];
+    userService.avatar_path = user_data[9];
+    userService.user_role = user_data[10];
+  }
+
   void _showerrorDialog(int user_id, String user_name) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
           'Warning!',
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Colors.red),
         ),
         content: Text("Are you sure you want to delete $user_name ? "),
         actions: <Widget>[
@@ -120,7 +140,8 @@ class _UsersListPageState extends State<UsersListPage> {
               db.deleteUsers(user_id);
               Toast.show("Removed Successfully!", context,
                   duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => DataPage("admin", "")));
             },
           ),
           Spacer(),
@@ -178,13 +199,15 @@ class EmployeeDataSource extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((e) {
-      return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(8.0),
-        child: Text(e.value.toString()),
-      );
-    }).toList());
+        cells: row.getCells().map<Widget>(
+      (e) {
+        return Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(8.0),
+          child: Text(e.value.toString()),
+        );
+      },
+    ).toList());
   }
 }
 
