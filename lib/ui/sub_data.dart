@@ -108,6 +108,10 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     if (widget.user_role == "admin") {
       Toast.show("Successfully Saved!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      io.Directory documentsDirectory =
+          await getApplicationDocumentsDirectory();
+      avatar_path =
+          join(documentsDirectory.path, "${_full_name_controller.text}.png");
       var user_data = new User_data(
           _full_name_controller.text,
           _doctor_controller.text,
@@ -119,7 +123,6 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
           _time_controller.text,
           avatar_path,
           widget.user_role);
-
       userService.id = await db.saveUserData(user_data);
       userService.full_name = _full_name_controller.text;
       userService.doctor_name = _doctor_controller.text;
@@ -142,9 +145,18 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   getRecord() async {
     themeChange();
     final Directory directory = await getApplicationDocumentsDirectory();
-    if (await File('${directory.path}/avatar.png').exists()) {
-      _image = File('${directory.path}/avatar.png');
+    // if (await File('${directory.path}/avatar.png').exists()) {
+    //   _image = File('${directory.path}/avatar.png');
+    //   print(_image);
+    // }
+    if (await File('${directory.path}/${userService.full_name}.png').exists()) {
+      _image = File('${directory.path}/${userService.full_name}.png');
       print(_image);
+    } else {
+      if (await File('${directory.path}/avatar.png').exists()) {
+        _image = File('${directory.path}/avatar.png');
+        print(_image);
+      }
     }
 
     setState(() {
@@ -204,11 +216,6 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   }
 
   themeChange() async {
-    print(userService.gender);
-
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("gender", userService.gender);
-
     if (userService.gender == "Male") {
       setState(() {
         themeService.myColor1 = 0xFF015098;
@@ -226,7 +233,9 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
 
   saveImages(full_name) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    final File Image_face = await _image.copy('${directory.path}/avatar.png');
+    final File Image_face =
+        await _image.copy('${directory.path}/${full_name}.png');
+    print(Image_face);
   }
 
   void _showPicker(context) {
@@ -357,12 +366,12 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(
                                       builder: (ctx) => NewUserDataPage()))
-                                  .then((value) => changeTheme());
+                                  .then((value) => Navigator.pop(context));
                             } else {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(
                                       builder: (ctx) => UsersListPage()))
-                                  .then((value) => changeTheme());
+                                  .then((value) => Navigator.pop(context));
                             }
                           },
                           padding: EdgeInsets.only(top: 20),
@@ -724,13 +733,14 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     super.initState();
     initAvatarPath();
     getRecord();
-    Scaffold();
   }
 
   void initAvatarPath() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     setState(() {
-      avatar_path = join(documentsDirectory.path, "avatar.png");
+      avatar_path =
+          join(documentsDirectory.path, "${userService.full_name}.png");
+      print(avatar_path);
     });
   }
 }

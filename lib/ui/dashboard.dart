@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_new.dart';
@@ -19,6 +21,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  List<String> userData = ["", "", "", "", "", "", "", "", "", "", ""];
   ThemeService themeService = ThemeService();
   UserService userService = UserService();
   final TextStyle whiteText = TextStyle(color: Colors.white);
@@ -28,6 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  bool isRemove = false;
+
   Widget cards(image, title, price, page_num) {
     return GestureDetector(
       onTap: () {
@@ -66,9 +71,41 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  @override
+  void initState() {
+    print(isRemove);
+    changeTheme();
+    super.initState();
+  }
+
   changeTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    userService.gender = prefs.getString("gender");
+    // prefs.setString("gender", userService.gender);
+    userData = [
+      userService.id.toString(),
+      userService.full_name,
+      userService.doctor_name,
+      userService.dentist_name,
+      userService.birthday,
+      userService.gender,
+      userService.weight,
+      userService.length,
+      userService.time,
+      userService.avatar_path,
+      userService.user_role
+    ];
+    prefs.setStringList("userData", userData);
+    userService.id = int.parse(userData[0]);
+    userService.full_name = userData[1];
+    userService.doctor_name = userData[2];
+    userService.dentist_name = userData[3];
+    userService.birthday = userData[4];
+    userService.gender = userData[5];
+    userService.weight = userData[6];
+    userService.length = userData[7];
+    userService.time = userData[8];
+    userService.avatar_path = userData[9];
+    userService.user_role = userData[10];
     if (userService.gender == "Male") {
       setState(() {
         themeService.myColor1 = 0xFF015098;
@@ -89,11 +126,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       onTap: () {
         switch (page_num) {
           case 1:
-            Navigator.of(context)
-                .push(MaterialPageRoute(
-                    builder: (ctx) =>
-                        DataPage(widget.user_role, widget.user_name)))
-                .then((value) => changeTheme());
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => DataPage(widget.user_role, widget.user_name),
+              ),
+            );
+            isRemove = true;
             break;
           case 2:
             Navigator.of(context)

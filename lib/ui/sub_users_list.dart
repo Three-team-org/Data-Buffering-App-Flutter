@@ -129,25 +129,37 @@ class _UsersListPageState extends State<UsersListPage> {
                                 return Card(
                                   child: ListTile(
                                     onTap: () {
-                                      // Navigator.of(context).push(MaterialPageRoute(
-                                      //     builder: (ctx) => DashboardScreen(
-                                      //         snapshot.data[position].row[10],
-                                      //         snapshot.data[position].row[1])));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (ctx) => DashboardScreen(
+                                                  snapshot
+                                                      .data[position].row[10],
+                                                  snapshot
+                                                      .data[position].row[1])))
+                                          .then(
+                                              (value) => Navigator.pop(context))
+                                          .then((value) =>
+                                              Navigator.pop(context));
                                       setUserData(snapshot.data[position].row);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) =>
-                                                DataPage("admin", "")),
-                                      ).then((value) => changeTheme());
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (ctx) =>
+                                      //           DataPage("admin", "")),
+                                      // ).then((value) => changeTheme());
                                     },
                                     title: new Container(
                                       child: Row(
                                         children: <Widget>[
-                                          Image.network(
-                                            "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
-                                            width: 60,
-                                            height: 60,
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: Image.file(
+                                              File(snapshot
+                                                  .data[position].row[9]),
+                                              width: 60,
+                                              height: 60,
+                                            ),
                                           ),
                                           Spacer(),
                                           Text(snapshot.data[position].row[1]),
@@ -160,6 +172,8 @@ class _UsersListPageState extends State<UsersListPage> {
                                             iconSize: 25,
                                             highlightColor: Colors.pink,
                                             onPressed: () {
+                                              print(
+                                                  snapshot.data[position].row);
                                               _showerrorDialog(
                                                   snapshot
                                                       .data[position].row[0],
@@ -234,8 +248,11 @@ class _UsersListPageState extends State<UsersListPage> {
               db.deleteUsers(user_id);
               Toast.show("Removed Successfully!", context,
                   duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => DataPage("admin", "")));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                      builder: (ctx) => DataPage("admin", "")))
+                  .then((value) => Navigator.pop(context))
+                  .then((value) => Navigator.pop(context));
             },
           ),
           Spacer(),

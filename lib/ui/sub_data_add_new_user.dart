@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,7 @@ class Item {
 }
 
 class _NewUserDataPageState extends State<NewUserDataPage> {
+  UserService userService = UserService();
   ThemeService themeService = ThemeService();
   double _height;
   double _width;
@@ -104,6 +106,10 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
         themeService.myColor3 = 0xFFAF2C98;
       });
     }
+
+    io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    avatar_path =
+        join(documentsDirectory.path, "${_full_name_controller.text}.png");
     var user_data = new User_data(
         _full_name_controller.text,
         _doctor_controller.text,
@@ -117,12 +123,15 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
         "user");
     await db.saveUserData(user_data);
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => UsersListPage()));
+        .push(MaterialPageRoute(builder: (ctx) => UsersListPage()))
+        .then((value) => Navigator.pop(context));
   }
 
-  saveImages() async {
+  saveImages(full_name) async {
+    print(full_name);
     final Directory directory = await getApplicationDocumentsDirectory();
-    final File Image_face = await _image.copy('${directory.path}/avatar.png');
+    final File Image_face =
+        await _image.copy('${directory.path}/${full_name}.png');
   }
 
   void _showPicker(context) {
@@ -527,7 +536,7 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                         ),
                         onPressed: () {
                           addRecord(context);
-                          saveImages();
+                          saveImages(_full_name_controller.text);
                         },
                       ),
                     ),
@@ -581,7 +590,8 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
   void initAvatarPath() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     setState(() {
-      avatar_path = join(documentsDirectory.path, "avatar.png");
+      avatar_path =
+          join(documentsDirectory.path, "${userService.full_name}.png");
     });
   }
 }

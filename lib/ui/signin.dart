@@ -35,6 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
+  List<String> userData = ["", "", "", "", "", "", "", "", "", "", ""];
 
   @override
   void initState() {
@@ -44,7 +45,19 @@ class _SignInScreenState extends State<SignInScreen> {
 
   changeTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    userService.gender = prefs.getString("gender");
+    // userService.gender = prefs.getString("gender");
+    userData = prefs.getStringList("userData");
+    userService.id = int.parse(userData[0]);
+    userService.full_name = userData[1];
+    userService.doctor_name = userData[2];
+    userService.dentist_name = userData[3];
+    userService.birthday = userData[4];
+    userService.gender = userData[5];
+    userService.weight = userData[6];
+    userService.length = userData[7];
+    userService.time = userData[8];
+    userService.avatar_path = userData[9];
+    userService.user_role = userData[10];
     if (userService.gender == "Male") {
       setState(() {
         themeService.myColor1 = 0xFF015098;

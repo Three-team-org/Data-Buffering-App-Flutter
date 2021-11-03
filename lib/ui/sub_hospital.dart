@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +32,7 @@ class Item {
 }
 
 class _HospitalPageState extends State<HospitalPage> {
+  UserService userService = UserService();
   ThemeService themeService = ThemeService();
   Hospital_data hospital_data;
 
@@ -69,29 +71,32 @@ class _HospitalPageState extends State<HospitalPage> {
 
   Future addRecord() async {
     var db = new DatabaseHelper();
-
+    print(_weight_controller.text);
     var Form = new Hospital_data(
-        _doctor_controller.text,
-        _dentist_controller.text,
-        _weight_controller.text,
-        _length_controller.text,
-        _advice_controller.text,
-        _remarks_controller.text,
-        _selected_day_str,
-        widget.user_role,
-        widget.user_name);
+      _doctor_controller.text,
+      _dentist_controller.text,
+      _weight_controller.text,
+      _length_controller.text,
+      _advice_controller.text,
+      _remarks_controller.text,
+      _selected_day_str,
+      widget.user_role,
+      widget.user_name,
+      userService.id,
+    );
     await db.saveHospitalData(Form);
   }
 
   getRecord(String date) async {
     var db = new DatabaseHelper();
     var maps;
-    if (widget.user_role == "admin") {
-      maps = await db.getHospitalData_admin(date, widget.user_role);
-    } else {
-      maps = await db.getHospitalData(date, widget.user_role, widget.user_name);
-    }
-
+    // if (widget.user_role == "admin") {
+    //   maps = await db.getHospitalData_admin(date, widget.user_role);
+    // } else {
+    //   maps = await db.getHospitalData(date, widget.user_role, widget.user_name);
+    // }
+    maps = await db.getHospitalData(date, userService.id);
+    print(maps);
     if (maps.length != 0) {
       String weight_str = maps[maps.length - 1]['weight'];
       String length_str = maps[maps.length - 1]['length'];

@@ -1,4 +1,5 @@
 import 'package:data_buffer/services/theme_service.dart';
+import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  UserService userService = UserService();
   ThemeService themeService = ThemeService();
   Form_draft form;
 
@@ -159,7 +161,8 @@ class _CalendarPageState extends State<CalendarPage> {
         _checked_teeth_upper_str,
         _checked_teeth_lower_str,
         widget.user_role,
-        widget.user_name);
+        widget.user_name,
+        userService.id);
     await db.saveUser(Form);
     setState(() {
       _groceries_controller = TextEditingController(text: '');
@@ -231,11 +234,12 @@ class _CalendarPageState extends State<CalendarPage> {
   getRecord(String date) async {
     var db = new DatabaseHelper();
     var maps;
-    if (widget.user_role == "admin") {
-      maps = await db.getDraft_admin(date, widget.user_role);
-    } else {
-      maps = await db.getDraft(date, widget.user_role, widget.user_name);
-    }
+    // if (widget.user_role == "admin") {
+    //   maps = await db.getDraft_admin(date, widget.user_role);
+    // } else {
+    // maps = await db.getDraft(date, widget.user_role, widget.user_name);
+    maps = await db.getDraft(date, userService.id);
+    // }
     print(maps);
     if (maps.length != 0) {
       String grocery_name_str = maps[maps.length - 1]['grocery_name'];
