@@ -31,7 +31,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
-  bool isRemove = false;
 
   Widget cards(image, title, price, page_num) {
     return GestureDetector(
@@ -73,7 +72,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
-    print(isRemove);
     changeTheme();
     super.initState();
   }
@@ -131,7 +129,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 builder: (ctx) => DataPage(widget.user_role, widget.user_name),
               ),
             );
-            isRemove = true;
             break;
           case 2:
             Navigator.of(context)
