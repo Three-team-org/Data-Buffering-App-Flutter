@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:data_buffer/services/theme_service.dart';
 import 'package:data_buffer/services/user_service.dart';
 import 'package:data_buffer/ui/sub_recipes.dart';
@@ -61,6 +63,8 @@ class _CalendarPageState extends State<CalendarPage> {
     Colors.white,
     Colors.white
   ];
+
+  List<bool> _spoonVisible = [false, false, false, false, false, false, false];
   List<Color> _waterColors = [
     Colors.white,
     Colors.white,
@@ -69,6 +73,7 @@ class _CalendarPageState extends State<CalendarPage> {
     "Water one".toUpperCase(),
     "Water two".toUpperCase(),
   ];
+  List<bool> _waterVisible = [false, false];
 
   List<Color> _hyginColors = [
     Colors.white,
@@ -78,6 +83,8 @@ class _CalendarPageState extends State<CalendarPage> {
     "Morning",
     "Evening",
   ];
+  List<bool> _hyginVisible = [false, false];
+
   List<Color> _teethUperColors = [
     Colors.white,
     Colors.white,
@@ -101,6 +108,18 @@ class _CalendarPageState extends State<CalendarPage> {
     "3",
     "4",
     "5"
+  ];
+  List<bool> _teethUperVisible = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
   ];
   List<Color> _teethLowerColors = [
     Colors.white,
@@ -126,8 +145,21 @@ class _CalendarPageState extends State<CalendarPage> {
     "7",
     "6"
   ];
+  List<bool> _teethLowerVisible = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   List<Color> _vit_dColors = [Colors.white];
   List<String> _vit_dLabels = ["Vit.ONE"];
+  bool _vit_dVisible = false;
 
   List<String> _checked_water = [];
   List<String> _checked_vit = [];
@@ -525,37 +557,80 @@ class _CalendarPageState extends State<CalendarPage> {
                                 Container(
                                   padding: EdgeInsets.only(
                                       top: 10, bottom: 10, left: 10),
-                                  child: Row(
+                                  child: Column(
                                     children: <Widget>[
-                                      for (var i = 1; i <= 7; i++)
-                                        GestureDetector(
-                                          onTap: () => setState(() {
-                                            if (_spoonColors[i - 1] ==
-                                                Colors.green) {
-                                              _spoonColors[i - 1] =
-                                                  Colors.white;
-                                              _checked_spoon
-                                                  .remove(i.toString());
-                                            } else {
-                                              _spoonColors[i - 1] =
-                                                  Colors.green;
-                                              _checked_spoon.add(i.toString());
-                                            }
-                                            print(_checked_spoon);
-                                          }),
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            width: _width / 9,
-                                            margin: EdgeInsets.only(right: 3),
-                                            child: CircleAvatar(
-                                              radius: 15.0,
-                                              backgroundColor:
-                                                  _spoonColors[i - 1],
-                                              backgroundImage: ExactAssetImage(
-                                                  'assets/images/spoon.png'),
+                                      Row(
+                                        children: <Widget>[
+                                          for (var i = 1; i <= 7; i++)
+                                            GestureDetector(
+                                              onTap: () => setState(() {
+                                                if (_spoonColors[i - 1] ==
+                                                    Colors.green) {
+                                                  _spoonColors[i - 1] =
+                                                      Colors.white;
+                                                  _checked_spoon
+                                                      .remove(i.toString());
+                                                  _spoonVisible[i - 1] = false;
+                                                } else {
+                                                  _spoonColors[i - 1] =
+                                                      Colors.green;
+                                                  _checked_spoon
+                                                      .add(i.toString());
+
+                                                  for (var j = 1; j <= 7; j++)
+                                                    if (j != i)
+                                                      _spoonVisible[j - 1] =
+                                                          false;
+                                                  _spoonVisible[i - 1] = true;
+                                                  Timer(
+                                                      new Duration(seconds: 2),
+                                                      () {
+                                                    setState(() {
+                                                      _spoonVisible[i - 1] =
+                                                          false;
+                                                    });
+                                                  });
+                                                  Toast.show(
+                                                      "Spoon ${i} is selected!",
+                                                      context,
+                                                      duration:
+                                                          Toast.LENGTH_LONG,
+                                                      gravity: Toast.BOTTOM);
+                                                }
+                                                print(_checked_spoon);
+                                              }),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                width: _width / 9,
+                                                margin:
+                                                    EdgeInsets.only(right: 3),
+                                                child: CircleAvatar(
+                                                  radius: 15.0,
+                                                  backgroundColor:
+                                                      _spoonColors[i - 1],
+                                                  backgroundImage: ExactAssetImage(
+                                                      'assets/images/spoon.png'),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          for (var i = 1; i <= 7; i++)
+                                            _spoonVisible[i - 1]
+                                                ? Container(
+                                                    child: Image.asset(
+                                                      "assets/images/smile_icon.png",
+                                                      width: 50,
+                                                      height: 50,
+                                                    ),
+                                                    padding: EdgeInsets.only(
+                                                        left: _width / 50),
+                                                  )
+                                                : Container(),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -587,11 +662,27 @@ class _CalendarPageState extends State<CalendarPage> {
                                                       Colors.white;
                                                   _checked_water.remove(
                                                       _waterLabels[i - 1]);
+                                                  _waterVisible[i - 1] = false;
                                                 } else {
                                                   _waterColors[i - 1] =
                                                       Colors.green;
                                                   _checked_water
                                                       .add(_waterLabels[i - 1]);
+                                                  _waterVisible[i - 1] = true;
+                                                  Timer(
+                                                      new Duration(seconds: 2),
+                                                      () {
+                                                    setState(() {
+                                                      _waterVisible[i - 1] =
+                                                          false;
+                                                    });
+                                                  });
+                                                  Toast.show(
+                                                      "${_waterLabels[i - 1]} is selected!",
+                                                      context,
+                                                      duration:
+                                                          Toast.LENGTH_LONG,
+                                                      gravity: Toast.BOTTOM);
                                                 }
                                                 print(_checked_water);
                                               }),
@@ -615,7 +706,18 @@ class _CalendarPageState extends State<CalendarPage> {
                                                     EdgeInsets.only(left: 12),
                                                 child:
                                                     Text(_waterLabels[i - 1]),
-                                              )
+                                              ),
+                                              _waterVisible[i - 1]
+                                                  ? Container(
+                                                      child: Image.asset(
+                                                        "assets/images/smile_icon.png",
+                                                        width: 50,
+                                                        height: 50,
+                                                      ),
+                                                      padding: EdgeInsets.only(
+                                                          left: _width / 4),
+                                                    )
+                                                  : Container()
                                             ],
                                           )),
                                   ],
@@ -645,11 +747,23 @@ class _CalendarPageState extends State<CalendarPage> {
                                                   Colors.white;
                                               _checked_vit
                                                   .remove(_vit_dLabels[i - 1]);
+                                              _vit_dVisible = false;
                                             } else {
                                               _vit_dColors[i - 1] =
                                                   Colors.green;
                                               _checked_vit
                                                   .add(_vit_dLabels[i - 1]);
+                                              _vit_dVisible = true;
+                                              Timer(new Duration(seconds: 2),
+                                                  () {
+                                                setState(() {
+                                                  _vit_dVisible = false;
+                                                });
+                                              });
+                                              Toast.show(
+                                                  "VIT.D is selected!", context,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.BOTTOM);
                                             }
                                             print(_checked_vit);
                                           }),
@@ -673,7 +787,18 @@ class _CalendarPageState extends State<CalendarPage> {
                                                     EdgeInsets.only(left: 12),
                                                 child:
                                                     Text(_vit_dLabels[i - 1]),
-                                              )
+                                              ),
+                                              _vit_dVisible
+                                                  ? Container(
+                                                      child: Image.asset(
+                                                        "assets/images/smile_icon.png",
+                                                        width: 50,
+                                                        height: 50,
+                                                      ),
+                                                      padding: EdgeInsets.only(
+                                                          left: _width / 4),
+                                                    )
+                                                  : Container(),
                                             ],
                                           ),
                                         ),
@@ -785,11 +910,24 @@ class _CalendarPageState extends State<CalendarPage> {
                                                   Colors.white;
                                               _checked_hygin
                                                   .remove(_hyginLabels[i - 1]);
+                                              _hyginVisible[i - 1] = false;
                                             } else {
                                               _hyginColors[i - 1] =
                                                   Colors.green;
                                               _checked_hygin
                                                   .add(_hyginLabels[i - 1]);
+                                              _hyginVisible[i - 1] = true;
+                                              Timer(new Duration(seconds: 2),
+                                                  () {
+                                                setState(() {
+                                                  _hyginVisible[i - 1] = false;
+                                                });
+                                              });
+                                              Toast.show(
+                                                  "${_hyginLabels[i - 1]} is selected",
+                                                  context,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.BOTTOM);
                                             }
                                             print(_checked_hygin);
                                           }),
@@ -811,7 +949,18 @@ class _CalendarPageState extends State<CalendarPage> {
                                           Container(
                                             margin: EdgeInsets.only(left: 12),
                                             child: Text(_hyginLabels[i - 1]),
-                                          )
+                                          ),
+                                          _hyginVisible[i - 1]
+                                              ? Container(
+                                                  child: Image.asset(
+                                                    "assets/images/smile_icon.png",
+                                                    width: 50,
+                                                    height: 50,
+                                                  ),
+                                                  padding: EdgeInsets.only(
+                                                      left: _width / 4),
+                                                )
+                                              : Container()
                                         ],
                                       )),
                               ],
@@ -822,15 +971,30 @@ class _CalendarPageState extends State<CalendarPage> {
                             child: Column(
                               children: <Widget>[
                                 Container(
+                                  height: 60,
                                   color: Colors.grey.shade200,
                                   padding: EdgeInsets.all(8.0),
                                   width: double.infinity,
-                                  child: Text(
-                                    "Upper jaw".toUpperCase(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(themeService.myColor2),
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Upper jaw".toUpperCase(),
+                                        style: TextStyle(
+                                          color: Color(themeService.myColor2),
+                                        ),
+                                      ),
+                                      for (var i = 1; i <= 10; i++)
+                                        _teethUperVisible[i - 1]
+                                            ? Container(
+                                                child: Image.asset(
+                                                  "assets/images/smile_icon.png",
+                                                  width: 50,
+                                                  height: 50,
+                                                ),
+                                              )
+                                            : Container(),
+                                    ],
                                   ),
                                 ),
                                 Container(
@@ -846,11 +1010,30 @@ class _CalendarPageState extends State<CalendarPage> {
                                                   Colors.white;
                                               _checked_teeth_upper.remove(
                                                   _teethUperLabels[i - 1]);
+                                              _teethUperVisible[i - 1] = false;
                                             } else {
                                               _teethUperColors[i - 1] =
                                                   Colors.green;
                                               _checked_teeth_upper
                                                   .add(_teethUperLabels[i - 1]);
+
+                                              for (var j = 1; j <= 10; j++)
+                                                if (j != i)
+                                                  _teethUperVisible[j - 1] =
+                                                      false;
+                                              _teethUperVisible[i - 1] = true;
+                                              Timer(new Duration(seconds: 2),
+                                                  () {
+                                                setState(() {
+                                                  _teethUperVisible[i - 1] =
+                                                      false;
+                                                });
+                                              });
+                                              Toast.show(
+                                                  "Teeth ${_teethUperLabels[i - 1]} is selected!",
+                                                  context,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.BOTTOM);
                                             }
                                             print(_checked_teeth_upper);
                                           }),
@@ -883,11 +1066,29 @@ class _CalendarPageState extends State<CalendarPage> {
                                                   Colors.white;
                                               _checked_teeth_lower.remove(
                                                   _teethLowerLabels[i - 1]);
+                                              _teethLowerVisible[i - 1] = false;
                                             } else {
                                               _teethLowerColors[i - 1] =
                                                   Colors.green;
                                               _checked_teeth_lower.add(
                                                   _teethLowerLabels[i - 1]);
+                                              for (var j = 1; j <= 10; j++)
+                                                if (j != i)
+                                                  _teethLowerVisible[j - 1] =
+                                                      false;
+                                              _teethLowerVisible[i - 1] = true;
+                                              Timer(new Duration(seconds: 2),
+                                                  () {
+                                                setState(() {
+                                                  _teethLowerVisible[i - 1] =
+                                                      false;
+                                                });
+                                              });
+                                              Toast.show(
+                                                  "Teeth ${_teethLowerLabels[i - 1]} is selected!",
+                                                  context,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.BOTTOM);
                                             }
                                             print(_checked_teeth_lower);
                                           }),
@@ -914,15 +1115,32 @@ class _CalendarPageState extends State<CalendarPage> {
                             child: Column(
                               children: <Widget>[
                                 Container(
+                                    height: 60,
                                     color: Colors.grey.shade200,
                                     padding: EdgeInsets.all(8.0),
                                     width: double.infinity,
-                                    child: Text(
-                                      "Lower jaw".toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(themeService.myColor2),
-                                      ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "Lower jaw".toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(themeService.myColor2),
+                                          ),
+                                        ),
+                                        for (var i = 1; i <= 10; i++)
+                                          _teethLowerVisible[i - 1]
+                                              ? Container(
+                                                  child: Image.asset(
+                                                    "assets/images/smile_icon.png",
+                                                    width: 50,
+                                                    height: 50,
+                                                  ),
+                                                )
+                                              : Container(),
+                                      ],
                                     )),
                               ],
                             ),

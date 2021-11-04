@@ -456,6 +456,16 @@ class _NewUserDataPageState extends State<NewUserDataPage> {
                             TimeOfDay pickedTime = await showTimePicker(
                               initialTime: TimeOfDay.now(),
                               context: context,
+                              builder: (BuildContext context, Widget child) {
+                                return Theme(
+                                    data: ThemeData.light().copyWith(
+                                      colorScheme:
+                                          ColorScheme.highContrastLight(
+                                        primary: Color(themeService.myColor2),
+                                      ),
+                                    ),
+                                    child: child);
+                              },
                             );
 
                             if (pickedTime != null) {

@@ -46,8 +46,10 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  String current_date_time;
 
   User_data user_data;
+  int userId;
 
   bool avatar_exists = false;
   bool isUpdate = false;
@@ -101,45 +103,52 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
   bool medium;
   String avatar_path;
 
-  Future addRecord(BuildContext context) async {
+  Future addRecord(BuildContext context, current_date_time) async {
     var db = new DatabaseHelper();
-    print(_doctor_controller.text);
 
-    if (widget.user_role == "admin") {
+    // if (widget.user_role == "admin") {
+    io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    avatar_path = join(documentsDirectory.path,
+        "${_full_name_controller.text}_${current_date_time}.png");
+
+    var user_data = new User_data(
+        _full_name_controller.text,
+        _doctor_controller.text,
+        _dentist_controller.text,
+        _dateController.text,
+        selectedGender.name,
+        _weight_controller.text,
+        _length_controller.text,
+        _time_controller.text,
+        avatar_path,
+        widget.user_role);
+
+    if (isUpdate == true) {
+      userId = userService.id;
+      await db.update(user_data, userId);
+      Toast.show("Successfully updated!", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    } else {
+      userService.id = await db.saveUserData(user_data);
       Toast.show("Successfully Saved!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      io.Directory documentsDirectory =
-          await getApplicationDocumentsDirectory();
-      avatar_path =
-          join(documentsDirectory.path, "${_full_name_controller.text}.png");
-      var user_data = new User_data(
-          _full_name_controller.text,
-          _doctor_controller.text,
-          _dentist_controller.text,
-          _dateController.text,
-          selectedGender.name,
-          _weight_controller.text,
-          _length_controller.text,
-          _time_controller.text,
-          avatar_path,
-          widget.user_role);
-      userService.id = await db.saveUserData(user_data);
-      userService.full_name = _full_name_controller.text;
-      userService.doctor_name = _doctor_controller.text;
-      userService.dentist_name = _dentist_controller.text;
-      userService.birthday = _dateController.text;
-      userService.gender = selectedGender.name;
-      userService.weight = _weight_controller.text;
-      userService.length = _length_controller.text;
-      userService.time = _time_controller.text;
-      userService.avatar_path = avatar_path;
-      userService.user_role = widget.user_role;
-
-      themeChange();
-    } else {
-      Toast.show("Admin already Exists!", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
+    userService.full_name = _full_name_controller.text;
+    userService.doctor_name = _doctor_controller.text;
+    userService.dentist_name = _dentist_controller.text;
+    userService.birthday = _dateController.text;
+    userService.gender = selectedGender.name;
+    userService.weight = _weight_controller.text;
+    userService.length = _length_controller.text;
+    userService.time = _time_controller.text;
+    userService.avatar_path = avatar_path;
+    userService.user_role = widget.user_role;
+
+    themeChange();
+    // } else {
+    //   Toast.show("Admin already Exists!", context,
+    //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    // }
   }
 
   getRecord() async {
@@ -149,19 +158,17 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     //   _image = File('${directory.path}/avatar.png');
     //   print(_image);
     // }
-    if (await File('${directory.path}/${userService.full_name}.png').exists()) {
-      _image = File('${directory.path}/${userService.full_name}.png');
-      print(_image);
-    } else {
-      if (await File('${directory.path}/avatar.png').exists()) {
-        _image = File('${directory.path}/avatar.png');
-        print(_image);
-      }
+    if (await File(userService.avatar_path).exists()) {
+      _image = File(userService.avatar_path);
     }
 
     setState(() {
       avatar_exists = true;
-      isUpdate = true;
+      if (userService.id != 0) {
+        isUpdate = true;
+      } else {
+        isUpdate = false;
+      }
 
       if (userService.gender == 'Male') {
         selectedGender = Gender[0];
@@ -231,11 +238,14 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     }
   }
 
-  saveImages(full_name) async {
+  saveImages(full_name, current_date_time) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    final File Image_face =
-        await _image.copy('${directory.path}/${full_name}.png');
-    print(Image_face);
+    // if (await File('${directory.path}/${full_name}.png').exists()) {
+    //   print("exists");
+    //   await File('${directory.path}/${full_name}.png').delete();
+    // }
+    final File Image_face = await _image
+        .copy('${directory.path}/${full_name}_${current_date_time}.png');
   }
 
   void _showPicker(context) {
@@ -603,6 +613,16 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
                             TimeOfDay pickedTime = await showTimePicker(
                               initialTime: TimeOfDay.now(),
                               context: context,
+                              builder: (BuildContext context, Widget child) {
+                                return Theme(
+                                    data: ThemeData.light().copyWith(
+                                      colorScheme:
+                                          ColorScheme.highContrastLight(
+                                        primary: Color(themeService.myColor2),
+                                      ),
+                                    ),
+                                    child: child);
+                              },
                             );
 
                             if (pickedTime != null) {
@@ -682,8 +702,12 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
                               color: Colors.white),
                         ),
                         onPressed: () {
-                          addRecord(context);
-                          saveImages(_full_name_controller.text);
+                          current_date_time =
+                              DateTime.now().microsecondsSinceEpoch.toString();
+                          print(current_date_time);
+                          addRecord(context, current_date_time);
+                          saveImages(
+                              _full_name_controller.text, current_date_time);
                         },
                       ),
                     ),
@@ -740,7 +764,6 @@ class _DataPageState extends State<DataPage> with WidgetsBindingObserver {
     setState(() {
       avatar_path =
           join(documentsDirectory.path, "${userService.full_name}.png");
-      print(avatar_path);
     });
   }
 }

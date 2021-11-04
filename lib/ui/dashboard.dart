@@ -124,11 +124,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       onTap: () {
         switch (page_num) {
           case 1:
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (ctx) => DataPage(widget.user_role, widget.user_name),
-              ),
-            );
+            Navigator.of(context)
+                .push(
+                  MaterialPageRoute(
+                    builder: (ctx) =>
+                        DataPage(widget.user_role, widget.user_name),
+                  ),
+                )
+                .then((value) => changeTheme());
             break;
           case 2:
             Navigator.of(context)

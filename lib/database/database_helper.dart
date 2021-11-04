@@ -293,11 +293,11 @@ class DatabaseHelper {
     return res;
   }
 
-  Future<bool> update(Form_draft user) async {
+  Future<bool> update(User_data user, int userId) async {
     var dbClient = await db;
 
-    int res = await dbClient.update("User", user.toMap(),
-        where: "id = ?", whereArgs: <int>[user.id]);
+    int res = await dbClient.update("user_info", user.toMap(),
+        where: "id = ?", whereArgs: <int>[userId]);
 
     return res > 0 ? true : false;
   }

@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:data_buffer/ui/sub_recipe_month_page.dart';
 import 'package:data_buffer/database/model/user_data.dart';
 import 'package:data_buffer/database/database_helper.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:data_buffer/ui/dashboard.dart';
@@ -35,7 +36,6 @@ class _UsersListPageState extends State<UsersListPage> {
   EmployeeDataSource employeeDataSource;
   List<User_data> employee;
   double _width, _height;
-
   List<Map> list;
   var db = new DatabaseHelper();
 
@@ -152,15 +152,24 @@ class _UsersListPageState extends State<UsersListPage> {
                                       child: Row(
                                         children: <Widget>[
                                           ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Image.file(
-                                              File(snapshot
-                                                  .data[position].row[9]),
-                                              width: 60,
-                                              height: 60,
-                                            ),
-                                          ),
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              child: !File(snapshot
+                                                          .data[position]
+                                                          .row[9])
+                                                      .existsSync()
+                                                  ? Image.network(
+                                                      "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_man_people_person_avatar_white_tone_icon_159363.png",
+                                                      width: 60,
+                                                      height: 60,
+                                                    )
+                                                  : Image.file(
+                                                      File(snapshot
+                                                          .data[position]
+                                                          .row[9]),
+                                                      width: 60,
+                                                      height: 60,
+                                                    )),
                                           Spacer(),
                                           Text(snapshot.data[position].row[1]),
                                           Spacer(),
