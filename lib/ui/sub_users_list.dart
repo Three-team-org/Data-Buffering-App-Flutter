@@ -249,7 +249,7 @@ class _UsersListPageState extends State<UsersListPage> {
           'Warning!',
           style: TextStyle(color: Colors.red),
         ),
-        content: Text("Are you sure you want to delete $user_name ? "),
+        content: Text("Are you sure you want to delete \"$user_name\" ? "),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),
