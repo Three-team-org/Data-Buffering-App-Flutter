@@ -428,11 +428,12 @@ class _CalendarPageState extends State<CalendarPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "GRADUAL INTRODUCTION\n OF FOODSTUFFS"
+                            "GRADUAL INTRODUCTION \nOF FOODSTUFFS"
                                 .toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,
+                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),

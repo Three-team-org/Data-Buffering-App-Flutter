@@ -92,9 +92,9 @@ class _UsersListPageState extends State<UsersListPage> {
                           Text(
                             "User List".toUpperCase(),
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: _width / 15,
-                            ),
+                                color: Colors.white,
+                                fontSize: _width / 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       )

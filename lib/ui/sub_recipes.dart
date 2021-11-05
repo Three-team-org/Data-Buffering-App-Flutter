@@ -116,37 +116,31 @@ class _RecipesPageState extends State<RecipesPage> {
         }
       },
       child: Container(
-        // height: 200,
-        // width: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6.0,
-            ),
-          ],
-          color: Colors.grey[100],
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                image,
-                height: _width * 0.4,
-                width: _width * 0.4,
+        padding: EdgeInsets.all(5),
+        child: Container(
+          // height: 200,
+          width: _width / 0.4,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 2.0,
               ),
-              SizedBox(
-                height: 1,
-              ),
-              Text(title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 1,
-                    color: Colors.orangeAccent.shade200,
-                  )),
             ],
+            color: Colors.grey[100],
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  image,
+                  height: _width * 0.4,
+                  width: _width * 0.4,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -157,18 +151,13 @@ class _RecipesPageState extends State<RecipesPage> {
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        // backgroundColor: Colors.deepOrange,
-        // appBar: AppBar(
-        //   title: Text("RECIPE PAGE",style: TextStyle(color: Colors.white, fontSize: 25),),
-        //   backgroundColor: Colors.red,
-        //   elevation: 0,
-        // ),
-        body: SafeArea(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            height: _height,
+      body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -177,35 +166,11 @@ class _RecipesPageState extends State<RecipesPage> {
                   Color(themeService.myColor1),
                   Color(themeService.myColor2),
                 ])),
-            width: double.infinity,
-          ),
-          Container(
-            width: _width,
-            margin: EdgeInsets.only(top: _height / 3),
-            decoration: BoxDecoration(
-                color: const Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: const Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
-            child: Column(
-              children: <Widget>[],
-            ),
-          ),
-          CustomScrollView(
-            slivers: <Widget>[
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(0.0),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  height: _height / 4,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
@@ -225,55 +190,66 @@ class _RecipesPageState extends State<RecipesPage> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Spacer(),
-                          Text("RECIPE by month".toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white)),
-                          Spacer(),
+                          Row(children: <Widget>[
+                            Container(
+                                height: _height / 4 - 50,
+                                margin: EdgeInsets.zero,
+                                width: _width,
+                                child: Container(
+                                  child: Text(
+                                      "ORAL HYGIENE FROM\n THE FIRST DAYS",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: _width / 12,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white)),
+                                )),
+                          ]),
                         ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      ),
+                      )
                     ],
                   ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.all(20.0),
-                sliver: SliverGrid.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  children: <Widget>[
-                    cards("assets/images/recipe_1.png", '1 Month', '37', 1),
-                    cards("assets/images/recipe_2.png", '2 Month', '22', 2),
-                    cards("assets/images/recipe_3.png", '3 Month', '90', 3),
-                    cards("assets/images/recipe_4.png", '4 Month', '22', 4),
-                    cards("assets/images/recipe_5.png", '5 Month', '90', 5),
-                    cards("assets/images/recipe_6.png", '6 Month', '30', 6),
-                    cards("assets/images/recipe_7.png", '7 Month', '37', 7),
-                    cards("assets/images/recipe_8.png", '8 Month', '22', 8),
-                    cards("assets/images/recipe_9.png", '9 Month', '90', 9),
-                    cards("assets/images/recipe_10.png", '10 Month', '22', 10),
-                    cards("assets/images/recipe_11.png", '11 Month', '22', 11),
-                    cards("assets/images/recipe_12.png", '12 Month', '90', 12),
-                  ],
+                Container(
+                  height: _height * 0.75,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    // mainAxisSpacing: 10,
+                    // crossAxisSpacing: 10,
+                    children: <Widget>[
+                      cards("assets/images/recipe_1.png", '1 Month', '37', 1),
+                      cards("assets/images/recipe_2.png", '2 Month', '22', 2),
+                      cards("assets/images/recipe_3.png", '3 Month', '90', 3),
+                      cards("assets/images/recipe_4.png", '4 Month', '22', 4),
+                      cards("assets/images/recipe_5.png", '5 Month', '90', 5),
+                      cards("assets/images/recipe_6.png", '6 Month', '30', 6),
+                      cards("assets/images/recipe_7.png", '7 Month', '37', 7),
+                      cards("assets/images/recipe_8.png", '8 Month', '22', 8),
+                      cards("assets/images/recipe_9.png", '9 Month', '90', 9),
+                      cards(
+                          "assets/images/recipe_10.png", '10 Month', '22', 10),
+                      cards(
+                          "assets/images/recipe_11.png", '11 Month', '22', 11),
+                      cards(
+                          "assets/images/recipe_12.png", '12 Month', '90', 12),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ));
+              ],
+            ),
+          )),
+    );
   }
 }
 

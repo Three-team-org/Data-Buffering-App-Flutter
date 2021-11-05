@@ -70,9 +70,9 @@ class _AdviceDescriptionPageState extends State<AdviceDescriptionPage> {
                           Text(
                             "Oral hygiene".toUpperCase(),
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: _width / 15,
-                            ),
+                                color: Colors.white,
+                                fontSize: _width / 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       )

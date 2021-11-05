@@ -178,9 +178,9 @@ class _HospitalPageState extends State<HospitalPage> {
                           Text(
                             "PEDIATRICIAN".toUpperCase(),
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: _width / 15,
-                            ),
+                                color: Colors.white,
+                                fontSize: _width / 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       )

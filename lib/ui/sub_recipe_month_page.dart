@@ -75,6 +75,7 @@ class _RecipeMonthPageState extends State<RecipeMonthPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],

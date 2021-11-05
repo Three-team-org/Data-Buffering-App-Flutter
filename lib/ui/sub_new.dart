@@ -74,6 +74,7 @@ class _NewPageState extends State<NewPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: _width / 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],

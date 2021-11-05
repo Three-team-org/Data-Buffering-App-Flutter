@@ -61,9 +61,10 @@ class _SubDentistPageState extends State<MilkTeethPage> {
                           Text(
                             "Oral hygiene of milk teeth".toUpperCase(),
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: _width / 17,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: _width / 17,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       )
